@@ -5,34 +5,38 @@ if (empty($DashboardLogin) || empty($Admin) || $Admin['level'] < $AdminLevel):
 endif;
 ?>
 
-<section class="home">
-            <div class="container">
+<section class="home page-weapper">
+    <div class="container">
+        <header class="row">
+           <h1 class="page-header">Dashboard</h1>    
+        </header>
 
-            <article class="box box3">
+        <div class="row">
+            <article class="box col-lg-3 col-md-4 col-sm-5">
                 <img src="images/icons/EditInfo.png" alt="[edit info]" title="edit info"/>
                 <center><a href="dashboard.php?p=info/home" title="editar informações pessoais" class="blue icon-user">Informações Pessoais</a></center>
             </article>
 
             <?php if($Admin['level']==3){ ?>
-                <article class="box box3">
+                <article class="box col-lg-3 col-md-4 col-sm-5">
                     <img src="images/icons/addUser.png" alt="[adicionar user]" title="adicionar user"/>
                     <center><a href="dashboard.php?p=info/add" title="adicionar usuários" class="red icon-wrench">Adicionar Usuários</a></center>
                 </article>
             <?php } ?>
 
             <?php if($Admin['level']==2){ ?>
-                <article class="box box3">
+                <article class="box col-lg-3 col-md-4 col-sm-5">
                     <img src="images/icons/maps2.png" alt="[maps draw]" title="maps draw"/>
                     <center><a href="dashboard.php?p=draw/home" title="criar mapas" class="red icon-pencil">Desenhar Mapas</a></center>
                 </article>
             <?php } ?>
 
             <?php if($Admin['level']==3){ ?>
-                <article class="box box3">
+                <article class="box col-lg-3 col-md-4 col-sm-5">
                     <img src="images/icons/delUser.png" alt="[del user]" title="del user"/>
                     <center><a href="dashboard.php?p=info/del" title="excluir usuários" class="green icon-warning">Excluir Responsável</a></center>
                 </article>
             <?php } ?>
-
-            </div>
+        </div>
+    </div>
 </section>

@@ -5,11 +5,18 @@ if (empty($DashboardLogin) || empty($Admin) || $Admin['level'] < $AdminLevel):
 endif;
 ?>
 
-<section class="create_content">
-    <div class="content">
+<section class="page-weapper">
+    <div class="container">
 
-        <h1>Adicionar Usuário</h1>
-        <form action="" name="create_form" method="post" enctype="multipart/form-data">
+        <header class="row">
+           <h1 class="page-header">Add Users</h1>    
+        </header>
+        <div class="row">
+            <article class="box col-lg-3 col-md-4 col-sm-5">
+                
+            </article>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
 
             <input type="hidden" name="callback" value="Users">
             <input type="hidden" name="callback_action" value="user_add">

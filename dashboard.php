@@ -68,15 +68,16 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
 
     </head>
     <body>
-        <header>
-            <div class="logo">
-                <a href="dashboard.php?p=home" title="pauliceia"><img src="images/logo.png" alt="[logo pauliceia]" title="logo pauliceia"/></a>
+        <header class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="logo">
+                    <a href="dashboard.php?p=home" title="pauliceia"><img src="images/logo.png" alt="[logo pauliceia]" title="logo pauliceia"/></a>
+                </div>
+                <div class="banner">
+                    <p>Welcome <b><?= $Admin['name']; ?></b>! </p>
+                    <a class="btn btn-default glyphicon glyphicon-log-out" title="logoff <?= P_NAME; ?>!" href="dashboard.php?p=home&logoff=true"></a>
+                </div>
             </div>
-            <div class="banner">
-                <p>Welcome <b><?= $Admin['name']; ?></b>! </p>
-                <a class="icon-exit btn" title="logoff <?= P_NAME; ?>!" href="dashboard.php?p=home&logoff=true">LOGOFF!</a>
-            </div>
-            <div class="clear"></div>
         </header>
 
         <?php
@@ -95,8 +96,9 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         //FIM QUERY STRING
         ?>
 
-        <center><a href="dashboard.php?p=home" title="home pauliceia" class="glyphicon glyphicon-arrow-left btnback"> Back Menu</a></center>
-        <footer>
+        <ul class="pager"><li><a href="dashboard.php?p=home">&#8617; BACK MENU</a></li></ul>
+
+       <footer class="navbar navbar-default">
             <div class="content">
                 <p>2017 - Pauliceia 2.0</p>
             </div>
