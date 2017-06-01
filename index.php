@@ -28,17 +28,18 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
         <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500' rel='stylesheet' type='text/css'>
         <link rel="base" href="<?= BASE; ?>">
 
-        <link rel="stylesheet" href="css/index.css"/>
-        <link rel="stylesheet" href="css/reset.css"/>
         <link rel="stylesheet" href="css/lib/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/index.css"/>
+        
     </head>
     <body>
-        <div class="login">
-            <img class="logo" alt="<?= P_NAME; ?>" title="<?= P_NAME; ?>" src="images/logo.png"/>
-            <hr style="margin-bottom: 20px;">
+        <div class="container"> 
 
-            <form name="login_form" action="" method="post" enctype="multipart/form-data">
-                <div class="callback_return" style="margin-bottom: -10px;">
+            <form name="login_form" action="" method="post" enctype="multipart/form-data" class="form-signin">
+                <div class='form-signin-heading'>
+                    <img class="logo" alt="<?= P_NAME; ?>" title="<?= P_NAME; ?>" src="images/logo.png"/>
+                </div>
+                <div class="callback_return">
                     <?php
                     if (!empty($_SESSION['trigger_login'])):
                         echo $_SESSION['trigger_login'];
@@ -49,27 +50,24 @@ if(isset($_SESSION['userLogin']) && isset($_SESSION['userLogin']['level']) && $_
                 <input type="hidden" name="callback" value="Login">
                 <input type="hidden" name="callback_action" value="login_submit">
 
-                <label class="label">
-                    <span class="legend">Email:</span>
-                    <input type="email" class="user" name="email" placeholder="contato@pauliceia.com" required/>
-                </label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"></span></span>
+                    <input type="email" name="email" class="form-control" aria-describedby="basic-addon1" placeholder="Email Address" required autofocus/>
+                </div>
+                <input type="password" name="password" class="form-control" placeholder="Password" required autofocus/>
 
-                <label class="label">
-                    <span class="legend">Password:</span>
-                    <input type="password" class="pass" name="password" placeholder="********" required/>
-                </label>
-
-                <img class="form_load" style="float: right; margin-top: 20px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
-                <button class="btn">Sign in!</button>
-                <div class="clear"></div>
+                <button class="btn btn-lg btn-primary btn-block">Sign in!</button>
+                <img class="form_load" alt="Enviando Requisição!" title="Enviando Requisição!" style="margin: 10px; display: none; float:right;" src="images/load.gif"/>
+                
             </form>
+            
         </div>
 
         <script src="js/lib/jquery.js"></script>
         <script src="js/lib/jquery.form.js"></script>
         <script src="js/lib/html5shiv.js"></script>
         <script src="js/lib/maskinput.js"></script>
-        <script src="js/lib/bootstrap.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

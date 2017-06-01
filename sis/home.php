@@ -6,7 +6,7 @@ endif;
 ?>
 
 <section class="home">
-            <div class="content">
+            <div class="container">
 
             <article class="box box3">
                 <img src="images/icons/EditInfo.png" alt="[edit info]" title="edit info"/>

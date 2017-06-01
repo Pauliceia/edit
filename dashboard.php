@@ -32,7 +32,7 @@ endif;
 */
 $LogOff = filter_input(INPUT_GET, 'logoff', FILTER_VALIDATE_BOOLEAN);
 if ($LogOff):
-    $_SESSION['trigger_login'] = Erro("<b>LOGOFF:</b> Olá {$Admin['name']}, você desconectou com sucesso, volte logo!");
+    $_SESSION['trigger_login'] = Erro("<b>LOGOFF:</b> Bye {$Admin['name']}, logoff success!");
     unset($_SESSION['userLogin']);
     header('Location: ./index.php');
 endif;
@@ -55,16 +55,15 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,500' rel='stylesheet' type='text/css'>
         <link rel="base" href="<?= BASE; ?>">
 
-        <link rel="stylesheet" href="css/reset.css"/>
         <link rel="stylesheet" href="css/main.css"/>
-        <link rel="stylesheet" href="css/lib/ol.css"/>
         <link rel="stylesheet" href="css/lib/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/lib/ol.css"/>
 
         <script src="js/lib/jquery.js"></script>
         <script src="js/lib/cookie.js"></script>
         <script src="js/lib/jquery.form.js"></script>
         <script src="js/lib/maskinput.js"></script>
-        <script src="js/lib/bootstrap.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
 
     </head>
@@ -74,7 +73,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
                 <a href="dashboard.php?p=home" title="pauliceia"><img src="images/logo.png" alt="[logo pauliceia]" title="logo pauliceia"/></a>
             </div>
             <div class="banner">
-                <p>Seja Bem-Vindo(a) <b><?= $Admin['name']; ?></b>! </p>
+                <p>Welcome <b><?= $Admin['name']; ?></b>! </p>
                 <a class="icon-exit btn" title="logoff <?= P_NAME; ?>!" href="dashboard.php?p=home&logoff=true">LOGOFF!</a>
             </div>
             <div class="clear"></div>
@@ -90,13 +89,13 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         if (file_exists($includepatch)):
              require_once($includepatch);
         else:
-             $_SESSION['trigger_controll'] = "<b>DESCULPE:</b> O controlador <b class='fontred'>sis/{$getView}.php</b> não foi encontrado ou não existe no destino especificado!";
+             $_SESSION['trigger_controll'] = "<b>DESCULPE:</b> The controller <b class='fontred'>sis/{$getView}.php</b> not found!";
              header('Location: dashboard.php?p=home');
              endif;
         //FIM QUERY STRING
         ?>
 
-        <center><a href="dashboard.php?p=home" title="home pauliceia" class="btnback icon-office">Voltar ao Menu Principal</a></center>
+        <center><a href="dashboard.php?p=home" title="home pauliceia" class="glyphicon glyphicon-arrow-left btnback"> Back Menu</a></center>
         <footer>
             <div class="content">
                 <p>2017 - Pauliceia 2.0</p>

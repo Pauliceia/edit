@@ -34,7 +34,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
         */
         case 'login_submit':
             if (in_array('', $PostData)){
-                $jSON['trigger'] = AjaxErro('Informe seu e-mail e senha para logar!', E_USER_NOTICE);
+                $jSON['trigger'] = AjaxErro('Enter your email and password, please!', E_USER_NOTICE);
             }else{
                 if($conn->getConn()){
                     $PostData['password'] = hash('sha512', $PostData['password']);
@@ -46,16 +46,16 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         if(pg_num_rows($result) > 0){
                              $ArrayResult = pg_fetch_all($result);
                              $_SESSION['userLogin'] = $ArrayResult[0];
-                             $jSON['trigger'] = AjaxErro("&#10004; Olá <b>{$ArrayResult[0]['name']},</b> Seja Bem-Vindo!");
+                             $jSON['trigger'] = AjaxErro("&#10004; Hello <b>{$ArrayResult[0]['name']},</b> Welcome!");
                              $jSON['redirect'] = 'dashboard.php?p=home';
                         }else{
-                            $jSON['trigger'] = AjaxErro('&#10008; Você não está ativo em nosso sistema!', E_USER_ERROR);
+                            $jSON['trigger'] = AjaxErro('&#10008; User is not active!', E_USER_ERROR);
                         }
                     }else{
-                        $jSON['trigger'] = AjaxErro('&#10008; E-mail ou senha incorreta!', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('&#10008; Email or password incorrect!', E_USER_ERROR);
                     }
                 }else{
-                    $jSON['trigger'] = AjaxErro('&#10008; Banco de dados não conectado!', E_USER_ERROR);
+                    $jSON['trigger'] = AjaxErro('&#10008; Database is not connected!', E_USER_ERROR);
                 }
             }
             break;

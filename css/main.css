@@ -3,10 +3,12 @@
 * os estilos estão divididos em setores e por página nessa arquivo
 */
 
-.content {
-    width: 80%;
-    margin: 0 10%;
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
 }
+
 .btnback{
     padding: 8px 18px;
     border-radius: 15px;

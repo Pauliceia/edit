@@ -17,7 +17,7 @@ define('P_DBSA', 'db_pauliceia'); //nome da Base de Dados
 /*
  * INFORMAÇÕES DO PORTAL
  */
-define('BASE', 'http://localhost/ediData/');
+define('BASE', 'http://localhost/editData/');
 define('P_NAME', 'Pauliceia-edit');
 define('P_DESC', 'Portal WEBGIS, responsável por realizar a edição de dados geográficos do projeto Pauliceia');
 
@@ -43,23 +43,23 @@ spl_autoload_register("MyAutoLoad");
  * EXIBE MENSAGEM DE ERRO
  */
 function Erro($ErrMsg, $ErrNo = null) {
-    $CssClass = ($ErrNo == E_USER_NOTICE ? 'trigger_info' : ($ErrNo == E_USER_WARNING ? 'trigger_alert' : ($ErrNo == E_USER_ERROR ? 'trigger_error' : 'trigger_success')));
-    echo "<div class='trigger {$CssClass}'>{$ErrMsg}<span class='ajax_close'></span></div>";
+    $CssClass = ($ErrNo == E_USER_NOTICE ? 'alert-info' : ($ErrNo == E_USER_WARNING ? 'alert-warning' : ($ErrNo == E_USER_ERROR ? 'alert-danger' : 'trigger_success')));
+    echo "<div class='alert {$CssClass}'>{$ErrMsg}<span class='ajax_close'></span></div>";
 }
 
 /*
  * EXIBE ERROS LANÇADOS POR AJAX
  */
 function AjaxErro($ErrMsg, $ErrNo = null) {
-    $CssClass = ($ErrNo == E_USER_NOTICE ? 'trigger_info' : ($ErrNo == E_USER_WARNING ? 'trigger_alert' : ($ErrNo == E_USER_ERROR ? 'trigger_error' : 'trigger_success')));
-    return "<div class='trigger trigger_ajax {$CssClass}'>{$ErrMsg}<span class='ajax_close'></span></div>";
+    $CssClass = ($ErrNo == E_USER_NOTICE ? 'alert-info' : ($ErrNo == E_USER_WARNING ? 'alert-warning' : ($ErrNo == E_USER_ERROR ? 'alert-danger' : 'alert-success')));
+    return "<div class='alert trigger_ajax {$CssClass}'>{$ErrMsg}<span class='ajax_close'></span></div>";
 }
 
 /*
  * PERSONALIZA OS ERROS VINDOS DO PHP
  */
 function PHPErro($ErrNo, $ErrMsg, $ErrFile, $ErrLine) {
-    echo "<div class='trigger trigger_error'>";
+    echo "<div class='alert alert-danger'>";
     echo "<b>Erro na Linha: #{$ErrLine} ::</b> {$ErrMsg}<br>";
     echo "<small>{$ErrFile}</small>";
     echo "<span class='ajax_close'></span></div>";
