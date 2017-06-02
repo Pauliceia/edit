@@ -5,44 +5,47 @@ if (empty($DashboardLogin) || empty($Admin) || $Admin['level'] < $AdminLevel):
 endif;
 ?>
 
-<section class="create_content">
-    <div class="content">
+<section class="page-weapper">
+    <div class="container">
 
-        <h1>Excluir Usuários</h1>
-        <form action="" name="create_form" method="post">
+        <header class="row">
+           <h1 class="page-header">Delete Users</h1>    
+        </header>
 
-            <input type="hidden" name="callback" value="Users">
-            <input type="hidden" name="callback_action" value="search_user">
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <input type="hidden" name="callback" value="Users">
+                <input type="hidden" name="callback_action" value="search_user">
 
-            <label style="display: inline-block; float: left; width: 80%;">
-                <input type="text" name="search" placeholder="Procure por nome, e-mail ou instituição: " <?php if(isset($_GET['search']) && !empty($_GET['search'])){ echo 'value="'.$_GET['search'].'"'; } ?>>
-            </label>
+                <div class="input-group">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" name="search" placeholder="Search Name, email or institution: " <?php if(isset($_GET['search']) && !empty($_GET['search'])){ echo 'value="'.$_GET['search'].'"'; } ?>>
+                        <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" >Search!</button>
+                        <img class="form_load" style="float: right; margin-top: 20px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
+                    </span>
+                </div>
 
-            <img class="form_load" style="float: right; margin-top: 20px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
-            <button class="btn" style="background: #4d4dff; display: inline-block; float:right; margin-top:10px;">Buscar</button>
-
-            <div class="clear"></div><br>
-            <div class="callback_return m_botton">
-                <?php
-                    if (!empty($_SESSION['trigger_login'])):
-                        echo $_SESSION['trigger_login'];
-                        unset($_SESSION['trigger_login']);
-                    endif;
-                ?>
+                <div class="clear"></div><br>
+                <div class="callback_return m_botton">
+                    <?php
+                        if (!empty($_SESSION['trigger_login'])):
+                            echo $_SESSION['trigger_login'];
+                            unset($_SESSION['trigger_login']);
+                        endif;
+                    ?>
+                </div>
             </div>
         </form>
-        <div style="background: #ccc">
-            <article class="box box3" style="border-right: 1px solid #999;">
-                <center><b>Nome</b></center>
-            </article>
-            <article class="box box3" style="border-right: 1px solid #999;">
-                <center><b>E-mail</b></center>
-            </article>
-            <article class="box box3">
-                <center><b>Excluir</b></center>
-            </article>
-        </div>
-        <hr>
+        
+        <table class="table table-hover">
+            <tr style="background: #f3f3f3;">
+                <td><center><b>Nome</b></center></td>
+                <td><center><b>E-mail</b></center></td>
+                <td><center><b>Excluir</b></center></td>
+            </tr>
 
         <?php
             if(isset($_GET['search']) && !empty($_GET['search'])){
@@ -55,25 +58,21 @@ endif;
                 foreach (pg_fetch_all($result) as $Colaborador):
                 extract($Colaborador);
                 ?>
-                <div class="del_colaborador" id="<?= $id ?>">
-                    <article class="box box3" style="border-right: 1px solid #999;">
-                        <?= $name ?>
-                    </article>
-                    <article class="box box3" style="border-right: 1px solid #999;">
-                        <?= $email ?>
-                    </article>
-                    <article class="box box3">
+                <tr class="del_colaborador" id="<?= $id ?>">
+                    <td><center><?= $name ?></center></td>
+                    <td><center><?= $email ?></center></td>
+                    <td>
                         <center><span rel='del_colaborador' class='btn j_delete_action icon-cancel-circle' id='<?= $id ?>'>DELETE</span>
                         <span rel='del_colaborador' callback='Users' callback_action='user_del' class='btn j_delete_action_confirm icon-warning' style='display:none; background: #cccc00' id='<?= $id ?>'>CONFIRMAR</span></center>
-                    </article>
-                </div>
+                    </td>
+                </tr>
                 <?php
                 endforeach;
             }else{
                 echo '<br>';
-                echo Erro("<span class='icon-notification'>{$Admin['name']}, não possui usuários para serem excluídos !</span>", E_USER_NOTICE);
+                echo Erro("{$Admin['name']}, there are no users to delete");
             }
-            ?>
-    </div>
+        ?>
+        </table>
     <div class="clear"></div>
 </section>

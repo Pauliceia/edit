@@ -97,7 +97,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         ?>
 
         <ul class="pager"><li><a href="dashboard.php?p=home">&#8617; BACK MENU</a></li></ul>
-
+        <br>
        <footer class="navbar navbar-default">
             <div class="content">
                 <p>2017 - Pauliceia 2.0</p>

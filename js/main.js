@@ -140,10 +140,10 @@ $(function() {
 
         if (!$(this).hasClass('actPass')) {
             $(this).addClass('actPass');
-            $(this).text('Não Alterar Senha');
+            $(this).text('Do not alter the password');
         }else{
             $(this).removeClass('actPass');
-            $(this).text('Alterar Senha');
+            $(this).text('Alter Password');
             $('.newpass input').val('');
         }
 

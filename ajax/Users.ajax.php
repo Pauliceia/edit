@@ -27,43 +27,43 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
     //SELECIONA AÇÃO
     switch ($Case):
-            /* EDIÇÃO DE USUÁRIO NO BD
-            * case responsável por verificar se o usuário existe no BD
-            * e posteriormente editar seu conteúdo
-            */
+        /* EDIÇÃO DE USUÁRIO NO BD
+        * case responsável por verificar se o usuário existe no BD
+        * e posteriormente editar seu conteúdo
+        */
         case 'user_edit':
                 if($conn->getConn()){
 
                     if(empty($PostData['passAtual']) && empty($PostData['newPass']) && empty($PostData['repNewPass'])){
                         $sql = "UPDATE tb_users SET name='{$PostData['name']}', institution='{$PostData['institution']}' WHERE id={$PostData['id']}";
                         $result = pg_query($conn->getConn(), $sql);
-                        $jSON['trigger'] = AjaxErro('Usuário editado com sucesso!');
+                        $jSON['trigger'] = AjaxErro('User edited successfully!');
                     }else{
                         if(empty($PostData['passAtual']) || empty($PostData['newPass']) || empty($PostData['repNewPass'])){
-                            $jSON['trigger'] = AjaxErro('Digite todos os campos!', E_USER_ERROR);
+                            $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_ERROR);
                         }else{
                             $passAtual = hash('sha512', $PostData['passAtual']);
                             $sql = "SELECT * FROM tb_users WHERE id={$PostData['id']} AND password='{$passAtual}'";
                             $result = pg_query($conn->getConn(), $sql);
                             if(pg_num_rows($result) > 0){
-                                $jSON['trigger'] = AjaxErro('Usuário editado com sucesso!');
+                                $jSON['trigger'] = AjaxErro('User edited successfully!');
                                 if($PostData['newPass'] == $PostData['repNewPass']){
                                     $newPass = hash('sha512', $PostData['newPass']);
                                     $sql = "UPDATE tb_users SET name='{$PostData['name']}', institution='{$PostData['institution']}', password='{$newPass}' WHERE id={$PostData['id']}";
                                     $result = pg_query($conn->getConn(), $sql);
-                                    $jSON['trigger'] = AjaxErro('Usuário editado com sucesso!');
+                                    $jSON['trigger'] = AjaxErro('User edited successfully!');
                                     $jSON['redirect'] = 'dashboard.php?p=info/home';
                                 }else{
-                                    $jSON['trigger'] = AjaxErro('A nova senha e a repetição dela, estão diferentes!', E_USER_ERROR);
+                                    $jSON['trigger'] = AjaxErro('The password and its repetition are different!', E_USER_ERROR);
                                 }
                              }else{
-                                $jSON['trigger'] = AjaxErro('Senha Atual Incorreta!', E_USER_ERROR);
+                                $jSON['trigger'] = AjaxErro('Current password is incorrect!', E_USER_ERROR);
                              }
                         }
                     }
 
                 }else{
-                    $jSON['trigger'] = AjaxErro('Banco de Dados não conectado, contate o administrador!', E_USER_ERROR);
+                    $jSON['trigger'] = AjaxErro('database not connected!', E_USER_ERROR);
                 }
             break;
 
@@ -73,13 +73,13 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             */
             case 'user_add':
             if (in_array('', $PostData)){
-                $jSON['trigger'] = AjaxErro('Preencha todos os campos!', E_USER_NOTICE);
+                $jSON['trigger'] = AjaxErro('Complete all fields!', E_USER_NOTICE);
             }else{
                 if($conn->getConn()){
                     $sql = "SELECT * FROM tb_users WHERE email='{$PostData['email']}'";
                     $result = pg_query($conn->getConn(), $sql);
                     if(pg_num_rows($result) > 0){
-                        $jSON['trigger'] = AjaxErro('E-mail já cadastrado em nosso sistema!', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('Email already registered in the system!', E_USER_ERROR);
                     }else{
                         $date = date("Y/m/d");
                         if($PostData['pass'] == $PostData['rePass']){
@@ -87,15 +87,15 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $sql = "INSERT INTO tb_users (name, email, institution, password, level, datestart, status) VALUES ('{$PostData['name']}', '{$PostData['email']}', '{$PostData['institution']}', '{$PostData['pass']}', 2, '{$date}', 1)";
     
                             $result = pg_query($conn->getConn(), $sql);
-                            $jSON['trigger'] = AjaxErro('Usuário adicionado com sucesso!');
+                            $jSON['trigger'] = AjaxErro('User created success!');
                             $jSON['redirect'] = 'dashboard.php?p=info/add';
                         }else{
-                            $jSON['trigger'] = AjaxErro('A senha e a repetição dela, estão diferentes!', E_USER_ERROR);
+                            $jSON['trigger'] = AjaxErro('The password and its repetition are different!', E_USER_ERROR);
                         }
                     }
 
                 }else{
-                    $jSON['trigger'] = AjaxErro('Banco de Dados não conectado, contate o administrador!', E_USER_ERROR);
+                    $jSON['trigger'] = AjaxErro('database not connected!', E_USER_ERROR);
                 }
             }
             break;
@@ -110,7 +110,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $result = pg_query($conn->getConn(), $sql);
                     $jSON['redirect'] = 'dashboard.php?p=info/del';
                 }else{
-                    $jSON['trigger'] = AjaxErro('Banco de Dados não conectado, contate o administrador!', E_USER_ERROR);
+                    $jSON['trigger'] = AjaxErro('database not connected!', E_USER_ERROR);
                 }
             break;
 

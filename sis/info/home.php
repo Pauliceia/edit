@@ -5,76 +5,78 @@ if (empty($DashboardLogin) || empty($Admin) || $Admin['level'] < $AdminLevel):
 endif;
 ?>
 
-<section class="create_content">
-    <div class="content">
-    <?php
+<section class="page-weapper">
+    <div class="container">
+        <?php
         $sql = "SELECT * FROM tb_users WHERE id='{$Admin['id']}'";
         $result = pg_query($Conn->getConn(), $sql);
         if(pg_num_rows($result) > 0){
             $MAP = pg_fetch_all($result)[0];
             extract($MAP);
             ?>
-        <h1>Altere suas informações, <b><?= $name;?></b></h1>
-        <form action="" name="create_form" method="post" enctype="multipart/form-data">
-
-            <input type="hidden" name="callback" value="Users">
-            <input type="hidden" name="callback_action" value="user_edit">
-            <input type="hidden" name="id" value="<?= $id ?>">
-
-            <div class="box box2">
-                <label>
-                    <span class="legend">&#10143; Nome:</span>
-                    <input type="text" name="name" value="<?= $name ?>" required>
-                </label>
-                <?php
-                if($level == 2){
-                    $funcao = 'Editor';
-                }else{
-                    $funcao = 'Administrador';
-                }
-                ?>
-                <label>
-                    <span class="legend">&#10143; Função:</span>
-                    <input type="text" name="level" value="<?= $funcao ?>" disabled required>
-                </label>
-            </div>
-            <div class="box box2">
-                <label>
-                    <span class="legend">&#10143; Email:</span>
-                    <input type="email" name="email" value="<?= $email ?>" disabled required>
-                </label>
-                <label>
-                    <span class="legend">&#10143; Instituição:</span>
-                    <input type="text" name="institution" value="<?= $institution ?>" required>
-                </label>
-            </div>
-
-
-
-
-            <div class="newpass" style="display: none;">
-                <label>
-                    <span class="legend">&#10143; Senha Atual:</span>
-                    <input type="password" name="passAtual" placeholder="******">
-                </label>
-                <div class="box box2">
-                    <label>
-                        <span class="legend">&#10143; Nova Senha:</span>
-                        <input type="password" name="newPass" placeholder="******">
-                    </label>
+        <header class="row">
+           <h1 class="page-header">Update your information, <b><?= $name;?></b></h1>    
+        </header>
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <input type="hidden" name="callback" value="Users">
+                <input type="hidden" name="callback_action" value="user_edit">
+                <input type="hidden" name="id" value="<?= $id ?>">
+        
+                <article class="col-lg-6">
+                    <div class="form-group">
+                        <label for="name">&#10143; Name:</label>
+                        <input type="text" name="name" class="form-control" value="<?= $name ?>" required>
+                    </div>
+                    <?php
+                        if($level == 2){
+                            $funcao = 'Editor';
+                        }else{
+                            $funcao = 'Administrador';
+                        }
+                    ?>
+                    <div class="form-group">
+                        <label for="function">&#10143; Function:</label>
+                        <input type="text" name="level" class="form-control" value="<?= $funcao ?>" disabled required>
+                    </div>
+                </article>
+                <article class="col-lg-6">
+                    <div class="form-group">
+                        <label for="email">&#10143; Email:</label>
+                        <input type="text" name="email" class="form-control" value="<?= $email ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="institution">&#10143; Institution:</label>
+                        <input type="text" name="institution" class="form-control" value="<?= $institution ?>" required>
+                    </div>
+                </article>
+                <div class="newpass" style="display: none;">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="passCurrent">&#10143; Current password:</label>
+                            <input type="password" name="passAtual" class="form-control" placeholder="******">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="passCurrent">&#10143; New Password:</label>
+                            <input type="password" name="newPass" class="form-control" placeholder="******">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="passCurrent">&#10143; Repeat new Password:</label>
+                            <input type="password" name="repNewPass" class="form-control" placeholder="******">
+                        </div>
+                    </div>
                 </div>
-                <div class="box box2">
-                    <label>
-                        <span class="legend">&#10143; Repita a nova Senha:</span>
-                        <input type="password" name="repNewPass" placeholder="******">
-                    </label>
-                </div>
+
             </div>
 
             <br>
-            <a class="btn actnewPass" style="background: #4d4dff; float: left;">Alterar Senha</a>
+            <a class="btn btn-info actnewPass" style="float: left; margin-right:8px;">Alter Password</a>
             <img class="form_load" style="float: right; margin-top: 5px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
-            <button class="btn">Alterar Info</button>
+            <button class="btn btn-success">Update Infos</button>
 
             <div class="clear"></div><br>
             <div class="callback_return m_botton">
@@ -89,7 +91,7 @@ endif;
         <?php
         }else{
              echo '<br>';
-             echo Erro("<span class='icon-notification'>Usuário não existente!</span>", E_USER_NOTICE);
+             echo Erro("User does not exist!");
         }
     ?>
         <div class="clear"></div>

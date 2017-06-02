@@ -11,55 +11,52 @@ endif;
         <header class="row">
            <h1 class="page-header">Add Users</h1>    
         </header>
-        <div class="row">
-            <article class="box col-lg-3 col-md-4 col-sm-5">
-                
-            </article>
-        </div>
         <form action="" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <input type="hidden" name="callback" value="Users">
+                <input type="hidden" name="callback_action" value="user_add">
 
-            <input type="hidden" name="callback" value="Users">
-            <input type="hidden" name="callback_action" value="user_add">
+                <article class="col-lg-6">
+                    <div class="form-group">
+                        <label for="name">&#10143; Name:</label>
+                        <input type="text" name="name" class="form-control" placeholder="name: " required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">&#10143; Password:</label>
+                        <input type="password" name="pass" class="form-control" placeholder="******" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rePass">&#10143; Repeat Password:</label>
+                        <input type="password" name="rePass" class="form-control" placeholder="******" required>
+                    </div>
+                </article>
 
-            <div class="box box2">
-                <label>
-                    <span class="legend">&#10143; Nome:</span>
-                    <input type="text" name="name" placeholder="nome: " required>
-                </label>
-                <label>
-                    <span class="legend">&#10143; Senha:</span>
-                    <input type="password" name="pass" placeholder="******" required>
-                </label>
-                <label>
-                    <span class="legend">&#10143; Repitição da Senha:</span>
-                    <input type="password" name="rePass" placeholder="******" required>
-                </label>
+                <article class="col-lg-6">
+                    <div class="form-group">
+                        <label for="email">&#10143; Email Adress:</label>
+                        <input type="email" name="email" class="form-control" placeholder="Email: " required>
+                    </div>
+                    <div class="form-group">
+                        <label for="institution">&#10143; Institution:</label>
+                        <input type="text" name="institution" class="form-control" placeholder="Institution: " required>
+                    </div>
+                </article>
             </div>
-            <div class="box box2">
-                <label>
-                    <span class="legend">&#10143; Email:</span>
-                    <input type="email" name="email" placeholder="e-mail: " required>
-                </label>
-                <label>
-                    <span class="legend">&#10143; Instituição:</span>
-                    <input type="text" name="institution" placeholder="Instituição: " required>
-                </label>
 
-            </div>
+            
+                <div class="callback_return">
+                    <?php
+                        if (!empty($_SESSION['trigger_login'])):
+                            echo $_SESSION['trigger_login'];
+                            unset($_SESSION['trigger_login']);
+                        endif;
+                    ?>
+                </div>
 
             <img class="form_load" style="float: right; margin-top: 5px; margin-left: 10px; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
-            <button class="btn">Adicionar Usuário</button>
-
-            <div class="clear"></div><br>
-            <div class="callback_return m_botton">
-                <?php
-                    if (!empty($_SESSION['trigger_login'])):
-                        echo $_SESSION['trigger_login'];
-                        unset($_SESSION['trigger_login']);
-                    endif;
-                ?>
-            </div>
+            <button class="btn btn-success">Adicionar Usuário</button>
         </form>
-        <div class="clear"></div>
+        
+       
     </div>
 </section>
