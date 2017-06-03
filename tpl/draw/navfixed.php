@@ -1,8 +1,8 @@
-    <div class='title'>Draw Map <b>'<?= $title ?>'</b></div>
+    <div class='title'>Draw Map</div>
     <div class='layersFixed'>
         <form>
             <ul>
-                <li style="background: #999;"><input type="checkbox" name="layerbase" value="mapAtual" checked><b><?= $title ?></b></li>
+                <li style="background: #999;"><input type="checkbox" name="layerbase" value="mapAtual" checked><b>Points</b></li>
                 <li style="background: #AAA;"><input type="checkbox" name="layerbase" value="1">1930</li>
                 <li style="background: #AAA;"><input type="checkbox" name="layerbase" value="distritos" checked>Distritos</li>
                 <li style="background: #AAA;"><input type="checkbox" name="layerbase" value="municipios" checked>Municipios</li>
