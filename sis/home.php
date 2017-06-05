@@ -14,27 +14,27 @@ endif;
         <div class="row">
             <article class="box col-lg-3 col-md-4 col-sm-5">
                 <img src="images/icons/EditInfo.png" alt="[edit info]" title="edit info"/>
-                <center><a href="dashboard.php?p=info/home" title="editar informações pessoais" class="blue icon-user">Informações Pessoais</a></center>
+                <center><a href="dashboard.php?p=info/home" title="editar informações pessoais" class="blue icon-user">My Profile</a></center>
             </article>
 
             <?php if($Admin['level']==3){ ?>
                 <article class="box col-lg-3 col-md-4 col-sm-5">
                     <img src="images/icons/addUser.png" alt="[adicionar user]" title="adicionar user"/>
-                    <center><a href="dashboard.php?p=info/add" title="adicionar usuários" class="red icon-wrench">Adicionar Usuários</a></center>
+                    <center><a href="dashboard.php?p=info/add" title="adicionar usuários" class="red icon-wrench">Add Users</a></center>
                 </article>
             <?php } ?>
 
             <?php if($Admin['level']==2){ ?>
                 <article class="box col-lg-3 col-md-4 col-sm-5">
                     <img src="images/icons/maps2.png" alt="[maps draw]" title="maps draw"/>
-                    <center><a href="dashboard.php?p=draw/home" title="criar mapas" class="red icon-pencil">Desenhar Mapas</a></center>
+                    <center><a href="dashboard.php?p=draw/home" title="criar mapas" class="red icon-pencil">Edit Maps</a></center>
                 </article>
             <?php } ?>
 
             <?php if($Admin['level']==3){ ?>
                 <article class="box col-lg-3 col-md-4 col-sm-5">
                     <img src="images/icons/delUser.png" alt="[del user]" title="del user"/>
-                    <center><a href="dashboard.php?p=info/del" title="excluir usuários" class="green icon-warning">Excluir Responsável</a></center>
+                    <center><a href="dashboard.php?p=info/del" title="excluir usuários" class="green icon-warning">Delete Users</a></center>
                 </article>
             <?php } ?>
         </div>

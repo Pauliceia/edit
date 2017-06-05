@@ -27,7 +27,7 @@ define('P_DESC', 'Portal WEBGIS, responsável por realizar a edição de dados g
  * Fazendo com que não seje necessário inclui-las novamente no decorrer das páginas
  */
 function MyAutoLoad($Class) {
-    $cDir = ['SQL', 'Help'];
+    $cDir = ['SQL', 'Help', 'Draw'];
     $iDir = null;
 
     foreach ($cDir as $dirName):

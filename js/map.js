@@ -26,7 +26,7 @@ var map = new ol.Map({
 		new ol.control.ZoomSlider()
 	]),
 	renderer: 'canvas',
-	layers: [openstreetmap, esri, stamen, bingRoad, bases],
+	layers: [openstreetmap, bingRoad, bases],
 	view: view
 });
 
@@ -62,86 +62,6 @@ $('.top input[type=checkbox]').click(function() {
 		});
 	}
 
-});
-
-//ações de mostragem dos mapas do geoserver
-$('.top .selectMap').click(function() {
-	var postgisSelect = $("select[name='dbpostgis']").val();
-	$('.titleMapStyle').attr('title', postgisSelect);
-	var postgislayer = 'portalweb:'+postgisSelect+'';
-
-	if (bases instanceof ol.layer.Group){
-		bases.getLayers().forEach(function(sublayer){
-			if (sublayer.get('name') == 'postgis') {
-				if(postgisSelect == 'none'){
-					sublayer.setVisible(false);
-				}else{
-					sublayer.getSource().updateParams({'LAYERS': postgislayer, 'TILED': true});
-					sublayer.setVisible(true);
-				}
-			}
-		});
-	}
-
-});
-
-//modificação de Estilos dos mapas
-$('.actEditStyleC').click(function() {
-	var mapEdit = $('.complex input[name="map"]').val();
-	var idEdit = $('.complex input[name="id"]').val();
-	var backEdit = $('.complex input[name="background"]').val();
-	var alphaEdit = $('.complex input[name="alpha"]').val();
-	var strokeEdit = $('.complex input[name="stroke"]').val();
-	var styleEdit = new ol.style.Style
-	({
-		image: new ol.style.Circle({
-			radius: 5,
-			fill: new ol.style.Fill({ color: backEdit }),
-			stroke: new ol.style.Stroke({ color: strokeEdit })
-		}),
-		fill: new ol.style.Fill({ color: backEdit }),
-		stroke: new ol.style.Stroke({ color: strokeEdit })
-	});
-
-
-	if(idEdit == 'Lmapa'){
-		map.getLayers().getArray().forEach(function(e) {
-			if(e.get('name') == mapEdit){
-				e.setOpacity(parseFloat(alphaEdit));
-			}
-		});
-
-	}else if(idEdit == 'Lbases'){
-		if (bases instanceof ol.layer.Group){
-			bases.getLayers().forEach(function(sublayer){
-				if (sublayer.get('name') == mapEdit) {
-					sublayer.setOpacity(parseFloat(alphaEdit));
-					sublayer.setStyle(styleEdit);
-				}
-			});
-		}
-	}
-});
-$('.actEditStyle').click(function() {
-	var mapEdit = $('.simple input[name="map"]').val();
-	var idEdit = $('.simple input[name="id"]').val();
-	var alphaEdit = $('.simple input[name="alpha"]').val();
-	if(idEdit == 'Lmapa'){
-		map.getLayers().getArray().forEach(function(e) {
-			if(e.get('name') == mapEdit){
-				e.setOpacity(parseFloat(alphaEdit));
-			}
-		});
-	}else if(idEdit == 'Lbases'){
-		if (bases instanceof ol.layer.Group){
-			bases.getLayers().forEach(function(sublayer){
-				if (sublayer.get('name') == mapEdit) {
-					sublayer.setOpacity(parseFloat(alphaEdit));
-					sublayer.setStyle(styleEdit);
-				}
-			});
-		}
-	}
 });
 
 //SELECT CAMADAS

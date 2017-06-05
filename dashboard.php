@@ -68,7 +68,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
 
     </head>
     <body>
-        <header class="navbar navbar-default navbar-static-top">
+        <header class="navbar navbar-default">
             <div class="container">
                 <div class="logo">
                     <a href="dashboard.php?p=home" title="pauliceia"><img src="images/logo.png" alt="[logo pauliceia]" title="logo pauliceia"/></a>

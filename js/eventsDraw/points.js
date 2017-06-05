@@ -1,28 +1,21 @@
-$('.points').click(function() {
+$('#pointsModel').click(function() {
     if (!$(this).hasClass('active')) {
-        $('.line').removeClass('active');
-        $('#lineOptions').fadeOut();
-        $('.poligons').removeClass('active');
-        $('#poligonsOptions').fadeOut();
-        clearInteraction('line');
-        clearInteraction('polygon');
-
-        $('.points').addClass('active');
+        $('#pointsModel').addClass('active');
         $('#pointsOptions').fadeIn();
     }else{
-        $('.points').removeClass('active');
+        $('#pointsModel').removeClass('active');
         $('#pointsOptions').fadeOut();
     }
 });
 
 
-//VARIAVEIS (OBJETOS) -> line - PARA A INTERAÇÃO COM O MAPA
+//VARIAVEIS (OBJETOS) -> Point - PARA A INTERAÇÃO COM O MAPA
 var erasePoint = new ol.interaction.Select();
 var editPoint = new ol.interaction.Select();
 var wkt = new ol.format.WKT();
 
 var drawPoints  = new ol.interaction.Draw({
-    source: vectorSourceAtual,
+    source: places,
     type: 'Point'
 });
 

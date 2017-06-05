@@ -1,60 +1,21 @@
-//Menu flutuante topo
-$('.maislayers p').click(function(){
-    if (!$(this).hasClass('actFloat')) {
-        $('.layersFloat').slideToggle();
-        $('.layersFixed').slideToggle();
-        $(this).addClass('actFloat');
-        $(this).removeClass('icon-point-down');
-        $(this).addClass('icon-point-up');
-    }else{
-        $('.layersFloat').slideToggle();
-        $('.layersFixed').slideToggle();
-        $(this).removeClass('actFloat');
-        $(this).removeClass('icon-point-up');
-        $(this).addClass('icon-point-down');
-    }
-});
-
 //CLOSE POPUP FORMULÁRIOS DE INSERÇÃO
 $('.closeForm').click(function () {
     $('.draw_form').fadeOut();
 });
 
- //CLOSE POPUP STYLE MAP
-$('.closeStyle').click(function () {
-    $('.editStyle').fadeOut();
-});
-
 //OPEN / CLOSE TOOBAR SEARCH
-$('.search_btn .btn').click(function () {
+$('#searchModel').click(function () {
         if ($(this).hasClass('active')) {
             $(this).removeClass('active');
         }else{
             $(this).addClass('active');
-            load_dados();
+            //load_dados();
         }
         $('.searchEnd').toggle();
 });
 
-//OPEN POPUP STYLE MAP
-$('.linkstyle_complex').click(function () {
-    $('.complex').fadeIn();
-    var nameMapStyle = $(this).attr('title');
-    var idMapStyle = $(this).attr('id');
-    $('.editStyle input[name="map"]').val(nameMapStyle);
-    $('.editStyle input[name="id"]').val(idMapStyle);
-});
-
-$('.linkstyle').click(function () {
-    $('.simple').fadeIn();
-    var nameMapStyle = $(this).attr('title');
-    var idMapStyle = $(this).attr('id');
-    $('.editStyle input[name="map"]').val(nameMapStyle);
-    $('.editStyle input[name="id"]').val(idMapStyle);
-});
-
 //btn RECARREGAMENTO de PÁGINA
-$('.recEditado').click(function () {
+$('#recEditModel').click(function () {
     var viewCenter = map.getView().getCenter();
     var viewZoom = map.getView().getZoom();
 
@@ -63,14 +24,15 @@ $('.recEditado').click(function () {
 
     location.reload();
 });
-
-$('.recDefault').click(function () {
-
+$('#recDefModel').click(function () {
     $.removeCookie("saveViewCenter");
     $.removeCookie("saveViewZoom");
 
     location.reload();
 });
+
+
+
 
 //automatização dos formulários de seleção de layers(CHECKBOX)
 $('.top .layersFloat input[type=checkbox]').click(function () {

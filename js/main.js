@@ -1,4 +1,5 @@
 $(function() {
+
     //Mascaras de formulário
     $(".formDate").mask("99/99/9999");
     $(".formTime").mask("99/99/9999 99:99");
