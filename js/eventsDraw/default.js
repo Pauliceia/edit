@@ -3,6 +3,16 @@ $('.closeForm').click(function () {
     $('.draw_form').fadeOut();
 });
 
+//OPEN / CLOSE TOOBAR LAYERS
+$('#layersModel').click(function () {
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+        }else{
+            $(this).addClass('active');
+        }
+        $('.layersMap').toggle();
+});
+
 //OPEN / CLOSE TOOBAR SEARCH
 $('#searchModel').click(function () {
         if ($(this).hasClass('active')) {

@@ -95,7 +95,7 @@ footer p{
     z-index: 1;
 }
 
-/* --------- buttons --------- */
+/* --------- buttons Principal --------- */
 .mapedit .base_btn{
     position: absolute;
     background: rgba(255,255,255,0.4);
@@ -138,7 +138,31 @@ footer p{
     left:5px;
 }
 
-/* =================== */
+/* ========== TOOBARS ========== */
+/* ---- layers ---- */
+.mapEdit .layersMap {
+    position: absolute;
+    right: 0;
+    width: 30%;
+    top: 14%;
+    z-index: 2;
+    background: rgba(255,255,255,0.8);
+    padding: 20px;
+    max-height:70%;
+    overflow: auto;
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+/* ========= TOOBAR BTN DRAW ========== */
 .mapedit .toobar {
     position: absolute;
     width: auto;
@@ -174,16 +198,6 @@ footer p{
     padding: 4px;
     font-size:0.9em;
     margin-top:-5px !important;
-}
-.mapedit .toobar form button.localizar{
-    background: #999;
-    padding: 0 4px;
-    font-size: 1.2em;
-    margin-top:0px;
-    cursor: pointer;
-}
-.mapedit .toobar form button.localizar:hover{
-    background: #666;
 }
 
 .mapedit a.btnbackMap{

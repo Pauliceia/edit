@@ -68,29 +68,29 @@ $('.top input[type=checkbox]').click(function() {
 $('.selectCamadas .actSelectC').click(function () {
 	var emptyStyle = new ol.style.Style({ display: 'none' });
 	if (bases instanceof ol.layer.Group){
-                        	bases.getLayers().forEach(function(sublayer){
-                            		if (sublayer.get('name') == 'mapAtual') {
-                                			sublayer.getSource().getFeatures().forEach( function(feat){
-                                			var visibleStyle = sublayer.getStyle();
-                                			var actSelect = 0;
-                                    			for(var i=1930; i>=1870; i-=10){
-                                    				if($('.selectCamadas input[value="'+i+'"]').is(":checked") == true){
-                                    					var cam = i+',';
-                                    					if(feat.get('camadas').indexOf(cam) != -1){
-	                                    					actSelect = 1;
-	                                    					break;
-	                                    				}
-                                    				}
-                                    			}
-                                    			if(actSelect == 0){
-                                    				feat.setStyle(emptyStyle);
-                                    			}else{
-                                    				feat.setStyle(visibleStyle);
-                                    			}
-                                			});
-                            		}
-                        	});
-                    	}
+		bases.getLayers().forEach(function(sublayer){
+				if (sublayer.get('name') == 'mapAtual') {
+						sublayer.getSource().getFeatures().forEach( function(feat){
+						var visibleStyle = sublayer.getStyle();
+						var actSelect = 0;
+							for(var i=1930; i>=1870; i-=10){
+								if($('.selectCamadas input[value="'+i+'"]').is(":checked") == true){
+									var cam = i+',';
+									if(feat.get('camadas').indexOf(cam) != -1){
+										actSelect = 1;
+										break;
+									}
+								}
+							}
+							if(actSelect == 0){
+								feat.setStyle(emptyStyle);
+							}else{
+								feat.setStyle(visibleStyle);
+							}
+						});
+				}
+		});
+	}
 });
 
 

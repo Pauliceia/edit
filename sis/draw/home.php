@@ -58,6 +58,9 @@ $Maps = new Maps();
     </div>
     <!---fim toobar -->
 
+    <!--- TOOBAR DE LAYERS -->
+    <?php require 'tpl/draw/layers.php'; ?>
+
     <!--- FORMULARIO DE ENVIO DO DADO -->
     <?php require 'tpl/draw/insertdados.php'; ?>
 
