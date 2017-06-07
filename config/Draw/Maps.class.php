@@ -9,12 +9,12 @@
  */
 class Maps {
 
-    private function searchInfoMap($Conn, $tbName){
-        //CONSTRUÇÃO DO SQL PARA LEITURA DOS DADOS GEOMETRICOS DA TABELA SELECIONADA
+    public function generateJson($name){
+        $Conn = new Connection();
         $sqljson = "SELECT id";
 
         //LEITURA DAS COLUNAS PERTENCENTES A TABELA ATUAL
-        $sql = "SELECT column_name FROM information_schema.columns WHERE table_name = '".$tbName."'";
+        $sql = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$name}'";
         $result = pg_query($Conn->getConn(), $sql);
         if(pg_num_rows($result) > 0){
             $atributos = pg_fetch_all($result);
@@ -28,17 +28,21 @@ class Maps {
         }
 
         //CONCLUSÃO DA CONSTRUÇÃO DO SQL DOS DADOS GEOGRAFICOS, COM BASE NO TIPO DE DADO A SER CADASTRADO
-        $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM ".$tbName;
+        $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
 
-        return pg_query($Conn->getConn(), $sqljson);
-    }
+        $result = pg_query($Conn->getConn(), $sqljson);
 
-    public function generateJson($Conn, $table){
+        //CONSTRUÇÃO DA Build GeoJSON
         $output = '';
         $rowOutput = '';
-
-        while ($row = pg_fetch_assoc(self::searchInfoMap($Conn, $table))) {
-            $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"tabName":"'.$this->tbName.'",';
+        function escapeJsonString($value) {
+            $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
+            $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
+            $result = str_replace($escapers, $replacements, $value);
+            return $result;
+        }
+        while ($row = pg_fetch_assoc($result)) {
+            $rowOutput = (strlen($rowOutput) > 0 ? ',' : '') . '{"type": "Feature", "geometry": ' . $row['geojson'] . ', "properties": {"tabName":"'.$name.'",';
             $props = '';
             $id    = '';
             foreach ($row as $key => $val) {
@@ -46,7 +50,7 @@ class Maps {
                     $props .= (strlen($props) > 0 ? ',' : '') . '"' . $key . '":"' . escapeJsonString($val) . '"';
                 }
                 if ($key == "id") {
-                    $id .= ',"id":"' . self::escapeJsonString($val) . '"';
+                    $id .= ',"id":"' . escapeJsonString($val) . '"';
                 }
             }
             $rowOutput .= $props . '}';
@@ -55,16 +59,7 @@ class Maps {
             $output .= $rowOutput;
         }
         $output = '{ "type": "FeatureCollection", "features": [ ' . $output . ' ]}';
-
+        
         return $output;
-    }
-
-    // ==========================================================================
-    // Funções Auxiliares
-    private function escapeJsonString($value) {
-        $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
-        $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
-        $result = str_replace($escapers, $replacements, $value);
-        return $result;
     }
 }

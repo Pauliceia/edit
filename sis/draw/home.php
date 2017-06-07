@@ -19,10 +19,10 @@ $Maps = new Maps();
 
 <script src="js/functionsDraw/default.func.js" defer></script>
 
-<section class="mapedit" id="mapafixo">
+<section class="mapedit" id="mapafixo"> 
 
-    <p id="jsonLayersStreet" style="display: none;"><?= $Maps->generateJson($Conn, 'tb_street'); ?></p>
-    <p id="jsonLayersPlaces" style="display: none;"><?= $Maps->generateJson($Conn, 'tb_places'); ?></p>
+    <p id="jsonLayersPlaces" style="display: none;"><?// $Maps->generateJson('tb_places'); ?></p>
+    <p id="jsonLayersStreet" style="display: none;"><?// $Maps->generateJson('tb_street'); ?></p>
 
     <!--- ### BOTÕES ### -->
         <!--- btn LAYERS -->
