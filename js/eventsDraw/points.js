@@ -1,4 +1,5 @@
 $('#pointsModel').click(function() {
+    clearInteraction('points');
     if (!$(this).hasClass('active')) {
         $('#pointsModel').addClass('active');
         $('#pointsOptions').fadeIn();
@@ -13,6 +14,7 @@ $('#pointsModel').click(function() {
 var erasePoint = new ol.interaction.Select();
 var editPoint = new ol.interaction.Select();
 var wkt = new ol.format.WKT();
+var statusDraw = 0;
 
 var drawPoints  = new ol.interaction.Draw({
     source: places,
@@ -29,36 +31,38 @@ $('#panPoint').click(function(){
 
 //AO CLICAR NO BOTÃO DE DESENHAR
 $('#drawPoint').click(function(){
-    clearInteraction('points');
-    $(this).addClass('activeOptions');
-    $('.inserirDado').fadeIn();
-    $('.editDado').fadeOut();
-    $('.duplicDado').fadeOut();
-    $('.delDado').fadeOut();
+    if($('#insertData input[name="id_street"]').val()!=""){
+        clearInteraction('points');
 
-    var actExiste = 0;
-    if (bases instanceof ol.layer.Group){
-        bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'mapAtual') {
-                sublayer.getSource().forEachFeature(function(f) {
-                    if(f.get('id') == 'waitingCheck'){
-                        actExiste=1;
-                    }
+        $(this).addClass('activeOptions');
+        $('#layersModel').removeClass('active');
+        $('#layers').fadeOut();
+        $('#editData').fadeOut();
+        $('#insertData').fadeIn();
+
+        if (bases instanceof ol.layer.Group){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.get('name') == 'places') {
+                    sublayer.getSource().forEachFeature(function(f) {
+                        if(f.get('id') == 'waitingCheck'){
+                            statusDraw=1;
+                        }
+                    });
+                }
+            });
+
+            if(statusDraw==0){
+                map.addInteraction(drawPoints);
+                drawPoints.on('drawend', function(e) {
+                    addFeature(e.feature);
+                    generationWkt(e.feature, "insert");
+
+                    map.removeInteraction(drawPoints);
                 });
             }
-        });
+            return false;
+        }
     }
-    if(actExiste==0){
-        map.addInteraction(drawPoints);
-        drawPoints.on('drawend', function(e) {
-            addFeature(e.feature);
-            generationWkt(e.feature, "insert");
-
-            map.removeInteraction(drawPoints);
-        });
-    }
-    return false;
-
 });
 
 //AO CLICAR NO BOTÃO EDIÇÃO
@@ -70,12 +74,12 @@ $('#editPoint').click(function(){
     editPoint.getFeatures().on('add', function(e) {
         var featSelect = e.element;
         if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
-            $('.inserirDado').fadeOut();
-            $('.editDado').fadeIn();
-            $('.duplicDado').fadeOut();
-            $('.delDado').fadeOut();
+            $('#layersModel').removeClass('active');
+            $('#layers').fadeOut();
+            $('#insertData').fadeOut();
+            $('#editData').fadeIn();
 
-            getAttribs(featSelect, "editDado");
+            getAttribs(featSelect, "editData");
         }
     });
 });
@@ -89,6 +93,7 @@ $('#erasePoint').click(function(){
     erasePoint.getFeatures().on('change:length', function(e) {
         if(e.target.getArray().length !== 0){
             erasePoint.getFeatures().on('add', function(f) {
+                statusDraw=0;
                 excluiFeature(f.element);
                 });
             }

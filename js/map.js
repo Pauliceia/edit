@@ -31,8 +31,8 @@ var map = new ol.Map({
 });
 
 // ===========================
-//ações de mostragem dos mapas fixos
-$('.top input[type=radio]').change(function() {
+//ações de mostragem dos mapas fixos ONLINE
+$('.layersMap input[type=radio]').change(function() {
 	var layer = $(this).val();
 
 	map.getLayers().getArray().forEach(function(e) {
@@ -41,13 +41,13 @@ $('.top input[type=radio]').change(function() {
 			if(!e.get('visible')){
 				e.setVisible(true);
 			}
-		}else if(name != 'bases' && name != 'lines' && name != 'Poligon' && name != 'points'){
+		}else if(name != 'bases'){
 			e.setVisible(false);
 		}
 	});
 });
-//ações de mostragem dos mapas do geoserver
-$('.top input[type=checkbox]').click(function() {
+//ações de mostragem dos mapas NATIVOS (geoserver ou banco de dados)
+$('.layersMap input[type=checkbox]').click(function() {
 	var layerselect = $(this).val();
 
 	if (bases instanceof ol.layer.Group){
@@ -64,33 +64,5 @@ $('.top input[type=checkbox]').click(function() {
 
 });
 
-//SELECT CAMADAS
-$('.selectCamadas .actSelectC').click(function () {
-	var emptyStyle = new ol.style.Style({ display: 'none' });
-	if (bases instanceof ol.layer.Group){
-		bases.getLayers().forEach(function(sublayer){
-				if (sublayer.get('name') == 'mapAtual') {
-						sublayer.getSource().getFeatures().forEach( function(feat){
-						var visibleStyle = sublayer.getStyle();
-						var actSelect = 0;
-							for(var i=1930; i>=1870; i-=10){
-								if($('.selectCamadas input[value="'+i+'"]').is(":checked") == true){
-									var cam = i+',';
-									if(feat.get('camadas').indexOf(cam) != -1){
-										actSelect = 1;
-										break;
-									}
-								}
-							}
-							if(actSelect == 0){
-								feat.setStyle(emptyStyle);
-							}else{
-								feat.setStyle(visibleStyle);
-							}
-						});
-				}
-		});
-	}
-});
 
 

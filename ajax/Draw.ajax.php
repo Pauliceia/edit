@@ -34,35 +34,34 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 if($conn->getConn()){
 
                     $date = date("Y/m/d");
-                    $PostData['camadas']='';
-                    for($j=1930;$j>=1870;$j-=10){
-                        if(isset($PostData[$j]) && !empty($PostData[$j])){
-                            $PostData['camadas'] .= $PostData[$j].', ';
-                        }
-                    }
-                    $sqlkeys = "INSERT INTO {$PostData['map']} (geom, rep_id, datemod, camadas";
-                    $sqlvalues = " VALUES (st_GeomFromText('{$PostData['geom']}', 4326), {$PostData['rep_id']}, '{$date}', '{$PostData['camadas']}'";
+                    $PostData['id_user'] = $_SESSION['userLogin']['id'];
 
-                    $mapname = $PostData['map'];
-                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
-                    $result = pg_query($conn->getConn(), $sqlcolumn);
-                    if(pg_num_rows($result) > 0){
-                        $atributos = pg_fetch_all($result);
-                        foreach ($atributos as $columns){
-                            extract($columns);
-                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
-                                $sqlkeys .= ",{$column_name}";
-                                $atributo = $PostData[$column_name];
-                                $sqlvalues .= ", '{$atributo}'";
+                    $sql = "INSERT INTO tb_places ";
+                    $sqlKeys = "(geom, date";
+                    $sqlValues = "VALUES (st_GeomFromText('{$PostData['geom']}', 4326), '{$date}'";
+                    foreach($PostData as $key => $value){
+                        if($key!="geom"){
+                            $sqlKeys .= ", {$key}";
+                            if($value==''){
+                                $sqlValues .= ", null";
+                            }else{
+                                if($key == "name" || $key == "original_number" || $key == "source"){
+                                    $sqlValues .= ", '{$value}'";
+                                }else{
+                                    $sqlValues .= ", {$value}";
+                                }
                             }
+                            
                         }
                     }
-                    $sqlkeys .= ")";
-                    $sqlvalues .= ")";
-                    $sql = $sqlkeys.$sqlvalues;
-                    $result = pg_query($conn->getConn(), $sql);
 
-                    $sql = "SELECT * FROM {$PostData['map']} ORDER BY id DESC limit 1";
+                    $sql .= $sqlKeys.")"." ".$sqlValues.")";
+                    $result = pg_query($conn->getConn(), $sql);
+                    if(!$result) {
+                        $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields</b>', E_USER_ERROR);
+                    }
+
+                    $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
                     $result = pg_query($conn->getConn(), $sql);
                     $registro = pg_fetch_all($result)[0];
                     $newID = $registro['id'];
@@ -72,8 +71,6 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $jSON['draw'] = 'insert';
                         $jSON['drawId'] = $newID;
                         $jSON['clearInput'] = true;
-                    }else{
-                        $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
                     }
 
                 }else{
@@ -83,10 +80,9 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             break;
 
             /* DELETA OS CONTEÚDOS DOS MAPAS (tabelas) NO BD
-            * case responsável por deletar os dados espaciais na tabela
             */
             case 'draw_delete':
-                $sql = "DELETE FROM {$PostData['tb_name']} WHERE id={$PostData['del_id']}";
+                $sql = "DELETE FROM tb_places WHERE id={$PostData['del_id']}";
                 $result = pg_query($conn->getConn(), $sql);
                 if(pg_affected_rows($result) <= 0){
                     $jSON['erro'] = true;
@@ -94,39 +90,38 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             break;
 
             /* EDIÇÃO DOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
-            * case responsável por editar os dados espaciais na tabela
+            * case responsável por editar os dados na tabela
             */
             case 'draw_editar':
                 if($conn->getConn()){
 
                     $date = date("Y/m/d");
-                    $mapname = $PostData['map'];
-                    $camadasSelect='';
-                    for($z=1930;$z>=1870;$z-=10){
-                        if(isset($PostData[$z])){
-                            $camadasSelect .= $z.', ';
-                        }
-                    }
-                    $sql = "UPDATE {$mapname} SET datemod='{$date}', camadas='{$camadasSelect}', rep_id='{$PostData['responsavel']}'";
+                    $PostData['id_user'] = $_SESSION['userLogin']['id'];
+                    $sql = "UPDATE tb_places SET date='{$date}', id_user={$PostData['id_user']}";
 
-                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
+                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='tb_places'";
                     $result = pg_query($conn->getConn(), $sqlcolumn);
                     if(pg_num_rows($result) > 0){
                         $atributos = pg_fetch_all($result);
                         foreach ($atributos as $columns){
                             extract($columns);
-                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
+                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'id_user' && $column_name != 'date'){
                                 $sql .= ", {$column_name}=";
                                 $atributo = $PostData[$column_name];
-                                $sql .= "'{$atributo}'";
+                                if($atributo==''){
+                                    $sql .= "null";
+                                }else{
+                                    if($column_name == "name" || $column_name == "original_number" || $column_name == "source"){
+                                        $sql .= "'{$atributo}'";
+                                    }else{
+                                        $sql .= "{$atributo}";
+                                    }
+                                } 
                             }
                         }
                     }
-                    $sql .= "WHERE id={$PostData['id']}";
-                    $result = pg_query($conn->getConn(), $sql);
-                    if($PostData['geom'] != ''){
-                        $sql = "UPDATE {$mapname} SET geom=st_GeomFromText('{$PostData['geom']}', 4326) WHERE id={$PostData['id']}";
-                    }
+
+                    $sql .= " WHERE id={$PostData['id']}";
                     $result = pg_query($conn->getConn(), $sql);
                     if($result){
                         $jSON['trigger'] = AjaxErro('Data updated successfully');
@@ -140,6 +135,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }else{
                     $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
+                
             break;
 
             /* DUPLICAÇÃO DOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
@@ -201,56 +197,6 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 }else{
                     $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
-            break;
-
-            /* DUPLICAÇÃO DOS CONTEÚDOS NOS MAPAS (tabelas) DO BD
-            * case responsável por duplicar um dado espacial, modificando em ambas partes a geometria desse.
-            * Ou seja, a primeira parte da divisão fica no dado original e a segunda parte no novo dado(o duplicado)
-            */
-            case 'draw_dividir':
-                $date = date("Y/m/d");
-                $newGeom = $PostData['lines'];
-                $geomlines = explode('+',  $newGeom);
-                $map_name = $PostData['tb_name'];
-
-                $sql = "SELECT * FROM {$map_name} WHERE id={$PostData['div_id']}";
-                $result = pg_query($conn->getConn(), $sql);
-                $feature = pg_fetch_all($result)[0];
-
-                $i=0;
-                while($i<2){
-                    $geom = $geomlines[$i];
-                    $camadas = $feature['camadas'];
-
-                    $sqlkeys = "INSERT INTO {$map_name} (geom, rep_id, datemod, camadas";
-                    $sqlvalues = " VALUES (st_GeomFromText('{$geom}', 4326), {$PostData['autor']}, '{$date}', '{$camadas}'";
-
-                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$map_name}'";
-                    $result = pg_query($conn->getConn(), $sqlcolumn);
-                    if(pg_num_rows($result) > 0){
-                        $atributos = pg_fetch_all($result);
-                        foreach ($atributos as $columns){
-                            extract($columns);
-                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
-                                $sqlkeys .= ",{$column_name}";
-                                $atributo = $feature[$column_name];
-                                $sqlvalues .= ", '{$atributo}'";
-                            }
-                        }
-                    }
-                    $sqlkeys .= ")";
-                    $sqlvalues .= ")";
-                    $sql = $sqlkeys.$sqlvalues;
-
-                    $result = pg_query($conn->getConn(), $sql);
-                    $i++;
-                }
-
-                $sql = "DELETE FROM {$map_name} WHERE id={$PostData['div_id']}";
-                $result = pg_query($conn->getConn(), $sql);
-
-                $jSON['sucess'] = true;
-
             break;
 
     endswitch;

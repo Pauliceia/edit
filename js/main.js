@@ -29,6 +29,7 @@ $(function() {
             data: {callback_action: callback_action},
             dataType: 'json',
             beforeSubmit: function () {
+                form.find('#enviar_form').prop('disabled', true);
                 form.find('.form_load').fadeIn('fast');
                 $('.trigger_ajax').fadeOut('fast');
             },
@@ -40,6 +41,7 @@ $(function() {
                         var CallBackPresent = form.find('.callback_return');
                         if (CallBackPresent.length) {
                             CallBackPresent.html(data.trigger);
+                            form.find('#enviar_form').prop('disabled', false); 
                             $('.trigger_ajax').fadeIn('slow');
                         } else {
                             Trigger(data.trigger);
@@ -48,8 +50,8 @@ $(function() {
 
                     //DRAW SUCESSO (preenchendo feature com os dados)
                     if (data.draw){
-                        if(data.draw=='insert'){
-                            preencheFeature(data.drawId, "inserirDado");
+                        if(data.draw=='insert'){                           
+                            preencheFeature(data.drawId, "editData");
                         }else if(data.draw=='edit'){
                             atualizaFeature(data.drawId);
                         }else if(data.draw=='duplic'){
@@ -73,8 +75,6 @@ $(function() {
                     //CLEAR INPUT's Draw
                     if (data.clearInput) {
                         form.find('input[id="clearForm"]').val('');
-                        inputCheck = $('.inserirDado input[type="checkbox"]');
-                        inputCheck.attr('checked', false);
 
                         window.setTimeout(function () {
                             $('.trigger_ajax').fadeOut('slow');

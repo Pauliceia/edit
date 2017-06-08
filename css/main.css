@@ -8,6 +8,12 @@
     padding: 0;
     font-family: 'Open Sans', sans-serif;
 }
+li {
+    list-style: none;
+}
+.clear{
+    clear: both !important;
+}
 
 .btnback{
     padding: 8px 18px;
@@ -21,7 +27,7 @@
     color: #000;
 }
 
-/* ========== HEADER ========== */
+/* =============================== HEADER =============================== */
 header{
     padding: 25px;
 }
@@ -46,7 +52,7 @@ header .banner .btn{
     margin-top: 5px;
 }
 
-/* ========= FOOTER ========== */
+/* =============================== FOOTER =============================== */
 footer p{
     text-align: center;
     color: #333;
@@ -54,7 +60,7 @@ footer p{
     padding: 15px 0 0 0;
 }
 
-/* ========== HOME ========== */
+/* =============================== HOME =============================== */
 .page-weapper h1{
     margin-top:5px;
 }
@@ -80,7 +86,7 @@ footer p{
 .home .box a.blue{ color: blue;}
 .home .box a.red{ color: red;}
 
-/* ======== DRAW ========= */
+/* =============================== DRAW =============================== */
 
 .mapedit{
     position: absolute;
@@ -95,6 +101,7 @@ footer p{
     z-index: 1;
 }
 
+/* ------------------------------------- */
 /* --------- buttons Principal --------- */
 .mapedit .base_btn{
     position: absolute;
@@ -138,32 +145,8 @@ footer p{
     left:5px;
 }
 
-/* ========== TOOBARS ========== */
-/* ---- layers ---- */
-.mapEdit .layersMap {
-    position: absolute;
-    right: 0;
-    width: 30%;
-    top: 14%;
-    z-index: 2;
-    background: rgba(255,255,255,0.8);
-    padding: 20px;
-    max-height:70%;
-    overflow: auto;
-    display: none;
-}
-
-
-
-
-
-
-
-
-
-
-/* ========= TOOBAR BTN DRAW ========== */
-.mapedit .toobar {
+/* --------- buttons de edição --------- */
+.mapedit .btn_edit{
     position: absolute;
     width: auto;
     bottom: 10px;
@@ -174,7 +157,7 @@ footer p{
     display:none;
     z-index: 2;
 }
-.mapedit .toobar p{
+.mapedit .btn_edit p{
     display: inline-block;
     background: rgba(0,128,0,0.5);
     padding: 8px 15px;
@@ -184,9 +167,62 @@ footer p{
     font-weight: 600;
     font-family: Arial;
 }
-.mapedit .toobar p:hover, .toobar p.activeOptions{
+.mapedit .btn_edit p:hover, .btn_edit p.activeOptions{
     background: rgba(0,128,0,0.7);
 }
+
+
+/* ------------------------------------- */
+/* -------------- Toobars -------------- */
+.mapedit .boxToobar{
+    position: absolute;
+    z-index: 2;
+    background: rgba(255,255,255,0.8);
+    overflow: auto;
+    max-height: 70%;
+    padding: 0 20px 20px 20px;
+    display: none;
+}
+.mapedit .boxToobar h1{
+    margin: 0;
+}
+.mapedit .boxToobar .content{
+    padding: 5px 20px;
+}
+
+
+/* ---- layers ---- */
+.mapedit .layersMap{
+    right: 0;
+    width: 30%;
+    top: 10%;
+    padding-bottom: 30px;
+}
+.mapedit .layersMap li{
+    font-size: 1.5em;
+    margin: 5px 0;
+    border-bottom: 1px dashed #dedede;
+}
+.mapedit .layersMap li:hover{
+    background: #fff;
+}
+
+/* ---- formularios ---- */
+.mapedit .form_draw {
+    right: 0;
+    width: 30%;
+    top: 10%;
+    padding-bottom: 30px;
+}
+
+
+
+
+
+
+
+
+
 
 /* ----------- points ---------- */
 .mapedit .toobar form{
@@ -265,7 +301,7 @@ footer p{
     float: right;
 }
 
-/* ---------- formulario para inserção de dados ---------- */
+/* ---------- formulario para inserção de dados ---------- 
 .mapedit .draw_form{
     position: absolute;
     right: 0;
@@ -314,7 +350,7 @@ footer p{
 .mapedit .draw_form .btn.btnred:hover{
     background: #ff0000;
 }
-
+*/
 /* ======== EXCLUSÃO ========= */
 .del_colaborador .btn{ background: #e60000; color: #fff; padding: 3px 10px;}
 .del_colaborador .btn:hover{ background: #cc0000;}

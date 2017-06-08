@@ -1,17 +1,24 @@
-//CLOSE POPUP FORMULÁRIOS DE INSERÇÃO
-$('.closeForm').click(function () {
-    $('.draw_form').fadeOut();
-});
-
 //OPEN / CLOSE TOOBAR LAYERS
 $('#layersModel').click(function () {
-        if ($(this).hasClass('active')) {
-            $(this).removeClass('active');
-        }else{
-            $(this).addClass('active');
-        }
-        $('.layersMap').toggle();
+    clearInteraction('points');
+    if (!$(this).hasClass('active')) {
+        $(this).addClass('active');
+    }
+    $('.form_draw').fadeOut();
+    $('#layers').fadeIn();
 });
+$('#cl_layers').click(function () {
+    $('#layersModel').removeClass('active');
+    $('#layers').fadeOut();
+});
+
+// CLOSE TOOBAR DE FORMULARIOS
+$('#cl_form').click(function () {
+    clearInteraction('points');
+    $('.form_draw').fadeOut();
+    $('.btn_edit .btn').removeClass('activeOptions');
+});
+
 
 //OPEN / CLOSE TOOBAR SEARCH
 $('#searchModel').click(function () {
@@ -44,55 +51,6 @@ $('#recDefModel').click(function () {
 
 
 
-//automatização dos formulários de seleção de layers(CHECKBOX)
-$('.top .layersFloat input[type=checkbox]').click(function () {
-    var layersName = $(this).val();
-
-    if(layersName == 'mapAtual' || layersName == 'sara' || layersName == 'distritos' || layersName == 'municipios'){
-        if($(this).is(":checked") == true){
-            $('.top .layersFixed input[value="'+layersName+'"]').prop("checked", true);
-        }else{
-            $('.top .layersFixed input[value="'+layersName+'"]').prop("checked", false);
-        }
-    }
-
-});
-$('.top .layersFixed input[type=checkbox]').click(function () {
-    var layersName = $(this).val();
-
-    if($(this).is(":checked") == true){
-        $('.top .layersFloat input[value="'+layersName+'"]').prop("checked", true);
-    }else{
-        $('.top .layersFloat input[value="'+layersName+'"]').prop("checked", false);
-    }
-
-});
-
-//automatização dos formulários de seleção de layers(RADIO)
-$('.top .layersFloat input[type=radio]').click(function () {
-    var layersName = $(this).val();
-
-    if(layersName == 'openstreetmap' || layersName == 'esri' || layersName == 'none'){
-        if($(this).is(":checked") == true){
-            $('.top .layersFixed input[value="'+layersName+'"]').prop("checked", true);
-        }else{
-            $('.top .layersFixed input[value="'+layersName+'"]').prop("checked", false);
-        }
-    }else{
-        $('.top .layersFixed input[type=radio]').prop("checked", false);
-    }
-
-});
-$('.top .layersFixed input[type=radio]').click(function () {
-    var layersName = $(this).val();
-
-    if($(this).is(":checked") == true){
-        $('.top .layersFloat input[value="'+layersName+'"]').prop("checked", true);
-    }else{
-        $('.top .layersFloat input[value="'+layersName+'"]').prop("checked", false);
-    }
-
-});
 
 //OPEN POPUP SELECT CAMADAS
 $('.selectC').click(function () {

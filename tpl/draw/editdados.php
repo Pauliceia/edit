@@ -1,58 +1,93 @@
-<article class="draw_form editDado">
-        <form action="" name="edit_form" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="callback" value="Draw">
-            <input type="hidden" name="callback_action" value="draw_editar">
-            <input type="hidden" name="responsavel" value="<?= $Admin['id'] ?>">
-            <input type="hidden" name="map" value="<?= $name ?>">
-            <input type="hidden" name="geom">
-            <input type="hidden" name="camadas">
-            <input type="hidden" name="id">
-            <div class="callback_return" style="margin-bottom: -10px;">
-                    <?php
-                    if (!empty($_SESSION['trigger_login'])):
-                        echo $_SESSION['trigger_login'];
-                        unset($_SESSION['trigger_login']);
-                    endif;
-                    ?>
-            </div>
+<article class="boxToobar form_draw" id="editData"> 
+    <header class="row">
+        <h1 class="page-header"> <span class="glyphicon glyphicon-pencil"></span> Edit Data</h1>    
+    </header>
+    <div class="content">
+        <form action="" name="create_form" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="callback" value="Draw">
+        <input type="hidden" name="callback_action" value="draw_editar">
+        <input type="hidden" name="geom">
+        <input type="hidden" name="id">
+        <div class="callback_return" style="margin-bottom: -10px;">
             <?php
-                foreach ($atributos as $columns){
-                    extract($columns);
-                    if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
-                        ?>
-                        <label>
-                            <span class="legend">&#10143; <?= $column_name; ?>:</span>
-                            <input type="text" name="<?= $column_name; ?>" placeholder="<?= $column_name; ?>" class="inF">
-                        </label>
-                        <?php
-                    }
-                }
+            if (!empty($_SESSION['trigger_login'])):
+                echo $_SESSION['trigger_login'];
+                unset($_SESSION['trigger_login']);
+            endif;
             ?>
+        </div>
 
-            <input type="checkbox" name="1930" value="1930" style="display: inline-block; width: 25px;">1930
-            <input type="checkbox" name="1920" value="1920" style="display: inline-block; width: 25px;">1920
-            <input type="checkbox" name="1910" value="1910" style="display: inline-block; width: 25px;">1910
-            <input type="checkbox" name="1900" value="1900" style="display: inline-block; width: 25px;">1900<br>
-            <input type="checkbox" name="1890" value="1890" style="display: inline-block; width: 25px;">1890
-            <input type="checkbox" name="1880" value="1880" style="display: inline-block; width: 25px;">1880
-            <input type="checkbox" name="1870" value="1870" style="display: inline-block; width: 25px;">1868
+        <div class="form-group">
+            <label for="name">&#10143; Name:</label>
+            <input type="text" name="name" class="form-control inF" placeholder="name">
+        </div>
+        <div class="form-group">
+            <label for="street">&#10143; Street:</label>
+            <br>
+            <div class="col-lg-9">
+                <input type="hidden" name="id_street" class="inF">
+                <input type="text" name="street" class="form-control" disabled>
+            </div>
+            <div class="col-lg-3">
+                <a class="btn btn-info" id="alterStreet">ALTER</a>
+            </div>
             <div class="clear"></div>
+        </div>
+        <div class="form-group">
+            <label for="number">&#10143; * Number:</label>
+            <input type="number" name="number" class="form-control inF" required>
+        </div>
+        <div class="form-group">
+            <label for="original_number">&#10143; Original Number:</label>
+            <input type="text" name="original_number" class="form-control inF" placeholder="full number">
+        </div>
+        <div class="form-group">
+            <label>&#10143; First date (dd/mm/yyyy):</label>
+            <br>
+            <div class="col-lg-4">
+                <input type="number" name="first_day" class="form-control inF" min="1" max="31" placeholder="day">
+            </div>
+            <div class="col-lg-4">
+                <input type="number" name="first_month" class="form-control inF" min="1" max="12" placeholder="month">
+            </div>
+            <div class="col-lg-4">
+                <input type="number" name="first_year" class="form-control inF" min="1868" max="1940" placeholder="year">
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="form-group">
+            <label>&#10143; Last date (dd/mm/yyyy):</label>
+            <br>
+            <div class="col-lg-4">
+                <input type="number" name="last_day" class="form-control inF" min="1" max="31" placeholder="day">
+            </div>
+            <div class="col-lg-4">
+                <input type="number" name="last_month" class="form-control inF" min="1" max="12" placeholder="month">
+            </div>
+            <div class="col-lg-4">
+                <input type="number" name="last_year" class="form-control inF" min="1868" max="1940" placeholder="year">
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="form-group">
+            <label for="source">&#10143; * Source:</label>
+            <input type="text" name="source" class="form-control inF" placeholder="fonte" required>
+        </div>
+        <div class="form-group">
+            <label for="author">&#10143; * Author:</label>
+             <?php
+                $sql = "SELECT id, name FROM tb_users";
+                $result = pg_query(Connection::getConn(), $sql);
+                $resAutor = pg_fetch_all($result);
+                $jsonAutor = json_encode($resAutor);
+            ?>
+            <p id="jsonAutor" style="display: none;"><?= $jsonAutor; ?></p>
+            <input type="text" name="author" class="form-control inF" placeholder="author" disabled>
+        </div>
 
-            <label>
-                    <span class="legend">&#10143; Autor:</span>
-                    <?php
-                    $sql = "SELECT id, name FROM tb_users";
-                    $result = pg_query(Connection::getConn(), $sql);
-                    $resAutor = pg_fetch_all($result);
-                    $jsonAutor = json_encode($resAutor);
-                    ?>
-                    <p id="jsonAutor" style="display: none;"><?= $jsonAutor; ?></p>
-                    <input type="text" name="autor" disabled>
-            </label>
-
-            <a class="closeForm icon-cancel-circle icon-notext" style="color: #333; cursor: pointer; bottom: 20px;"></a>
-            <img class="form_load" style="float: right; margin-top: 25px; margin-left: 10px; position: relative; display: none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
-            <button class="btn btnblue">Update</button>
-        </form>
+        <button type="button" class="btn btn-default" id="cl_form"><span class="glyphicon glyphicon-remove"></span> Close</button>
+        <button class="btn btn-primary">Update</button>
+        <img class="form_load" style="margin-left: 10px; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
+    </form>
 
 </article>

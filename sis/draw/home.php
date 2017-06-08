@@ -21,7 +21,7 @@ $Maps = new Maps();
 
 <section class="mapedit" id="mapafixo"> 
 
-    <p id="jsonLayersPlaces" style="display: none;"><?// $Maps->generateJson('tb_places'); ?></p>
+    <p id="jsonLayersPlaces" style="display: none;"><?= $Maps->generateJson('tb_places'); ?></p>
     <p id="jsonLayersStreet" style="display: none;"><?// $Maps->generateJson('tb_street'); ?></p>
 
     <!--- ### BOTÕES ### -->
@@ -49,7 +49,7 @@ $Maps = new Maps();
     <!--- ### FIM BOTÕES ### -->
 
     <!--- TOOBAR dos Desenhos -->
-    <div id="pointsOptions" class="toobar">
+    <div id="pointsOptions" class="btn_edit">
         <p class="btn" id="panPoint">[ ]</p>
         <p class="btn" id="drawPoint">Draw</p>
         <p class="btn" id="editPoint">Edit</p>
@@ -68,7 +68,7 @@ $Maps = new Maps();
     <?php require 'tpl/draw/editdados.php'; ?>
 
     <!--- FORMULARIO DE DUPLICAÇÃO DO DADO -->
-    <?php require 'tpl/draw/duplicdados.php'; ?>
+    <?php //require 'tpl/draw/duplicdados.php'; ?>
 
     <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
     <?php require 'tpl/draw/search.php'; ?>
