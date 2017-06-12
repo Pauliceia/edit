@@ -56,6 +56,7 @@ $getView = ($getViewInput == 'home' ? 'home' : $getViewInput);
         <link rel="base" href="<?= BASE; ?>">
 
         <link rel="stylesheet" href="css/main.css"/>
+        <link rel="stylesheet" href="css/main_responsive.css" media="screen and (max-width: 1280px)"/>
         <link rel="stylesheet" href="css/lib/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/lib/ol.css"/>
 

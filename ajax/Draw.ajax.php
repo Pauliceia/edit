@@ -35,7 +35,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
 
                     $date = date("Y/m/d");
                     $PostData['id_user'] = $_SESSION['userLogin']['id'];
-
+    
                     $sql = "INSERT INTO tb_places ";
                     $sqlKeys = "(geom, date";
                     $sqlValues = "VALUES (st_GeomFromText('{$PostData['geom']}', 4326), '{$date}'";
@@ -129,7 +129,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $jSON['drawId'] = $PostData['id'];
                         $jSON['none'] = true;
                     }else{
-                        $jSON['trigger'] = AjaxErro('Error: verify your data, obs: do not use quotation marks', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields', E_USER_ERROR);
                     }
 
                 }else{
@@ -145,53 +145,52 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                  if($conn->getConn()){
 
                     $date = date("Y/m/d");
-                    $mapname = $PostData['map'];
-                    $camadasSelect='';
-                    for($z=1870;$z<=1930;$z+=10){
-                        if(isset($PostData[$z])){
-                            $camadasSelect .= $z.', ';
-                        }
-                    }
-                    $sql = "SELECT id, st_astext(geom) geom FROM {$mapname} WHERE id={$PostData['id']}";
+                    $PostData['id_user'] = $_SESSION['userLogin']['id'];
+                    $antId = $PostData['id'];
+                    unset($PostData['id']);
+
+                    $sql = "SELECT id, st_astext(geom) geom FROM tb_places WHERE id={$antId}";
                     $result = pg_query($conn->getConn(), $sql);
                     $wktgeom = pg_fetch_all($result)[0];
                     $geom = $wktgeom['geom'];
 
-                    $sqlkeys = "INSERT INTO {$mapname} (geom, rep_id, datemod, camadas";
-                    $sqlvalues = " VALUES (st_GeomFromText('{$geom}', 4326), {$PostData['responsavel']}, '{$date}', '{$camadasSelect}'";
+                    $sql = "INSERT INTO tb_places ";
+                    $sqlKeys = "(geom, date";
+                    $sqlValues = "VALUES (st_GeomFromText('{$geom}', 4326), '{$date}'";
 
-                    $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='{$mapname}'";
-                    $result = pg_query($conn->getConn(), $sqlcolumn);
-                    if(pg_num_rows($result) > 0){
-                        $atributos = pg_fetch_all($result);
-                        foreach ($atributos as $columns){
-                            extract($columns);
-                            if($column_name != 'id' && $column_name != 'geom' && $column_name != 'rep_id' && $column_name != 'datemod' && $column_name != 'camadas'){
-                                $sqlkeys .= ",{$column_name}";
-                                $atributo = $PostData[$column_name];
-                                $sqlvalues .= ", '{$atributo}'";
+                    foreach($PostData as $key => $value){
+                        if($key!="geom"){
+                            $sqlKeys .= ", {$key}";
+                            if($value==''){
+                                $sqlValues .= ", null";
+                            }else{
+                                if($key == "name" || $key == "original_number" || $key == "source"){
+                                    $sqlValues .= ", '{$value}'";
+                                }else{
+                                    $sqlValues .= ", {$value}";
+                                }
                             }
+                            
                         }
                     }
-                    $sqlkeys .= ")";
-                    $sqlvalues .= ")";
-                    $sql = $sqlkeys.$sqlvalues;
+
+                    $sql .= $sqlKeys.")"." ".$sqlValues.")";
 
                     $result = pg_query($conn->getConn(), $sql);
 
-                    $sql = "SELECT * FROM {$PostData['map']} ORDER BY id DESC limit 1";
+                    $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
                     $result = pg_query($conn->getConn(), $sql);
                     $registro = pg_fetch_all($result)[0];
                     $newID = $registro['id'];
 
                     if($result){
-                        $jSON['trigger'] = AjaxErro('Data updated successfully');
+                        $jSON['trigger'] = AjaxErro('data replicated successfully');
                         $jSON['draw'] = 'duplic';
-                        $jSON['drawIdAnt'] = $PostData['id'];
+                        $jSON['drawIdAnt'] = $antId;
                         $jSON['drawId'] = $newID;
-                        //$jSON['none'] = true;
+                        $jSON['none'] = true;
                     }else{
-                        $jSON['trigger'] = AjaxErro('Error: verifique seus dados, não é possível utilizar aspas.', E_USER_ERROR);
+                        $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields.', E_USER_ERROR);
                     }
 
                 }else{

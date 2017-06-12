@@ -1,0 +1,57 @@
+/*
+* Estilos das páginas em html do portal
+* para telas menores que 1280px, edição do tamanho das boxes
+*/
+
+@media (max-width: 1279px){
+    header .logo{ width: 20%; }
+
+    .mapedit .boxToobar h1{font-size: 2em;} 
+
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{width: 40%;}
+    .mapedit .searchEnd{left: 5%;}
+}
+
+@media (max-width: 780px){
+    header .logo{ width: 30%; }
+
+    .mapedit img{ width: 20%; }
+    .mapedit a.btnbackMap{ bottom: 95%; right: 50%; }
+
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{ width: 55%; }
+    .mapedit .searchEnd{left: 7%;}
+}
+
+@media (max-width: 620px){
+    header{ padding: 15px 5px; }
+    header .logo{ width: 40%; }
+
+    .page-header {font-size: 1.5em;}
+
+    .mapedit img{ width: 25%; }
+
+    .mapedit .btn_edit{ bottom: 15px; left:3%; }
+
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{ width: 80%; }
+    .mapedit .searchEnd{left: 10%;}
+}
+
+@media (max-width: 450px){
+    header .logo{ width: 50%; display: block; margin: 0 25%;}
+
+    .mapedit .btn_edit{ bottom: 15px; left:1%; }
+    .mapedit .btn_edit p{ padding: 5px 10px; font: 0.75em;}
+
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{ width: 85%; }
+}
+
+@media (max-height: 650px){
+    .mapedit .base_btn.searchB{ bottom: 230px; }
+    .mapedit .base_btn.layerB{ top: 5px; }
+    .mapedit .base_btn.typeGeomB{ bottom:140px; }
+    .mapedit .base_btn.recarregB{ bottom:65px; }
+
+    .mapedit a.btnbackMap{ bottom: 90%; }
+
+    .ol-zoomslider {display: none !important;}
+}

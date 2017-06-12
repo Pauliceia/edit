@@ -13,6 +13,7 @@ $('#pointsModel').click(function() {
 //VARIAVEIS (OBJETOS) -> Point - PARA A INTERAÇÃO COM O MAPA
 var erasePoint = new ol.interaction.Select();
 var editPoint = new ol.interaction.Select();
+var duplicPoint = new ol.interaction.Select();
 var wkt = new ol.format.WKT();
 var statusDraw = 0;
 
@@ -37,7 +38,10 @@ $('#drawPoint').click(function(){
         $(this).addClass('activeOptions');
         $('#layersModel').removeClass('active');
         $('#layers').fadeOut();
+        $('#searchEnd').fadeOut();
+        $('#searchModel').removeClass('active');
         $('#editData').fadeOut();
+        $('#duplicData').fadeOut();
         $('#insertData').fadeIn();
 
         if (bases instanceof ol.layer.Group){
@@ -76,7 +80,10 @@ $('#editPoint').click(function(){
         if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
             $('#layersModel').removeClass('active');
             $('#layers').fadeOut();
+            $('#searchEnd').fadeOut();
+            $('#searchModel').removeClass('active');
             $('#insertData').fadeOut();
+            $('#duplicData').fadeOut();
             $('#editData').fadeIn();
 
             getAttribs(featSelect, "editData");
@@ -84,11 +91,43 @@ $('#editPoint').click(function(){
     });
 });
 
+//AO CLICAR NO BOTÃO PARA DUPLICAR FEATURE
+$('#duplicPoint').click(function(){
+    clearInteraction('points');
+    $(this).addClass('activeOptions');
+    map.addInteraction(duplicPoint);
+
+    duplicPoint.getFeatures().on('add', function(e) {
+        var featSelect = e.element;
+        if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
+            $('#layersModel').removeClass('active');
+            $('#layers').fadeOut();
+            $('#searchEnd').fadeOut();
+            $('#searchModel').removeClass('active');
+            $('#insertData').fadeOut();
+            $('#editData').fadeOut();
+            $('#duplicData').fadeIn();
+
+            getAttribs(featSelect, "duplicData");
+        }
+    });
+
+    return false;
+});
+
 //AO CLICAR NO BOTÃO DE EXCLUSÃO
 $('#erasePoint').click(function(){
     clearInteraction('points');
     $(this).addClass('activeOptions');
     map.addInteraction(erasePoint);
+
+    $('#layersModel').removeClass('active');
+    $('#layers').fadeOut();
+    $('#searchEnd').fadeOut();
+    $('#searchModel').removeClass('active');
+    $('#insertData').fadeOut();
+    $('#editData').fadeOut();
+    $('#duplicData').fadeOut();
 
     erasePoint.getFeatures().on('change:length', function(e) {
         if(e.target.getArray().length !== 0){

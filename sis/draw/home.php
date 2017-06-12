@@ -3,8 +3,6 @@ $AdminLevel = 1;
 if (empty($DashboardLogin) || empty($Admin) || $Admin['level'] < $AdminLevel ):
     die('<div style="text-align: center; margin: 5% 0; color: #C54550; font-size: 1.6em; font-weight: 400; background: #fff; float: left; width: 100%; padding: 30px 0;"><b>ACESSO NEGADO:</b> Você não esta logado<br>ou não tem permissão para acessar essa página!</div>');
 endif;
-
-$Maps = new Maps();
 ?>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
@@ -21,8 +19,8 @@ $Maps = new Maps();
 
 <section class="mapedit" id="mapafixo"> 
 
-    <p id="jsonLayersPlaces" style="display: none;"><?= $Maps->generateJson('tb_places'); ?></p>
-    <p id="jsonLayersStreet" style="display: none;"><?// $Maps->generateJson('tb_street'); ?></p>
+    <p id="jsonLayersPlaces" style="display: none;"><?= Maps::generateJson('tb_places'); ?></p>
+    <p id="jsonLayersStreet" style="display: none;"><?// Maps::generateJson('tb_street'); ?></p>
 
     <!--- ### BOTÕES ### -->
         <!--- btn LAYERS -->
@@ -53,7 +51,7 @@ $Maps = new Maps();
         <p class="btn" id="panPoint">[ ]</p>
         <p class="btn" id="drawPoint">Draw</p>
         <p class="btn" id="editPoint">Edit</p>
-        <p class="btn" id="dupPoint">Duplicate</p>
+        <p class="btn" id="duplicPoint">Duplicate</p>
         <p class="btn" id="erasePoint">Erase</p>
     </div>
     <!---fim toobar -->
@@ -68,7 +66,7 @@ $Maps = new Maps();
     <?php require 'tpl/draw/editdados.php'; ?>
 
     <!--- FORMULARIO DE DUPLICAÇÃO DO DADO -->
-    <?php //require 'tpl/draw/duplicdados.php'; ?>
+    <?php require 'tpl/draw/duplicdados.php'; ?>
 
     <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
     <?php require 'tpl/draw/search.php'; ?>

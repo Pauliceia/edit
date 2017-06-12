@@ -12,6 +12,7 @@ function clearInteraction(type){
         map.removeInteraction(drawPoints);
         map.removeInteraction(erasePoint);
         map.removeInteraction(editPoint);
+        map.removeInteraction(duplicPoint);
     }
 }
 
@@ -49,13 +50,23 @@ function addFeature(feature){
 function cloneFeature(idAnt, id){
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'mapAtual') {
+            if (sublayer.get('name') == 'places') {
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == idAnt){
                         var cloneF = f.clone();
                         cloneF.setId(id);
                         cloneF.set('id', id, true);
+
                         sublayer.getSource().addFeatures(cloneF);
+
+                       /* function addFeature(callback){
+                            sublayer.getSource().addFeatures(cloneF);
+                            callback();
+                        };
+                        addFeature(function(){
+                            console.log(sublayer.getSource().getFeatures());
+                            atualizaFeature(id, "duplicData");
+                        });*/
                     }
                 });
             }
@@ -104,16 +115,16 @@ function getAttribs(feature, type){
 }
 
 //ATUALIZA OS ATRIBUTOS DA FEATURE DE ACORDO COM O QUE FOI DIGITADO PELO USUÁRIO
-function atualizaFeature(idFeature){
+function atualizaFeature(idFeature, type){
      if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'places') {
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == idFeature){
 
-                        $("#editData input.inF").each(function(){
+                        $("#"+type+" input.inF").each(function(){
                             var colunmsName = $(this).attr('name');
-                            var inputAtual = $('#editData input[name="'+colunmsName+'"').val();
+                            var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
                             f.set(colunmsName, inputAtual, true);
                         });
 

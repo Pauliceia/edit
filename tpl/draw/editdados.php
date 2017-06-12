@@ -85,7 +85,7 @@
             <input type="text" name="author" class="form-control inF" placeholder="author" disabled>
         </div>
 
-        <button type="button" class="btn btn-default" id="cl_form"><span class="glyphicon glyphicon-remove"></span> Close</button>
+        <button type="button" class="btn btn-default cl_form"><span class="glyphicon glyphicon-remove"></span> Close</button>
         <button class="btn btn-primary">Update</button>
         <img class="form_load" style="margin-left: 10px; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
     </form>

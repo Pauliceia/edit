@@ -9,7 +9,7 @@
  */
 class Maps {
 
-    public function generateJson($name){
+    public static function generateJson($name){
         $Conn = new Connection();
         $sqljson = "SELECT id";
 

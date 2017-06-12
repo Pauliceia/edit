@@ -5,6 +5,8 @@ $('#layersModel').click(function () {
         $(this).addClass('active');
     }
     $('.form_draw').fadeOut();
+    $('#searchEnd').fadeOut();
+    $('#searchModel').removeClass('active');
     $('#layers').fadeIn();
 });
 $('#cl_layers').click(function () {
@@ -13,7 +15,7 @@ $('#cl_layers').click(function () {
 });
 
 // CLOSE TOOBAR DE FORMULARIOS
-$('#cl_form').click(function () {
+$('.cl_form').click(function () {
     clearInteraction('points');
     $('.form_draw').fadeOut();
     $('.btn_edit .btn').removeClass('activeOptions');
@@ -22,14 +24,22 @@ $('#cl_form').click(function () {
 
 //OPEN / CLOSE TOOBAR SEARCH
 $('#searchModel').click(function () {
-        if ($(this).hasClass('active')) {
-            $(this).removeClass('active');
-        }else{
-            $(this).addClass('active');
-            //load_dados();
-        }
-        $('.searchEnd').toggle();
+    clearInteraction('points');
+    if (!$(this).hasClass('active')) {
+        $(this).addClass('active');
+    }
+     $('.form_draw').fadeOut();
+     $('#layersModel').removeClass('active');
+     $('#layers').fadeOut();
+
+    $('#searchEnd').fadeIn();
+    //load_dados();
 });
+$('#cl_search').click(function () {
+    $('#searchModel').removeClass('active');
+    $('#searchEnd').fadeOut();
+});
+
 
 //btn RECARREGAMENTO de PÁGINA
 $('#recEditModel').click(function () {
@@ -47,6 +57,7 @@ $('#recDefModel').click(function () {
 
     location.reload();
 });
+
 
 
 

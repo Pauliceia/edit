@@ -101,6 +101,19 @@ footer p{
     z-index: 1;
 }
 
+.mapedit a.btnbackMap{
+    position: absolute;
+    z-index: 3;
+    bottom: 20px;
+    font-size: 1.2em;
+    right: 90px;
+    text-decoration:none;
+    color: #636363;
+}
+.mapedit a.btnbackMap:hover{
+    color: #333;
+}
+
 /* ------------------------------------- */
 /* --------- buttons Principal --------- */
 .mapedit .base_btn{
@@ -127,7 +140,7 @@ footer p{
 
 .mapedit .base_btn.searchB{
     width: 2.54em;
-    bottom: 400px;
+    bottom: 370px;
     left: 5px;
 }
 .mapedit .base_btn.layerB{
@@ -136,7 +149,7 @@ footer p{
 }
 .mapedit .base_btn.typeGeomB{
     width: 2.54em;
-    bottom:250px;
+    bottom:220px;
     left: 5px;
 }
 .mapedit .base_btn.recarregB{
@@ -191,7 +204,7 @@ footer p{
 }
 
 
-/* ---- layers ---- */
+/* ------- layers ------- */
 .mapedit .layersMap{
     right: 0;
     width: 30%;
@@ -207,7 +220,7 @@ footer p{
     background: #fff;
 }
 
-/* ---- formularios ---- */
+/* ----- formularios ----- */
 .mapedit .form_draw {
     right: 0;
     width: 30%;
@@ -215,85 +228,20 @@ footer p{
     padding-bottom: 30px;
 }
 
-
-
-
-
-
-
-
-
-
-/* ----------- points ---------- */
-.mapedit .toobar form{
-    display: inline-block;
-    margin-right: 30px;
-}
-.mapedit .toobar form input{
-    border: 1px solid #999;
-    padding: 4px;
-    font-size:0.9em;
-    margin-top:-5px !important;
-}
-
-.mapedit a.btnbackMap{
-    position: absolute;
-    z-index: 3;
-    bottom: 15px;
-    right: 90px;
-    text-decoration:none;
-    color: #636363;
-}
-.mapedit a.btnbackMap:hover{
-    color: #333;
-}
-
-/* ------------- toobar para pesquisa de endereço (search) -----------*/
+/* ---- Search Street ---- */
 .searchEnd{
-    position: absolute;
     width: 30%;
-    top: 15%;
+    top: 10%;
     left: 3%;
-    background: rgba(255,255,255,0.7);
-    padding: 10px 10px;
-    z-index: 4;
-    display: none;
-}
-.searchEnd h1{
-    color: #333;
-    text-shadow: 1px 1px 1px #666;
-    border-bottom: 1px solid #333;
-    padding: 0 0 5px 15px;
-    margin-bottom: 20px;
-    font-weight: 500;
-}
-.searchEnd input[name='searchInput']{
-    width: 94%;
-    margin: 15px 0 15px 3%;
-    padding: 7px 7px 7px 35px;
-    background-image: url(../images/search.png) no-repeat;
-}
-.searchEnd .years{
-    border-radius:8px;
-    background: #dedede;
-    padding: 5px;
-    border:none;
-    text-align: center;
-}
-.searchEnd .search_load{
-    float: left;
-    position: absolute;
-    top: 25px;
-    right: 5%;
 }
 .searchEnd .searchResposta{
-    width: 94%;
+    padding: 3px;
     background: rgba(0,0,0,0.02);
     border: 1px solid #ccc;
-    margin: 0px 0 15px 3%;
+    margin: -10px 0 15px 0;
 }
 .searchEnd .searchResposta p{
-    padding: 5px;
+    padding: 5px 5px 10px 5px;
     border-bottom: 1px solid #ccc;
 }
 .searchEnd .searchResposta button{
@@ -301,56 +249,6 @@ footer p{
     float: right;
 }
 
-/* ---------- formulario para inserção de dados ---------- 
-.mapedit .draw_form{
-    position: absolute;
-    right: 0;
-    width: 30%;
-    top: 14%;
-    z-index: 2;
-    background: rgba(255,255,255,0.8);
-    padding: 20px;
-    max-height:70%;
-    overflow: auto;
-    display: none;
-}
-.mapedit .draw_form form, .draw_form form label{
-    width: 100%;
-}
-.mapedit .draw_form form .legend{
-    width: 100%;
-    display: block;
-    font-weight: 600;
-    font-size: 1.1em;
-}
-.mapedit .draw_form form input{
-    width: 100%;
-    padding: 5px;
-    margin:5px 0 15px 0;
-}
-.mapedit .draw_form .btn{
-    background: #29a329;
-    color: #fff;
-    font-weight: 600;
-    float: right;
-    margin-right: 30px;
-}
-.mapedit .draw_form .btn:hover{
-    background: #1f7a1f;
-}
-.mapedit .draw_form .btn.btnblue{
-    background: #1a1aff;
-}
-.mapedit .draw_form .btn.btnblue:hover{
-    background: #0000b3;
-}
-.mapedit .draw_form .btn.btnred{
-    background: #e60000;
-}
-.mapedit .draw_form .btn.btnred:hover{
-    background: #ff0000;
-}
-*/
-/* ======== EXCLUSÃO ========= */
+/* ============================= EXCLUSÃO ============================= */
 .del_colaborador .btn{ background: #e60000; color: #fff; padding: 3px 10px;}
 .del_colaborador .btn:hover{ background: #cc0000;}

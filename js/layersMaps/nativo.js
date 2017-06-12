@@ -1,5 +1,8 @@
-/*var JsonStreet = $('#jsonLayersStreet').text();*/
+//var JsonStreet = $('#jsonLayersStreet').text();
 var JsonPlaces = $('#jsonLayersPlaces').text();
+/*var street = new ol.source.Vector({
+    features: (new ol.format.GeoJSON()).readFeatures(JsonStreet)
+});*/
 var places = new ol.source.Vector({
     features: (new ol.format.GeoJSON()).readFeatures(JsonPlaces)
 });
@@ -8,9 +11,7 @@ var places = new ol.source.Vector({
 var bases = new ol.layer.Group({
     layers: [
         /*new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: (new ol.format.GeoJSON()).readFeatures(JsonStreet)
-            }),
+            source: street,
             visible: true,
             name: 'street'
         }),*/

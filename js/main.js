@@ -51,12 +51,11 @@ $(function() {
                     //DRAW SUCESSO (preenchendo feature com os dados)
                     if (data.draw){
                         if(data.draw=='insert'){                           
-                            preencheFeature(data.drawId, "editData");
+                            preencheFeature(data.drawId, "insertData");
                         }else if(data.draw=='edit'){
-                            atualizaFeature(data.drawId);
+                            atualizaFeature(data.drawId, "editData");
                         }else if(data.draw=='duplic'){
                             cloneFeature(data.drawIdAnt, data.drawId);
-                            preencheFeature(data.drawId, "duplicDado");
                         }
                     }
 
@@ -85,7 +84,7 @@ $(function() {
                     if (data.none) {
                         window.setTimeout(function () {
                             $('.trigger_ajax').fadeOut('slow');
-                        }, 2000);
+                        }, 3000);
                     }
 
                 });
