@@ -33,6 +33,8 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
         case 'draw_insert':
                 if($conn->getConn()){
 
+                    //verificar se a rua existe
+
                     $date = date("Y/m/d");
                     $PostData['id_user'] = $_SESSION['userLogin']['id'];
     

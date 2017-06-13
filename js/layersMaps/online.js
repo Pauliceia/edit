@@ -13,3 +13,4 @@ var bingRoad = new ol.layer.Tile({
     visible: false,
     name: 'bingRoad'
 });
+

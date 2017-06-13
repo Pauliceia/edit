@@ -4,7 +4,8 @@ require '../config/infoBase.php';
 
 usleep(50000);
 
-/* DEFINE CALLBACK (LOGIN) E RECUPERA POST
+/**
+* DEFINE CALLBACK (LOGIN) E RECUPERA POST
 * página reponsável por receber os dados enviados pelos formulários,
 * tratar os dados, executar as ações necessárias e enviar uma resposta ao usuário
 *

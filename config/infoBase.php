@@ -11,7 +11,7 @@
 define('P_HOST', 'localhost'); //host
 define('P_PORT', '5432'); //Port
 define('P_USER', 'postgres'); //Usuário
-define('P_PASS', 'postgres'); //Senha
+define('P_PASS', 'root'); //Senha
 define('P_DBSA', 'db_pauliceia'); //nome da Base de Dados
 
 /*

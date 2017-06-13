@@ -6,10 +6,10 @@ endif;
 ?>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
-<script src="js/ol3/ol-debug.js"></script>
+<script src="js/ol3/ol-debug.js" defer></script>
 
-<script src="js/layersMaps/online.js" defer></script>
 <script src="js/layersMaps/nativo.js" defer></script>
+<script src="js/layersMaps/online.js" defer></script>
 
 <script src="js/map.js" defer></script>
 <script src="js/eventsDraw/default.js" defer></script>
@@ -18,9 +18,6 @@ endif;
 <script src="js/functionsDraw/default.func.js" defer></script>
 
 <section class="mapedit" id="mapafixo"> 
-
-    <p id="jsonLayersPlaces" style="display: none;"><?= Maps::generateJson('tb_places'); ?></p>
-    <p id="jsonLayersStreet" style="display: none;"><?// Maps::generateJson('tb_street'); ?></p>
 
     <!--- ### BOTÕES ### -->
         <!--- btn LAYERS -->
