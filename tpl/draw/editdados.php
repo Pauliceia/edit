@@ -8,14 +8,6 @@
         <input type="hidden" name="callback_action" value="draw_editar">
         <input type="hidden" name="geom">
         <input type="hidden" name="id">
-        <div class="callback_return" style="margin-bottom: -10px;">
-            <?php
-            if (!empty($_SESSION['trigger_login'])):
-                echo $_SESSION['trigger_login'];
-                unset($_SESSION['trigger_login']);
-            endif;
-            ?>
-        </div>
 
         <div class="form-group">
             <label for="name">&#10143; Name:</label>
@@ -85,9 +77,20 @@
             <input type="text" name="author" class="form-control inF" placeholder="author" disabled>
         </div>
 
+        <div class="callback_return">
+            <?php
+            if (!empty($_SESSION['trigger_login'])):
+                echo $_SESSION['trigger_login'];
+                unset($_SESSION['trigger_login']);
+            endif;
+            ?>
+        </div>
+
         <button type="button" class="btn btn-default cl_form"><span class="glyphicon glyphicon-remove"></span> Close</button>
         <button class="btn btn-primary">Update</button>
-        <img class="form_load" style="margin-left: 10px; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
+
+        <div class="clear"></div>
+        <img class="form_load" style="float: right; position:relative; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
     </form>
 
 </article>

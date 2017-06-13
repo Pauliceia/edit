@@ -9,15 +9,6 @@
         <input type="hidden" name="geom" required id="clearForm">
         <input type="hidden" name="id_user" class="inF" value="<?= $Admin['id'] ?>">
 
-        <div class="callback_return" style="margin-bottom: -10px;">
-            <?php
-            if (!empty($_SESSION['trigger_login'])):
-                echo $_SESSION['trigger_login'];
-                unset($_SESSION['trigger_login']);
-            endif;
-            ?>
-        </div>
-
         <div class="form-group">
             <label for="name">&#10143; Name:</label>
             <input type="text" name="name" class="form-control inF" placeholder="name " id="clearForm">
@@ -68,9 +59,20 @@
             <input type="text" name="source" class="form-control inF" placeholder="fonte" required id="clearForm">
         </div>
 
+        <div class="callback_return" style="margin-bottom: -10px;">
+            <?php
+            if (!empty($_SESSION['trigger_login'])):
+                echo $_SESSION['trigger_login'];
+                unset($_SESSION['trigger_login']);
+            endif;
+            ?>
+        </div>
+
         <button type="button" class="btn btn-default cl_form"><span class="glyphicon glyphicon-remove"></span> Close</button>
         <button class="btn btn-success" id="enviar_form">Inserir</button>
-        <img class="form_load" style="margin-left: 10px; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
+        
+        <div class="clear"></div>
+        <img class="form_load" style="float: right; position:relative; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
         </form>
     </div>
 </article>
