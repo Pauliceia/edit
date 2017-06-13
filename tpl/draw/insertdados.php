@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
             <label for="street">&#10143; Street:</label>
-            <input type="hidden" name="id_street" value="515" class="inF">
+            <input type="hidden" name="id_street" class="inF">
             <input type="text" name="street" class="form-control" disabled>
         </div>
         <div class="form-group">

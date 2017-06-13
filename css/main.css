@@ -183,7 +183,12 @@ footer p{
 .mapedit .btn_edit p:hover, .btn_edit p.activeOptions{
     background: rgba(0,128,0,0.7);
 }
-
+.mapedit .btn_edit p.line {
+    background: rgba(0,60,136,.7);
+}
+.mapedit .btn_edit p.line:hover, .btn_edit p.line.activeOptions {
+    background: rgba(0,60,136,.9);
+}
 
 /* ------------------------------------- */
 /* -------------- Toobars -------------- */

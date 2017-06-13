@@ -21,7 +21,7 @@
                 <input type="text" name="street" class="form-control" disabled>
             </div>
             <div class="col-lg-3">
-                <a class="btn btn-info" id="alterStreet">ALTER</a>
+                <a class="btn btn-info" id="alterStLine">ALTER</a>
             </div>
             <div class="clear"></div>
         </div>

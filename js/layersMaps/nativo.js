@@ -15,9 +15,18 @@ getJsonMap('tb_street', function(streets){
         places = new ol.source.Vector({
             features: (new ol.format.GeoJSON()).readFeatures(place)
         });
-        //layers do geoserver
+        
         bases = new ol.layer.Group({
             layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'http://localhost:8080/geoserver/ows',
+                        params: {'LAYERS': 'portalweb:mosaicSaraAnt', 'TILED': true},
+                        serverType: 'geoserver'
+                    }),
+                    visible: true,
+                    name: 'sara'
+                }),
                 new ol.layer.Vector({
                     source: street,
                     visible: true,
@@ -36,6 +45,7 @@ getJsonMap('tb_street', function(streets){
         rendMap();
         activeActions();
         actPoint();
+        actLine();
     });
 });
 

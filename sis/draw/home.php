@@ -14,6 +14,7 @@ endif;
 <script src="js/map.js" defer></script>
 <script src="js/eventsDraw/default.js" defer></script>
 <script src="js/eventsDraw/points.js" defer></script>
+<script src="js/eventsDraw/line.js" defer></script>
 
 <script src="js/functionsDraw/default.func.js" defer></script>
 
@@ -46,6 +47,7 @@ endif;
     <!--- TOOBAR dos Desenhos -->
     <div id="pointsOptions" class="btn_edit">
         <p class="btn" id="panPoint">[ ]</p>
+        <p class="btn line" id="selectStLine">Line</p>
         <p class="btn" id="drawPoint">Draw</p>
         <p class="btn" id="editPoint">Edit</p>
         <p class="btn" id="duplicPoint">Duplicate</p>

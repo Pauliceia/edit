@@ -27,6 +27,7 @@ function actPoint(){
     //AO CLICAR NO BOTÃO [ ]
     $('#panPoint').click(function(){
         clearInteraction('points');
+        clearInteraction('line');
         $(this).addClass('activeOptions');
 
         return false;
@@ -36,6 +37,7 @@ function actPoint(){
     $('#drawPoint').click(function(){
         if($('#insertData input[name="id_street"]').val()!=""){
             clearInteraction('points');
+            clearInteraction('line');
 
             $(this).addClass('activeOptions');
             $('#layersModel').removeClass('active');
@@ -74,12 +76,13 @@ function actPoint(){
     //AO CLICAR NO BOTÃO EDIÇÃO
     $('#editPoint').click(function(){
         clearInteraction('points');
+        clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(editPoint);
 
         editPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
-            if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
+            if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
                 $('#searchEnd').fadeOut();
@@ -96,12 +99,13 @@ function actPoint(){
     //AO CLICAR NO BOTÃO PARA DUPLICAR FEATURE
     $('#duplicPoint').click(function(){
         clearInteraction('points');
+        clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(duplicPoint);
 
         duplicPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
-            if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null){
+            if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
                 $('#searchEnd').fadeOut();
@@ -120,6 +124,7 @@ function actPoint(){
     //AO CLICAR NO BOTÃO DE EXCLUSÃO
     $('#erasePoint').click(function(){
         clearInteraction('points');
+        clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(erasePoint);
 

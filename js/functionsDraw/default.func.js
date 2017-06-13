@@ -1,14 +1,9 @@
 //RETIRA AS INTERAÇÕES DOS MAPAS
 function clearInteraction(type){
+    $("#pointsOptions").find("p").removeClass('activeOptions');
     if(type == 'line'){
-        $("#lineOptions").find("p").removeClass('activeOptions');
-        map.removeInteraction(editLine);
-        map.removeInteraction(drawLine);
-        map.removeInteraction(duplicLine);
-        map.removeInteraction(modifyLine);
-        map.removeInteraction(eraseLine);
+        map.removeInteraction(selectLine);
     }else{
-        $("#pointsOptions").find("p").removeClass('activeOptions');
         map.removeInteraction(drawPoints);
         map.removeInteraction(erasePoint);
         map.removeInteraction(editPoint);
@@ -58,15 +53,6 @@ function cloneFeature(idAnt, id){
                         cloneF.set('id', id, true);
 
                         sublayer.getSource().addFeatures(cloneF);
-
-                       /* function addFeature(callback){
-                            sublayer.getSource().addFeatures(cloneF);
-                            callback();
-                        };
-                        addFeature(function(){
-                            console.log(sublayer.getSource().getFeatures());
-                            atualizaFeature(id, "duplicData");
-                        });*/
                     }
                 });
             }
@@ -82,6 +68,7 @@ function preencheFeature(id, type){
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == 'waitingCheck'){
                         f.set('id', id, true);
+                        f.set('tabName', 'tb_places', true);
                         f.setId(id);
 
                         $("#"+type+" input.inF").each(function(){
@@ -89,6 +76,7 @@ function preencheFeature(id, type){
                             var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
                             f.set(colunmsName, inputAtual, true);
                         });
+                        
                     }
                 });
             }
@@ -112,6 +100,8 @@ function getAttribs(feature, type){
             $('#'+type+' input[name="author"]').val(resultado.name);
         }
     });
+
+    atualizaStreet(type);
 }
 
 //ATUALIZA OS ATRIBUTOS DA FEATURE DE ACORDO COM O QUE FOI DIGITADO PELO USUÁRIO
@@ -133,6 +123,20 @@ function atualizaFeature(idFeature, type){
             }
         });
     }
+}
+
+//ATUALIZA E PREENCHE RUAS NO CAMPO DO FORMULARIO
+function atualizaStreet(type){
+    var streetID = $('#'+type+' input[name="id_street"').val();
+    bases.getLayers().forEach(function(sublayer){
+        if (sublayer.get('name') == 'street') {
+            sublayer.getSource().forEachFeature(function(f) {
+                if(f.get('id') == streetID){
+                    $('#'+type+' input[name="street"').val(f.get('name'))
+                }
+            });
+        }
+    });
 }
 
 //EXCLUI A FEATURE SELECIONADA DO 'LAYER ATUAL' NO MAPA

@@ -11,8 +11,8 @@ function rendMap(){
 		var centerMap = [long, lat];
 		var zoomMap = $.cookie("saveViewZoom");
 	}else{
-		var centerMap = [-5432905.961580031, -2530559.233689207];
-		var zoomMap = '7';
+		var centerMap = [-5191416.910254965, -2697764.155309246];
+		var zoomMap = '15';
 	}
 
 	view = new ol.View({
