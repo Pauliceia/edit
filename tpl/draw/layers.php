@@ -3,8 +3,8 @@
         <h1 class="page-header"> <span class=" glyphicon glyphicon-check"></span> Select Layers</h1>    
     </header>
     <div class="content">
-        <li><input type="checkbox" name="layers" value="places" checked><b> Places</b></li>
-        <li><input type="checkbox" name="layers" value="street" checked> Street</li>
+        <li><input type="checkbox" name="layers" value="places" checked><b> Places</b> <span style='float: right; cursor:pointer; color: #0066ff;' class='glyphicon glyphicon-cog selectCam' name='places'></span></li>
+        <li><input type="checkbox" name="layers" value="street" checked> Street <span style='float: right; cursor:pointer; color: #0066ff;' class='glyphicon glyphicon-cog selectCam' name='street'></span></li>
         <li><input type="checkbox" name="layers" value="sara" checked> Sara Brasil</li>
         <br>
         <li><input type="radio" name="layerbase" value="openstreetmap" checked> OpenStreetMap</li>

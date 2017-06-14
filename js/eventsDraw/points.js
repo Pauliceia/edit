@@ -42,6 +42,7 @@ function actPoint(){
             $(this).addClass('activeOptions');
             $('#layersModel').removeClass('active');
             $('#layers').fadeOut();
+            $('.selectCamadas').fadeOut();
             $('#searchEnd').fadeOut();
             $('#searchModel').removeClass('active');
             $('#editData').fadeOut();
@@ -85,6 +86,7 @@ function actPoint(){
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
+                $('.selectCamadas').fadeOut();
                 $('#searchEnd').fadeOut();
                 $('#searchModel').removeClass('active');
                 $('#insertData').fadeOut();
@@ -108,6 +110,7 @@ function actPoint(){
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
+                $('.selectCamadas').fadeOut();
                 $('#searchEnd').fadeOut();
                 $('#searchModel').removeClass('active');
                 $('#insertData').fadeOut();
@@ -131,6 +134,7 @@ function actPoint(){
         $('#layersModel').removeClass('active');
         $('#layers').fadeOut();
         $('#searchEnd').fadeOut();
+        $('.selectCamadas').fadeOut();
         $('#searchModel').removeClass('active');
         $('#insertData').fadeOut();
         $('#editData').fadeOut();

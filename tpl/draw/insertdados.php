@@ -59,7 +59,7 @@
             <input type="text" name="source" class="form-control inF" placeholder="fonte" required id="clearForm">
         </div>
 
-        <div class="callback_return" style="margin-bottom: -10px;">
+        <div class="callback_return">
             <?php
             if (!empty($_SESSION['trigger_login'])):
                 echo $_SESSION['trigger_login'];

@@ -233,6 +233,12 @@ footer p{
     padding-bottom: 30px;
 }
 
+/* ---- Select Feature (camadas por data) ---- */
+.selectCamadas {
+    top: 10%;
+    left: 10%;
+}
+
 /* ---- Search Street ---- */
 .searchEnd{
     width: 30%;

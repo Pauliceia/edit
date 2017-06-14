@@ -70,6 +70,9 @@ endif;
     <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
     <?php require 'tpl/draw/search.php'; ?>
 
+    <!--- TOOBAR DE SELEÇÃO DE CAMADAS (FEATURE por data) -->
+    <?php require 'tpl/draw/selectCamadas.php'; ?>
+
     <img src="images/logo.png" title="logo Pauliceia-Edit">
     <a href="dashboard.php?p=home" title="portal web Pauliceia-Edit" class="icon-office btnbackMap">Voltar ao Menu</a>
 

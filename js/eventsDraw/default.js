@@ -23,7 +23,6 @@ function activeActions(){
         $('.btn_edit .btn').removeClass('activeOptions');
     });
 
-
     //OPEN / CLOSE TOOBAR SEARCH
     $('#searchModel').click(function () {
         clearInteraction('points');
@@ -33,6 +32,7 @@ function activeActions(){
         $('.form_draw').fadeOut();
         $('#layersModel').removeClass('active');
         $('#layers').fadeOut();
+        $('.selectCamadas').fadeOut();
 
         $('#searchEnd').fadeIn();
         //load_dados();
@@ -59,6 +59,50 @@ function activeActions(){
 
         location.reload();
     });
+
+    //btn SELECT DE FEATURES EM DETERMINADO TEMPO (DATE)
+    $('.selectCam').click(function () {
+        $('.selectCamadas input[name="featureName"]').val($(this).attr('name'));
+        $('.selectCamadas').fadeIn();
+    });
+    $('#cl_selectC').click(function () {
+        $('.selectCamadas').fadeOut();
+    });
+    $('#applyCamadas').click(function () {
+	    var emptyStyle = new ol.style.Style({ display: 'none' });
+
+        var featName = $('.selectCamadas input[name="featureName"]').val();
+        var anoFirst = $('.selectCamadas input[name="first_year"]').val();
+        var anoLast = $('.selectCamadas input[name="last_year"]').val();
+
+        console.log(featName+" "+anoFirst+" "+anoLast);
+        if (bases instanceof ol.layer.Group){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.get('name') == featName) {
+                    sublayer.getSource().getFeatures().forEach( function(feat){
+                        var visibleStyle = sublayer.getStyle();
+                        if(anoFirst==null) anoFirst=1968;
+                        else if(anoLast==null) anoLast=1940;
+
+                        console.log(feat.get('first_year')+" "+feat.get('last_year'));
+
+                        if(feat.get('first_year')==null){
+                            if (feat.get('last_year') <= anoLast) feat.setStyle(visibleStyle);
+                            else feat.setStyle(emptyStyle);
+                        }else if(feat.get('last_year')==null){
+                            if (feat.get('first_year') >= anoFirst) feat.setStyle(visibleStyle);
+                            else feat.setStyle(emptyStyle);
+                        }else{
+                            if ((anoFirst >= feat.get('first_year') && anoFirst <= feat.get('last_year')) 
+                                    || (anoLast >= feat.get('first_year') && anoLast <= feat.get('last_year')) ) feat.setStyle(visibleStyle);
+                            else feat.setStyle(emptyStyle);
+                        }             
+                    });
+                }
+            });
+        }
+    });
+
 
     // ===========================
     //ações de mostragem dos mapas fixos ONLINE
