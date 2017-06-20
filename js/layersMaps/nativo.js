@@ -20,8 +20,8 @@ getJsonMap('tb_street', function(streets){
             layers: [
                 new ol.layer.Tile({
                     source: new ol.source.TileWMS({
-                        url: 'http://localhost:8080/geoserver/ows',
-                        params: {'LAYERS': 'portalweb:mosaicSaraAnt', 'TILED': true},
+                        url: 'http://terrabrasilis.info/pauliceia/ows',
+                        params: {'LAYERS': 'shapefile-sp:MosaicoSara', 'TILED': true},
                         serverType: 'geoserver'
                     }),
                     visible: true,
