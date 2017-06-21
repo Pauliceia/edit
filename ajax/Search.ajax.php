@@ -31,70 +31,45 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
         * case responsável por inserir os dados espaciais na tabela
         */
         case 'search_end':
-                if($conn->getConn()){
+            if($conn->getConn()){
 
-                    $searchInput = $PostData['searchInput'];
-                    $sinal=""; 
-                    //verifica se algum numero foi informado
-                    if(strpos($searchInput, "-") !== false){ $sinal = "-"; }
-                    if(strpos($searchInput, ",") !== false){ $sinal = ","; }
-                    if(strpos($searchInput, ".") !== false){ $sinal = "."; }
-                    if(strpos($searchInput, "/") !== false){ $sinal = "/"; }
+                $searchInput = $PostData['searchInput'];
 
-                    //divide a string. nome da rua e o número da casa em variavéis diferentes
-                    $numSearch=-1;
-                    if(!empty($sinal)){
-                        $numSearch = intval(substr($searchInput, strpos($searchInput, $sinal)+1));
-                        $searchInput = substr($searchInput, 0, strpos($searchInput, $sinal));
-                    }
+                //limpa a string nome - retirando os espaços
+                $searchInput = str_replace("    ", " ", $searchInput);
+                $searchInput = str_replace("   ", " ", $searchInput);
+                $searchInput = str_replace("  ", " ", $searchInput);
+                $searchInput = trim($searchInput);
 
-                    //limpa a string nome - retirando os espaços
-                    $searchInput = str_replace("    ", " ", $searchInput);
-                    $searchInput = str_replace("   ", " ", $searchInput);
-                    $searchInput = str_replace("  ", " ", $searchInput);
-                    $searchInput = trim($searchInput);
+                //realiza as buscas no banco de dados
+                $anoI = $PostData['first_year'];
+                $anoF = $PostData['last_year'];
+                if(empty($anoI)) $anoI = 1868;
+                if(empty($anoF)) $anoF = 1940;
 
-                    //realiza as buscas no banco de dados
-                    $resultado = "";
-                    $anoI = (intval(intval($PostData['anoI'])/10))*10;
-                    $anoF = (intval(intval($PostData['anoF'])/10))*10;
-                    for($j=$anoF;$j>=$anoI;$j-=10){
-                        $camadaAtual = $j.',';
+                $resultado = "";
 
-                        $sql="SELECT * FROM map_ruas_betonoronha WHERE upper(nome) LIKE upper('%{$searchInput}%') AND camadas LIKE '%{$camadaAtual}%' ORDER BY nome ASC limit 7";
-                        $result = pg_query($conn->getConn(), $sql);
+                $sql="SELECT * FROM tb_street WHERE upper(name) LIKE upper('%{$searchInput}%') AND (";
+                $sql.="((first_year>={$anoI} AND first_year<={$anoF}) OR first_year=null) OR ";
+                $sql.="((last_year>={$anoI} AND last_year<={$anoF}) OR last_year=null) ";
+                $sql.=") ORDER BY name ASC limit 5";
+                $result = pg_query($conn->getConn(), $sql);
 
-                        if(pg_num_rows($result) > 0){
-                            $ruas = pg_fetch_all($result);
-                            foreach ($ruas as $rua){
-                                extract($rua);
-                                if(strpos($resultado, $id." -") === false){
-                                    if($numSearch>0){
-                                        if($numSearch%2==0){
-                                            if($numSearch>=$nipar && $numSearch<=$nfpar){
-                                                $resultado .= "<p><span style='display:none;'>".$id." - (".$niimpar.",".$nfimpar.",".$nipar.",".$nfpar.")</span> ".$nome."
-                                                <span style='color:#454545; font-size:0.75em'> ".$bairro."</span><button id=".$id." geom='geomeria'>&#10146;</button></p>";
-                                            }
-                                        }else{
-                                            if($numSearch>=$niimpar && $numSearch<=$nfimpar){
-                                                $resultado .= "<p><span style='display:none;'>".$id." - (".$niimpar.",".$nfimpar.",".$nipar.",".$nfnfparright.")</span> ".$nome."
-                                                <span style='color:#454545; font-size:0.75em'> ".$bairro."</span><button id=".$id." geom='geomeria'>&#10146;</button></p>";
-                                            }
-                                        }
-                                    }else{
-                                        $resultado .= "<p><span style='display:none;'>".$id." - (".$niimpar.",".$nfimpar.",".$nipar.",".$nfpar.")</span> ".$nome."
-                                        <span style='color:#454545; font-size:0.75em'> ".$bairro."</span><button id=".$id." geom='geomeria'>&#10146;</button></p>";
-                                    }
-                                    
-                                }
-                            }
+                if(pg_num_rows($result) > 0){
+                    $ruas = pg_fetch_all($result);
+                    foreach ($ruas as $rua){
+                        extract($rua);
+                        if(strpos($resultado, $id." -") === false){
+                            $resultado .= "<p><span style='display:none;'>".$id." - </span> ".$name."<button id=".$id." geom='geomeria'>&#10146;</button></p>";
                         }
                     }
-                    $jSON['sucess'] = $resultado;
-
-                }else{
-                    $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
+
+                $jSON['sucess'] = $resultado;
+
+            }else{
+                $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+            }
 
             break;
 

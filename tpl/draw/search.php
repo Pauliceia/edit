@@ -11,10 +11,10 @@
                 <label>&#10143; First / Last (year):</label>
                 <br>
                 <div class="col-lg-6">
-                    <input type="number" name="first_year" class="form-control" min="1868" max="1940" placeholder="year" id="clearForm">
+                    <input type="number" name="first_year" class="form-control years" min="1868" max="1940" placeholder="year" id="clearForm">
                 </div>
                 <div class="col-lg-6">
-                    <input type="number" name="first_year" class="form-control" min="1868" max="1940" placeholder="year" id="clearForm">
+                    <input type="number" name="last_year" class="form-control years" min="1868" max="1940" placeholder="year" id="clearForm">
                 </div>
                 <div class="clear"></div>
             </div>

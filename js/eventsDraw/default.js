@@ -75,7 +75,6 @@ function activeActions(){
         var anoFirst = $('.selectCamadas input[name="first_year"]').val();
         var anoLast = $('.selectCamadas input[name="last_year"]').val();
 
-        console.log(featName+" "+anoFirst+" "+anoLast);
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){
                 if (sublayer.get('name') == featName) {
@@ -83,8 +82,6 @@ function activeActions(){
                         var visibleStyle = sublayer.getStyle();
                         if(anoFirst==null) anoFirst=1968;
                         else if(anoLast==null) anoLast=1940;
-
-                        console.log(feat.get('first_year')+" "+feat.get('last_year'));
 
                         if(feat.get('first_year')==null){
                             if (feat.get('last_year') <= anoLast) feat.setStyle(visibleStyle);
@@ -137,5 +134,59 @@ function activeActions(){
         }
 
     });
+
+    //btn SEARCH (GEOCODIFICAÇÃO DE ENDEREÇOS)
+        //inicia-se a função de GEOLOCALIZAÇÃO
+        $(".searchEnd input[name='searchInput']").keyup(function(){
+            load_dados();
+        });
+
+        $(".searchEnd .years").keyup(function(){
+            if($('.searchEnd input[name="first_year"]').val()>=1868 
+                && $('.searchEnd input[name="first_year"]').val()<=1940
+                && $('.searchEnd input[name="last_year"]').val()>=1868
+                && $('.searchEnd input[name="last_year"]').val()<=1940
+                && $('.searchEnd input[name="first_year"]').val() <= $('.searchEnd input[name="last_year"]').val()){
+                load_dados();
+            }
+        });
+
+        //função que carrega os dados do formulário para o ajax
+        function load_dados(){
+            var form = $('#searchForm_end');
+
+            var consulta = form.find('input[name="searchInput"]').val();
+            var first_year = form.find('input[name="first_year"]').val();
+            var last_year = form.find('input[name="last_year"]').val();
+
+            var callback = form.find('input[name="callback"]').val();
+            var callback_action = form.find('input[name="callback_action"]').val();
+
+            form.ajaxSubmit({
+                type: 'POST',
+                data: {callback_action: callback_action},
+                dataType: 'json',
+                url: 'ajax/' + callback + '.ajax.php',
+                success: function(msg){
+                    var res = msg.sucess;
+                    $("#searchResposta").html(res).fadeIn();
+
+                    //ao clicar no botão de visualizar a rua
+                    $(".searchResposta p button").click(function(){
+                        var idRua = $(this).attr('id');
+                            
+                        //centraliza o mapa na rua selecionada
+                        var extent = ol.extent.createEmpty();
+                        bases.getLayers().forEach(function(layer) {
+                            if(layer.get('name') == "street"){
+                                var ruaSelect = layer.getSource().getFeatureById(idRua);
+                                ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
+                            }
+                        });
+                        map.getView().fitExtent(extent, map.getSize());
+                    });
+                }
+            });
+        }
 
 }
