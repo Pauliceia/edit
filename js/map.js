@@ -18,7 +18,7 @@ function rendMap(){
 	view = new ol.View({
 		center: centerMap,
 		zoom: zoomMap,
-		maxZoom: 25,
+		maxZoom: 21,
 		minZoom: 2
 	});
 

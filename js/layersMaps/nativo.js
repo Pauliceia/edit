@@ -30,12 +30,30 @@ getJsonMap('tb_street', function(streets){
                 new ol.layer.Vector({
                     source: street,
                     visible: true,
-                    name: 'street'
+                    name: 'street',
+                    style: new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            width: 6, 
+                            color: [0, 102, 255, 0.8]
+                        })
+                    })
                 }),
-                new ol.layer.Vector({
+                new ol.layer.Vector({   
                     source: places,
                     visible: true,
-                    name: 'places'
+                    name: 'places',
+                    style: new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 8,
+                            stroke: new ol.style.Stroke({
+                                color: 'white',
+                                width: 3
+                            }),
+                            fill: new ol.style.Fill({
+                                color: 'red'
+                            })
+                        })
+                    })
                 })
             ],
             visible: true,
