@@ -80,8 +80,8 @@ function activeActions(){
                 if (sublayer.get('name') == featName) {
                     sublayer.getSource().getFeatures().forEach( function(feat){
                         var visibleStyle = sublayer.getStyle();
-                        if(anoFirst==null) anoFirst=1968;
-                        else if(anoLast==null) anoLast=1940;
+                        if(!anoFirst) anoFirst=1868;
+                        else if(!anoLast) anoLast=1940;   
 
                         if(feat.get('first_year')==null){
                             if (feat.get('last_year') <= anoLast) feat.setStyle(visibleStyle);
@@ -90,8 +90,8 @@ function activeActions(){
                             if (feat.get('first_year') >= anoFirst) feat.setStyle(visibleStyle);
                             else feat.setStyle(emptyStyle);
                         }else{
-                            if ((anoFirst >= feat.get('first_year') && anoFirst <= feat.get('last_year')) 
-                                    || (anoLast >= feat.get('first_year') && anoLast <= feat.get('last_year')) ) feat.setStyle(visibleStyle);
+                            if ((feat.get('first_year') >= anoFirst && feat.get('first_year') <= anoLast) 
+                                    || (feat.get('last_year') >= anoFirst && feat.get('last_year') <= anoLast) ) feat.setStyle(visibleStyle);
                             else feat.setStyle(emptyStyle);
                         }             
                     });
