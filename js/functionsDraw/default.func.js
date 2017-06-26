@@ -77,6 +77,8 @@ function preencheFeature(id, type){
                             f.set(colunmsName, inputAtual, true);
                         });
                         
+                        var descFeature = $("#"+type+" textarea").val();
+                        f.set('description', descFeature, true);
                     }
                 });
             }
@@ -88,10 +90,13 @@ function preencheFeature(id, type){
 function getAttribs(feature, type){
     $("#"+type+" input").each(function(){
         var colunmsName = $(this).attr('name');
-        if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'geom'){
+        if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'geom' && colunmsName != 'description'){
             $('#'+type+' input[name="'+colunmsName+'"').val(feature.get(colunmsName));
         }
     });
+
+    $("#"+type+" textarea").val(feature.get('description'));
+
     var jsonAutor = $('#jsonAutor').text();
     jsonAutor = JSON.parse(jsonAutor);
 
@@ -118,6 +123,8 @@ function atualizaFeature(idFeature, type){
                             f.set(colunmsName, inputAtual, true);
                         });
 
+                        var descFeature = $("#"+type+" textarea").val();
+                        f.set('description', descFeature, true);
                     }
                 });
             }

@@ -63,7 +63,7 @@
         </div>
         <div class="form-group">
             <label for="source">&#10143; Description:</label>
-            <textarea name="description" class="form-control inF"></textarea>
+            <textarea name="description" class="form-control" id="clearForm"></textarea>
         </div>
         <div class="form-group">
             <label for="source">&#10143; * Source:</label>
