@@ -52,7 +52,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                                     if($value==''){
                                         $sqlValues .= ", null";
                                     }else{
-                                        if($key == "name" || $key == "original_number" || $key == "source"){
+                                        if($key == "name" || $key == "original_number" || $key == "source" || $key == "description"){
                                             $sqlValues .= ", '{$value}'";
                                         }else{
                                             $sqlValues .= ", {$value}";
@@ -124,7 +124,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                                     if($atributo==''){
                                         $sql .= "null";
                                     }else{
-                                        if($column_name == "name" || $column_name == "original_number" || $column_name == "source"){
+                                        if($column_name == "name" || $column_name == "original_number" || $column_name == "source" || $column_name == "description"){
                                             $sql .= "'{$atributo}'";
                                         }else{
                                             $sql .= "{$atributo}";
@@ -182,7 +182,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                                 if($value==''){
                                     $sqlValues .= ", null";
                                 }else{
-                                    if($key == "name" || $key == "original_number" || $key == "source"){
+                                    if($key == "name" || $key == "original_number" || $key == "source" || $key == "description"){
                                         $sqlValues .= ", '{$value}'";
                                     }else{
                                         $sqlValues .= ", {$value}";

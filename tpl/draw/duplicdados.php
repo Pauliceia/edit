@@ -54,6 +54,10 @@
             <div class="clear"></div>
         </div>
         <div class="form-group">
+            <label for="source">&#10143; Description:</label>
+            <textarea name="description" class="form-control inF"></textarea>
+        </div>
+        <div class="form-group">
             <label for="source">&#10143; * Source:</label>
             <input type="text" name="source" class="form-control inF" placeholder="fonte" required>
         </div>

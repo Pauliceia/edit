@@ -53,6 +53,10 @@
                 <input type="number" name="last_year" class="form-control inF" min="1868" max="1940" placeholder="year" id="clearForm">
             </div>
             <div class="clear"></div>
+        </div>        
+        <div class="form-group">
+            <label for="source">&#10143; Description:</label>
+            <textarea name="description" class="form-control inF" id="clearForm"></textarea>
         </div>
         <div class="form-group">
             <label for="source">&#10143; * Source:</label>
