@@ -21,7 +21,16 @@ function actPoint(){
 
     drawPoints = new ol.interaction.Draw({
         source: places,
-        type: 'Point'
+        type: 'Point',
+        style: new ol.style.Style({
+            image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.5, 29],
+                anchorXUnits: 'fraction',
+                anchorYUnits: 'pixels',
+                opacity: 0.85,
+                src: 'images/iconLocation.png'
+            }))
+        })
     });
 
     //AO CLICAR NO BOTÃO [ ]

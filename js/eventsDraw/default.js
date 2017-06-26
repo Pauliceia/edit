@@ -63,6 +63,11 @@ function activeActions(){
     //btn SELECT DE FEATURES EM DETERMINADO TEMPO (DATE)
     $('.selectCam').click(function () {
         $('.selectCamadas input[name="featureName"]').val($(this).attr('name'));
+        
+        var refMap = $('#layers span.period.'+$(this).attr('name')).text().substr(2, 11).split(' - ');
+        $('.selectCamadas input[name="first_year"]').val(refMap[0]);
+        $('.selectCamadas input[name="last_year"]').val(refMap[1]);
+    
         $('.selectCamadas').fadeIn();
     });
     $('#cl_selectC').click(function () {
@@ -75,13 +80,14 @@ function activeActions(){
         var anoFirst = $('.selectCamadas input[name="first_year"]').val();
         var anoLast = $('.selectCamadas input[name="last_year"]').val();
 
+        if(!anoFirst) anoFirst=1868;
+        if(!anoLast) anoLast=1940;
+
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){
                 if (sublayer.get('name') == featName) {
                     sublayer.getSource().getFeatures().forEach( function(feat){
                         var visibleStyle = sublayer.getStyle();
-                        if(!anoFirst) anoFirst=1868;
-                        else if(!anoLast) anoLast=1940;   
 
                         if(feat.get('first_year')==null){
                             if (feat.get('last_year') <= anoLast) feat.setStyle(visibleStyle);
@@ -98,6 +104,8 @@ function activeActions(){
                 }
             });
         }
+
+        $('#layers span.period.'+featName).html('( '+anoFirst+' - '+anoLast+' )');
     });
 
 
