@@ -10,6 +10,17 @@
         <input type="hidden" name="id_user" class="inF" value="<?= $Admin['id'] ?>">
 
         <div class="form-group">
+            <label>&#10143; * LAT / LONG:</label>
+            <br>
+            <div class="col-lg-6">
+                <input type="text" name="lat" class="form-control" placeholder="lat" id="clearForm" disabled>
+            </div>
+            <div class="col-lg-6">
+                <input type="text" name="long" class="form-control" placeholder="long" id="clearForm" disabled>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="form-group">
             <label for="name">&#10143; Name:</label>
             <input type="text" name="name" class="form-control inF" placeholder="name " id="clearForm">
         </div>

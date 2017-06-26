@@ -20,6 +20,11 @@ function generationWkt(e, type){
 
     if(type == "insert"){
         $("#insertData input[name='geom']").val(featureWkt);
+
+        var coordinatesPoint = featureWkt.substr(6).split(" ");
+        $("#insertData input[name='lat']").val(coordinatesPoint[0]);
+        $("#insertData input[name='long']").val(coordinatesPoint[1].substr(0, coordinatesPoint[1].indexOf(')')));
+
     }else if(type == "edit"){
         $("#editData input[name='geom']").val(featureWkt);
     }
