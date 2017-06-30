@@ -170,6 +170,22 @@ function activeActions(){
             var callback = form.find('input[name="callback"]').val();
             var callback_action = form.find('input[name="callback_action"]').val();
 
+            var defaultStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    width: 6, 
+                    color: [0, 102, 255, 0.8]
+                })
+            });
+            
+            var selectStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    width: 6, 
+                    color: [0, 0, 153, 0.8]
+                })
+            });
+
+            
+
             form.ajaxSubmit({
                 type: 'POST',
                 data: {callback_action: callback_action},
@@ -187,7 +203,10 @@ function activeActions(){
                         var extent = ol.extent.createEmpty();
                         bases.getLayers().forEach(function(layer) {
                             if(layer.get('name') == "street"){
+
                                 var ruaSelect = layer.getSource().getFeatureById(idRua);
+                                ruaSelect.setStyle(selectStyle);
+
                                 ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
                             }
                         });
