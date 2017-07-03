@@ -150,14 +150,16 @@ function actPoint(){
         $('#duplicData').fadeOut();
 
         erasePoint.getFeatures().on('add', function(e) {
-            if(e.target.getArray().length !== 0 && e.element.getGeometry().getType() == 'Point'){
-  
-                confirme = confirm("Do you want to delete this Place?");
-                if(confirme){
-                    statusDraw=0;
-                    excluiFeature(e.element);
-                }
+            if(e.element.getGeometry().getType() == 'Point'){
+                if(e.target.getArray().length !== 0){
+
+                    confirme = confirm("Do you want to delete this Place?");
+                    if(confirme){
+                        statusDraw=0;
+                        excluiFeature(e.element);
+                    }
                     
+                }                  
             }
         });
         return false;
