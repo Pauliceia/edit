@@ -160,6 +160,7 @@ function activeActions(){
         });
 
         //função que carrega os dados do formulário para o ajax
+        var firstFeature;
         function load_dados(){
             var form = $('#searchForm_end');
 
@@ -180,11 +181,9 @@ function activeActions(){
             var selectStyle = new ol.style.Style({
                 stroke: new ol.style.Stroke({
                     width: 6, 
-                    color: [0, 0, 153, 0.8]
+                    color: [0, 0, 153, 0.9]
                 })
-            });
-
-            
+            });            
 
             form.ajaxSubmit({
                 type: 'POST',
@@ -204,13 +203,18 @@ function activeActions(){
                         bases.getLayers().forEach(function(layer) {
                             if(layer.get('name') == "street"){
 
+                                layer.setStyle(defaultStyle);
+                                if(firstFeature) firstFeature.setStyle(defaultStyle);
+
                                 var ruaSelect = layer.getSource().getFeatureById(idRua);
                                 ruaSelect.setStyle(selectStyle);
+                                firstFeature = ruaSelect;
 
                                 ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
                             }
                         });
                         map.getView().fitExtent(extent, map.getSize());
+                        
                     });
                 }
             });
