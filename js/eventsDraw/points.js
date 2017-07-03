@@ -149,13 +149,16 @@ function actPoint(){
         $('#editData').fadeOut();
         $('#duplicData').fadeOut();
 
-        erasePoint.getFeatures().on('change:length', function(e) {
-            if(e.target.getArray().length !== 0){
-                erasePoint.getFeatures().on('add', function(f) {
+        erasePoint.getFeatures().on('add', function(e) {
+            if(e.target.getArray().length !== 0 && e.element.getGeometry().getType() == 'Point'){
+  
+                confirme = confirm("Do you want to delete this Place?");
+                if(confirme){
                     statusDraw=0;
-                    excluiFeature(f.element);
-                    });
+                    excluiFeature(e.element);
                 }
+                    
+            }
         });
         return false;
     });
