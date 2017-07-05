@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label for="source">&#10143; Description:</label>
-            <textarea name="description" class="form-control" id="clearForm"></textarea>
+            <textarea name="description" class="form-control"></textarea>
         </div>
         <div class="form-group">
             <label for="source">&#10143; * Source:</label>
@@ -74,7 +74,7 @@
             <input type="text" name="author" class="form-control inF" placeholder="author" disabled>
         </div>
 
-        <div class="callback_return" style="margin-bottom: -10px;">
+        <div class="callback_return">
             <?php
             if (!empty($_SESSION['trigger_login'])):
                 echo $_SESSION['trigger_login'];

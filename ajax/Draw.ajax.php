@@ -140,7 +140,6 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $jSON['trigger'] = AjaxErro('Data updated successfully');
                             $jSON['draw'] = 'edit';
                             $jSON['drawId'] = $PostData['id'];
-                            $jSON['none'] = true;
                         }else{
                             $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields', E_USER_ERROR);
                         }
@@ -156,21 +155,31 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             * case responsável por duplicar os dados espaciais na tabela, fazendo ou não pequenas modificação no seu conteúdo
             */
             case 'draw_duplic':
-                 if($conn->getConn()){
+            if($conn->getConn()){
+                if(!isset($PostData['id_street']) || empty($PostData['id_street'])){
+                    $jSON['trigger'] = AjaxErro('Error: Select a street or avenue</b>', E_USER_ERROR);
+                }else{  
 
-                    if(!isset($PostData['id_street']) || empty($PostData['id_street'])){
-                        $jSON['trigger'] = AjaxErro('Error: Select a street or avenue</b>', E_USER_ERROR);
+                    $date = date("Y/m/d");
+                    $PostData['id_user'] = $_SESSION['userLogin']['id'];
+                    $antId = $PostData['id'];
+
+                    unset($PostData['id']);
+
+                    $sql = "SELECT *, st_astext(geom) as geom FROM tb_places WHERE id={$antId}";
+                    $result = pg_query($conn->getConn(), $sql);
+                    $wktgeom = pg_fetch_all($result)[0];
+                    $geom = $wktgeom['geom'];
+                    $first_day = $wktgeom['first_day'];
+                    $first_month = $wktgeom['first_month'];
+                    $first_year = $wktgeom['first_year'];
+                    $last_day = $wktgeom['last_day'];
+                    $last_month = $wktgeom['last_month'];
+                    $last_year = $wktgeom['last_year'];
+                    
+                    if($first_day == $PostData['first_day'] && $first_month == $PostData['first_month'] && $first_year == $PostData['first_year'] && $last_day == $PostData['last_day'] && $last_month == $PostData['last_month'] && $last_year == $PostData['last_year']){
+                        $jSON['trigger'] = AjaxErro('<b>Error</b>! Change dates', E_USER_ERROR);
                     }else{
-
-                        $date = date("Y/m/d");
-                        $PostData['id_user'] = $_SESSION['userLogin']['id'];
-                        $antId = $PostData['id'];
-                        unset($PostData['id']);
-
-                        $sql = "SELECT id, st_astext(geom) geom FROM tb_places WHERE id={$antId}";
-                        $result = pg_query($conn->getConn(), $sql);
-                        $wktgeom = pg_fetch_all($result)[0];
-                        $geom = $wktgeom['geom'];
 
                         $sql = "INSERT INTO tb_places ";
                         $sqlKeys = "(geom, date";
@@ -179,6 +188,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         foreach($PostData as $key => $value){
                             if($key!="geom"){
                                 $sqlKeys .= ", {$key}";
+
                                 if($value==''){
                                     $sqlValues .= ", null";
                                 }else{
@@ -188,14 +198,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                                         $sqlValues .= ", {$value}";
                                     }
                                 }
-                                
                             }
                         }
 
                         $sql .= $sqlKeys.")"." ".$sqlValues.")";
-
                         $result = pg_query($conn->getConn(), $sql);
-
                         $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
                         $result = pg_query($conn->getConn(), $sql);
                         $registro = pg_fetch_all($result)[0];
@@ -211,10 +218,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields.', E_USER_ERROR);
                         }
                     }
-
-                }else{
-                    $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
                 }
+
+            }else{
+                $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+            }
             break;
 
     endswitch;

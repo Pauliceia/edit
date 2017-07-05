@@ -55,7 +55,7 @@ $(function() {
                         }else if(data.draw=='edit'){
                             atualizaFeature(data.drawId, "editData");
                         }else if(data.draw=='duplic'){
-                            cloneFeature(data.drawIdAnt, data.drawId);
+                            //cloneFeature(data.drawIdAnt, data.drawId);
                         }
                     }
 
@@ -74,6 +74,7 @@ $(function() {
                     //CLEAR INPUT's Draw
                     if (data.clearInput) {
                         form.find('input[id="clearForm"]').val('');
+                        form.find('textarea[id="clearForm"]').val('');
 
                         window.setTimeout(function () {
                             $('.trigger_ajax').fadeOut('slow');
