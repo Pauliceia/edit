@@ -1,7 +1,8 @@
 function getJsonMap(table, callback){
     $.post('ajax/MapJson.ajax.php', {callback: 'MapJson', callback_action: 'getRes', tbName: table}, function (data) {
         if (data.ResultJson) {
-            callback(data.ResultJson);
+            if(table == "tb_places") callback(data.ResultJson, data.PlacesDuplicated);
+            else callback(data.ResultJson);
         }
     }, 'json');
 }
@@ -11,7 +12,7 @@ getJsonMap('tb_street', function(streets){
     street = new ol.source.Vector({
         features: (new ol.format.GeoJSON()).readFeatures(streets)
     });
-    getJsonMap('tb_places', function(place){
+    getJsonMap('tb_places', function(place, duplicated){
         places = new ol.source.Vector({
             features: (new ol.format.GeoJSON()).readFeatures(place)
         });
@@ -61,6 +62,7 @@ getJsonMap('tb_street', function(streets){
         });
 
         rendMap();
+        editPlaceDuplic(duplicated);
         activeActions();
         actPoint();
         actLine();

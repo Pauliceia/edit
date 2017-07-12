@@ -79,7 +79,21 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 $output .= $rowOutput;
             }
             $output = '{ "type": "FeatureCollection", "features": [ ' . $output . ' ]}';
-            
+
+            //get features duplicadas
+            if($name=='tb_places') {
+                $sql = "select st_astext(geom) AS geojson,count(*) from tb_places group by geojson having count(*) > 1";
+                $result = pg_query($Conn->getConn(), $sql);
+                $duplic = [];
+                if(pg_num_rows($result) > 0){
+                    foreach (pg_fetch_all($result) as $geometrias){
+                        extract($geometrias);
+                        array_push($duplic,$geojson);
+                    }
+                }
+                $jSON['PlacesDuplicated'] = $duplic;
+            }
+
             $jSON['ResultJson'] = $output;
         
         break;

@@ -1,3 +1,42 @@
+//colorindo os places duplicados
+function editPlaceDuplic(dadosDuplic){
+
+    var styleDuplic = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            stroke: new ol.style.Stroke({
+                color: 'white',
+                width: 3
+            }),
+            fill: new ol.style.Fill({
+                color: 'orange'
+            })
+        })
+    });
+
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == "places") {
+                sublayer.getSource().getFeatures().forEach(function(feat){
+
+                    dadosDuplic.forEach(function(res){
+                        var pontos = res.substr(res.indexOf('(')+1);
+                        pontos = pontos.substr(0,pontos.indexOf(')'));
+                        var listPoints = pontos.split(' ');
+
+                        if(feat.getGeometry().getCoordinates()[0]==listPoints[0] && feat.getGeometry().getCoordinates()[1]==listPoints[1]){
+                            feat.setStyle(styleDuplic);
+                        }
+                    });
+
+                });
+            }
+        });
+    }
+
+}
+
+//liberando as ações por evento
 function activeActions(){
 
     //OPEN / CLOSE TOOBAR LAYERS
