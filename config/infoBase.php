@@ -17,7 +17,7 @@ define('P_DBSA', 'db_pauliceia'); //nome da Base de Dados
 /*
  * INFORMAÇÕES DO PORTAL
  */
-define('BASE', 'http://localhost/editData/');
+define('BASE', 'http://www.dpi.inpe.br/pauliceia/editData/');
 define('P_NAME', 'Pauliceia-edit');
 define('P_DESC', 'Portal WEBGIS, responsável por realizar a edição de dados geográficos do projeto Pauliceia');
 
