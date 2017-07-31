@@ -252,7 +252,7 @@ function activeActions(){
                                 ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
                             }
                         });
-                        map.getView().fitExtent(extent, map.getSize());
+                        map.getView().fit(extent, map.getSize());
                         
                     });
                 }
