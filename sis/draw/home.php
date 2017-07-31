@@ -6,7 +6,7 @@ endif;
 ?>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
-<script src="js/ol3/ol-debug.js" defer></script>
+<script src="js/ol4/ol-debug.js" defer></script>
 
 <script src="js/layersMaps/nativo.js" defer></script>
 <script src="js/layersMaps/online.js" defer></script>
