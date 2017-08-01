@@ -31,6 +31,11 @@ endif;
             <a class='btn_draw glyphicon glyphicon-search' id='searchModel'></a>
         </div>
 
+        <!--- btn REVERSE STREET -->
+        <div class="base_btn reverseStrB">
+            <a class='btn_draw glyphicon glyphicon-sort' id='reverseModel'></a>
+        </div>
+
         <!--- btn AÇÕES DESENHO -->
         <div class="base_btn typeGeomB">
             <span style="color: #3366FF; font-size: 2em; font-weight: 600;text-shadow: 1px 1px 1px #333;">&#9997;</span>
@@ -69,6 +74,9 @@ endif;
 
     <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
     <?php require 'tpl/draw/search.php'; ?>
+
+    <!--- TOOBAR DE REVERSE STREET -->
+    <?php require 'tpl/draw/reverse.php'; ?>
 
     <!--- TOOBAR DE SELEÇÃO DE CAMADAS (FEATURE por data) -->
     <?php require 'tpl/draw/selectCamadas.php'; ?>

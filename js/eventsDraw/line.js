@@ -49,6 +49,19 @@ function actLine(){
         return false;
     });
 
+    $('#sltStrReverse').click(function(){
+        map.addInteraction(selectLine);
+
+        selectLine.getFeatures().on('add', function(e) {
+            var featSelect = e.element;
+            if(featSelect.get("tabName") == 'tb_street'){
+                $('#strReverse').attr('disabled', false);
+            }
+        });
+        
+        return false;
+    });
+
     function getStreetLine(type){
         map.addInteraction(selectLine);
 

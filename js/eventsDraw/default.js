@@ -48,6 +48,8 @@ function activeActions(){
         $('.form_draw').fadeOut();
         $('#searchEnd').fadeOut();
         $('#searchModel').removeClass('active');
+        arrowLine('remove');
+
         $('#layers').fadeIn();
     });
     $('#cl_layers').click(function () {
@@ -72,6 +74,7 @@ function activeActions(){
         $('#layersModel').removeClass('active');
         $('#layers').fadeOut();
         $('.selectCamadas').fadeOut();
+        arrowLine('remove');
 
         $('#searchEnd').fadeIn();
         //load_dados();
@@ -79,6 +82,19 @@ function activeActions(){
     $('#cl_search').click(function () {
         $('#searchModel').removeClass('active');
         $('#searchEnd').fadeOut();
+    });
+
+    //OPEN / CLOSE TOOBAR REVERSE
+    $('#reverseModel').click(function () {
+        clearInteraction('points');
+        clearInteraction('line');
+        if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+        }
+        arrowLine('');
+    });
+    $('#cl_reverse').click(function () {
+        arrowLine('remove');
     });
 
 
@@ -258,5 +274,24 @@ function activeActions(){
                 }
             });
         }
+
+    // função que adiciona e remove os arrows das ruas
+    function arrowLine(actionType){
+        if(actionType=='remove'){
+            $('#reverseModel').removeClass('active');
+            $('#reverseStr').fadeOut();
+            $('#strReverse').attr('disabled', true);
+        }else{
+            $('.form_draw').fadeOut();
+            $('#layersModel').removeClass('active');
+            $('#layers').fadeOut();
+            $('.selectCamadas').fadeOut();
+            $('#searchEnd').fadeOut();
+            $('#searchModel').removeClass('active');
+
+            $('#reverseStr').fadeIn();
+        }
+        return;
+    }
 
 }
