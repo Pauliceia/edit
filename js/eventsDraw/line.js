@@ -38,6 +38,7 @@ var selectLine = new ol.interaction.Select({
 function actLine(){
     $('#selectStLine').click(function(){
         clearInteraction('point');
+        clearInteraction('line');
         $(this).addClass('activeOptions');
         getStreetLine('insertData');
         return false;
@@ -45,19 +46,42 @@ function actLine(){
     
     $('#alterStLine').click(function(){
         clearInteraction('point');
+        clearInteraction('line');
         getStreetLine('editData');
         return false;
     });
 
+    var featSelect;
     $('#sltStrReverse').click(function(){
+        clearInteraction('point');
+        clearInteraction('line');
         map.addInteraction(selectLine);
 
         selectLine.getFeatures().on('add', function(e) {
-            var featSelect = e.element;
+            featSelect = e.element;
             if(featSelect.get("tabName") == 'tb_street'){
                 $('#strReverse').attr('disabled', false);
+                $('#reverseStr input[name="name_street"]').val(featSelect.get('name'));
+                $('#reverseStr input[name="length_street"]').val(featSelect.get('perimeter'));
+                $('#reverseStr input[name="id"]').val(featSelect.get('id'));
             }
         });
+        
+        return false;
+    });
+
+    $('#strReverse').click(function(){
+        clearInteraction('point');
+        var newLine = [];
+        var lineStringsArray = featSelect.getGeometry().getLineStrings();
+
+        for(var i=lineStringsArray.length-1; i>=0 ;i--){
+            newLine[i] = featSelect.getGeometry().getCoordinates()[i].reverse();
+        }
+        featSelect.getGeometry().setCoordinates(newLine);
+
+        generationWkt(featSelect, "reverse");
+        $('#btnStrReverseSave').prop("disabled", false);
         
         return false;
     });

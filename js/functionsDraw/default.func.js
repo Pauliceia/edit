@@ -27,6 +27,8 @@ function generationWkt(e, type){
 
     }else if(type == "edit"){
         $("#editData input[name='geom']").val(featureWkt);
+    }else if(type == "reverse"){
+        $('#reverseStr input[name="geom"]').val(featureWkt);
     }
 
 }

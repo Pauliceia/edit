@@ -82,6 +82,7 @@ function activeActions(){
     $('#cl_search').click(function () {
         $('#searchModel').removeClass('active');
         $('#searchEnd').fadeOut();
+
     });
 
     //OPEN / CLOSE TOOBAR REVERSE
@@ -257,7 +258,6 @@ function activeActions(){
                         var extent = ol.extent.createEmpty();
                         bases.getLayers().forEach(function(layer) {
                             if(layer.get('name') == "street"){
-
                                 layer.setStyle(defaultStyle);
                                 if(firstFeature) firstFeature.setStyle(defaultStyle);
 

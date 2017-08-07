@@ -225,6 +225,33 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
             break;
 
+            /* INVERSÃO DO SENTIDO DA RUA
+            * salva no banco a nova geometria da rua, invertida pelo sistema.
+            */
+            case 'draw_reverse':
+            if($conn->getConn()){
+                if( (!isset($PostData['id']) || empty($PostData['id'])) || (!isset($PostData['geom']) || empty($PostData['geom']))){
+                    $jSON['trigger'] = AjaxErro('Error: Select a line and edit</b>', E_USER_ERROR);
+                }else{  
+                    $id = $PostData['id'];
+                    $geom = $PostData['geom'];
+
+                    $sql = "UPDATE tb_street SET geom=st_tranform('{$geom}', 4326) WHERE id={$id}";
+                    //realiza o procedimento
+                    if($sql!=""){
+                        $jSON['trigger'] = AjaxErro('street reversed successfully');
+                        $jSON['none'] = true;
+                    }else{
+                        $jSON['trigger'] = AjaxErro('ERROR: street not reversed', E_USER_ERROR);
+                    }          
+                }
+
+            }else{
+                $jSON['trigger'] = AjaxErro('Database not conected!', E_USER_ERROR);
+            }
+            break;
+
+
     endswitch;
 
     //RETORNA O CALLBACK
