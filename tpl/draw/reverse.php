@@ -25,7 +25,7 @@
             
             <div class="form-group">
                 <label for="length_street">&#10143; * LENGTH:</label>
-                <input type="number" name="length_street" class="form-control" disabled/>
+                <input type="text" name="length_street" class="form-control" disabled/>
             </div>
 
             <br>

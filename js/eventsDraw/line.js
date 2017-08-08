@@ -62,7 +62,19 @@ function actLine(){
             if(featSelect.get("tabName") == 'tb_street'){
                 $('#strReverse').attr('disabled', false);
                 $('#reverseStr input[name="name_street"]').val(featSelect.get('name'));
-                $('#reverseStr input[name="length_street"]').val(featSelect.get('perimeter'));
+
+                var sizeStreet = 0;
+                if(featSelect.get('perimeter')==0){
+                    //MultiLineString
+                    for(var i=0; i<featSelect.getGeometry().getLineStrings().length; i++){
+                        sizeStreet += LengthLineString(featSelect.getGeometry().getCoordinates()[i]);
+                    }
+                }else{
+                    sizeStreet = featSelect.get('perimeter');
+                }
+
+                sizeStreet = sizeStreet>=1000 ? (sizeStreet/1000)+"km" : sizeStreet+"m"; 
+                $('#reverseStr input[name="length_street"]').val(sizeStreet);
                 $('#reverseStr input[name="id"]').val(featSelect.get('id'));
             }
         });
@@ -99,5 +111,18 @@ function actLine(){
                 $('#'+type+' input[name="street"]').val(nameStreet);
             }
         });
+    }
+
+    function LengthLineString(coordinates) {
+        var length = 0;
+        var wgs84Sphere = new ol.Sphere(6378137);
+
+        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+            var c1 = ol.proj.transform(coordinates[i], map.getView().getProjection(), 'EPSG:4326');
+            var c2 = ol.proj.transform(coordinates[i + 1], map.getView().getProjection(), 'EPSG:4326');
+            length += wgs84Sphere.haversineDistance(c1, c2);
+        }
+
+        return (Math.round(length * 100) / 100);
     }
 }
