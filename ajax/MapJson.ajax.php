@@ -47,9 +47,8 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
 
             //CONCLUSÃO DA CONSTRUÇÃO DO SQL DOS DADOS GEOGRAFICOS, COM BASE NO TIPO DE DADO A SER CADASTRADO
-            if($name=='tb_places') $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
-            else $sqljson .= ", st_asgeojson(st_transform(geom,3857)) AS geojson FROM {$name}";
-
+            $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
+            
             $result = pg_query($Conn->getConn(), $sqljson);
 
             //CONSTRUÇÃO DA Build GeoJSON
