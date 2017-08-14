@@ -11,11 +11,12 @@ function rendMap(){
 		var centerMap = [long, lat];
 		var zoomMap = $.cookie("saveViewZoom");
 	}else{
-		var centerMap = [-5191416.910254965, -2697764.155309246];
+		var centerMap = [-46.63665134071729, -23.543103484961193];
 		var zoomMap = '15';
 	}
 
 	view = new ol.View({
+		projection: 'EPSG:4326',
 		center: centerMap,
 		zoom: zoomMap,
 		maxZoom: 21,
