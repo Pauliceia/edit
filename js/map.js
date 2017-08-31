@@ -30,7 +30,7 @@ function rendMap(){
 			new ol.control.ZoomSlider()
 		]),
 		renderer: 'canvas',
-		layers: [openstreetmap, bingRoad, bases],
+		layers: [openstreetmap, bases],
 		view: view
 	});
 }

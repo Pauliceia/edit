@@ -16,7 +16,6 @@
         <li><input type="checkbox" name="layers" value="sara" checked> Sara Brasil</li>
         <br>
         <li><input type="radio" name="layerbase" value="openstreetmap" checked> OpenStreetMap</li>
-        <li><input type="radio" name="layerbase" value="bingRoad"> Esri</li>
         <li><input type="radio" name="layerbase" value="none"> Blank</li>
         
         <button type="button" class="btn btn-default" id="cl_layers" style="display:block; margin: 30px auto 0 auto;">
