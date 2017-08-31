@@ -55,7 +55,7 @@ $(function() {
                         }else if(data.draw=='edit'){
                             atualizaFeature(data.drawId, "editData");
                         }else if(data.draw=='duplic'){
-                            //cloneFeature(data.drawIdAnt, data.drawId);
+                            editFeatDuplic(data.drawIdAnt, "duplicData");
                         }
                     }
 

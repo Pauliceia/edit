@@ -31,35 +31,36 @@ function generationWkt(e, type){
 
 }
 
+//style provisórios -> quando um places é editado
+function generateStylePlaces(type){
+    $color = "#33cc33"; //default => green
+    if(type == 'wait') $color = "#ccffff";
+    else if(type == 'duplic') $color = "orange";
+    return new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            stroke: new ol.style.Stroke({
+                color: 'white',
+                width: 3
+            }),
+            fill: new ol.style.Fill({
+                color: $color
+            })
+        })
+    });
+}
+
 //ADICIONA A FEATURE NO LAYER DO MAPA
 function addFeature(feature){
     feature.setProperties({
         'id': 'waitingCheck'
     });
+    feature.setStyle(generateStylePlaces('wait'));
 
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'places') {
                 sublayer.getSource().addFeatures(feature);
-            }
-        });
-    }
-}
-
-//DUPLICA A FEATURE NO LAYER DO MAPA
-function cloneFeature(idAnt, id){
-    if (bases instanceof ol.layer.Group){
-        bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'places') {
-                sublayer.getSource().forEachFeature(function(f) {
-                    if(f.get('id') == idAnt){
-                        var cloneF = f.clone();
-                        cloneF.setId(id);
-                        cloneF.set('id', id, true);
-
-                        sublayer.getSource().addFeatures(cloneF);
-                    }
-                });
             }
         });
     }
@@ -83,7 +84,23 @@ function preencheFeature(id, type){
                         });
                         
                         var descFeature = $("#"+type+" textarea").val();
+                        f.setStyle(generateStylePlaces());
                         f.set('description', descFeature, true);
+                    }
+                });
+            }
+        });
+    }
+}
+
+//ALTERA O ESTILO DA FEATURE DUPLICADA
+function editFeatDuplic(id, type){
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'places') {
+                sublayer.getSource().forEachFeature(function(f) {
+                    if(f.get('id') == id){
+                        f.setStyle(generateStylePlaces('duplic'));
                     }
                 });
             }
@@ -116,7 +133,7 @@ function getAttribs(feature, type){
 
 //ATUALIZA OS ATRIBUTOS DA FEATURE DE ACORDO COM O QUE FOI DIGITADO PELO USUÁRIO
 function atualizaFeature(idFeature, type){
-     if (bases instanceof ol.layer.Group){
+    if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'places') {
                 sublayer.getSource().forEachFeature(function(f) {
@@ -130,6 +147,7 @@ function atualizaFeature(idFeature, type){
 
                         var descFeature = $("#"+type+" textarea").val();
                         f.set('description', descFeature, true);
+                        f.setStyle(generateStylePlaces());
                     }
                 });
             }
