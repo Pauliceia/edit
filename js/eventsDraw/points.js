@@ -80,6 +80,8 @@ function actPoint(){
                 }
                 return false;
             }
+        }else{
+            alert('Select a street, please!');
         }
     });
 
