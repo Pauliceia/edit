@@ -30,8 +30,8 @@
             <input type="text" name="street" class="form-control" disabled>
         </div>
         <div class="form-group">
-            <label for="number">&#10143; * Number:</label>
-            <input type="number" name="number" class="form-control inF" required id="clearForm">
+            <label for="number">&#10143; * Number:</label>  
+            <input type="number" name="number" class="form-control inF" step="0.01" required id="clearForm">
         </div>
         <div class="form-group">
             <label for="original_number">&#10143; Original Number:</label>
