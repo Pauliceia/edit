@@ -38,6 +38,23 @@ function actPoint(){
         clearInteraction('points');
         clearInteraction('line');
         $(this).addClass('activeOptions');
+    
+        var defaultStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                width: 6, 
+                color: [0, 102, 255, 0.8]
+            })
+        });
+
+        if (bases instanceof ol.layer.Group){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.get('name') == "street") {
+                    sublayer.getSource().getFeatures().forEach(function(feat){
+                        feat.setStyle(defaultStyle)
+                    });
+                }
+            });
+        }
 
         return false;
     });

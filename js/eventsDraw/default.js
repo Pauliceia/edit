@@ -199,7 +199,6 @@ function activeActions(){
         });
 
         //função que carrega os dados do formulário para o ajax
-        var firstFeature;
         function load_dados(){
             var form = $('#searchForm_end');
 
@@ -209,13 +208,6 @@ function activeActions(){
 
             var callback = form.find('input[name="callback"]').val();
             var callback_action = form.find('input[name="callback_action"]').val();
-
-            var defaultStyle = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    width: 6, 
-                    color: [0, 102, 255, 0.8]
-                })
-            });
             
             var selectStyle = new ol.style.Style({
                 stroke: new ol.style.Stroke({
@@ -242,12 +234,8 @@ function activeActions(){
                         bases.getLayers().forEach(function(layer) {
                             if(layer.get('name') == "street"){
 
-                                layer.setStyle(defaultStyle);
-                                if(firstFeature) firstFeature.setStyle(defaultStyle);
-
                                 var ruaSelect = layer.getSource().getFeatureById(idRua);
                                 ruaSelect.setStyle(selectStyle);
-                                firstFeature = ruaSelect;
 
                                 ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
                             }

@@ -19,6 +19,13 @@ function actLine(){
     function getStreetLine(type){
         map.addInteraction(selectLine);
 
+        var selectStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                width: 6, 
+                color: [0, 0, 153, 0.9]
+            })
+        });    
+
         selectLine.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("tabName") == 'tb_street'){
@@ -27,6 +34,8 @@ function actLine(){
 
                 $('#'+type+' input[name="id_street"]').val(idStreet);
                 $('#'+type+' input[name="street"]').val(nameStreet);
+
+                featSelect.setStyle(selectStyle);
             }
         });
     }
