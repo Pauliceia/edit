@@ -40,6 +40,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $jSON['trigger'] = AjaxErro('Error: add point into map</b>', E_USER_ERROR);
                         }else{
 
+                            if(isset($PostData['name']) || !empty($PostData['name'])){
+                                $PostData['name'] = preg_replace('/[^\w\ \.\,]/', '', htmlentities(trim($PostData['name'])));
+                                $PostData['name'] = strtolower($PostData['name']);
+                            }
+
                             $date = date("Y/m/d");
                             $PostData['id_user'] = $_SESSION['userLogin']['id'];
             
