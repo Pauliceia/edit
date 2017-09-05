@@ -113,6 +113,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $jSON['trigger'] = AjaxErro('Error: Select a street or avenue</b>', E_USER_ERROR);
                     }else{
 
+                        if(isset($PostData['name']) || !empty($PostData['name'])){
+                            $PostData['name'] = preg_replace('/[^\w\ \.\,]/', '', htmlentities(trim($PostData['name'])));
+                            $PostData['name'] = strtolower($PostData['name']);
+                        }
+
                         $date = date("Y/m/d");
                         $PostData['id_user'] = $_SESSION['userLogin']['id'];
                         $sql = "UPDATE tb_places SET date='{$date}', id_user={$PostData['id_user']}";
@@ -181,10 +186,29 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     $last_day = $wktgeom['last_day'];
                     $last_month = $wktgeom['last_month'];
                     $last_year = $wktgeom['last_year'];
+                    $number = $wktgeom['number'];
                     
+                    $dates = false;
+                    $numbers = false;
+
+                    //verificando se as datas são iguais
                     if($first_day == $PostData['first_day'] && $first_month == $PostData['first_month'] && $first_year == $PostData['first_year'] && $last_day == $PostData['last_day'] && $last_month == $PostData['last_month'] && $last_year == $PostData['last_year']){
-                        $jSON['trigger'] = AjaxErro('<b>Error</b>! Change dates', E_USER_ERROR);
+                        $dates=true;
+                    }
+                    //verificando se os numeros são diferentes
+                    if((intval($number)%2 == 0 && intval($PostData['number'])%2 == 0) || (intval($number)%2 != 0 && intval($PostData['number'])%2 != 0)){
+                        $numbers=true;
+                    }
+                    
+                    if( $dates && $numbers ){                    
+                        $jSON['trigger'] = AjaxErro('<b>Error</b>! Change dates or numbers', E_USER_ERROR);                    
+                    
                     }else{
+
+                        if(isset($PostData['name']) || !empty($PostData['name'])){
+                            $PostData['name'] = preg_replace('/[^\w\ \.\,]/', '', htmlentities(trim($PostData['name'])));
+                            $PostData['name'] = strtolower($PostData['name']);
+                        }
 
                         $sql = "INSERT INTO tb_places ";
                         $sqlKeys = "(geom, date";
