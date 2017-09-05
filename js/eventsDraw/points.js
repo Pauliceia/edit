@@ -39,7 +39,7 @@ function actPoint(){
         image: new ol.style.Circle({
             radius: 8,
             stroke: new ol.style.Stroke({
-                color: 'black',
+                color: '#666',
                 width: 3
             }),
             fill: new ol.style.Fill({

@@ -64,15 +64,19 @@
                 <input type="number" name="last_year" class="form-control inF" min="1868" max="1940" placeholder="year" id="clearForm">
             </div>
             <div class="clear"></div>
-        </div>        
+        </div>  
+        <div class="form-group">
+            <label for="source">&#10143; Discrete date ?</label><br>
+            <input type="checkbox" name="disc_date" style="height: 20px; width: 20px; margin:10px 5px 0 10px;" value="true"> <b style="font-size: 1.3em;">YES</b>
+        </div>      
         <div class="form-group">
             <label for="source">&#10143; Description:</label>
             <textarea name="description" class="form-control" id="clearForm"></textarea>
         </div>
         <div class="form-group">
-            <label for="source">&#10143; * Source:</label>
-            <input type="text" name="source" class="form-control inF" placeholder="fonte" required id="clearForm">
-        </div>
+        <label for="source">&#10143; * Source:</label>
+        <input type="text" name="source" class="form-control inF" placeholder="fonte" required id="clearForm">
+    </div>
 
         <div class="callback_return">
             <?php

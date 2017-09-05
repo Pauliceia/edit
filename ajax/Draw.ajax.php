@@ -130,11 +130,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                                 extract($columns);
                                 if($column_name != 'id' && $column_name != 'geom' && $column_name != 'id_user' && $column_name != 'date'){
                                     $sql .= ", {$column_name}=";
-                                    $atributo = $PostData[$column_name];
+                                    $atributo = isset($PostData[$column_name]) ? $PostData[$column_name] : 'false';
                                     if($atributo==''){
                                         $sql .= "null";
                                     }else{
-                                        if($column_name == "name" || $column_name == "original_number" || $column_name == "source" || $column_name == "description"){
+                                        if($column_name == "disc_name" || $column_name == "name" || $column_name == "original_number" || $column_name == "source" || $column_name == "description"){
                                             $sql .= "'{$atributo}'";
                                         }else{
                                             $sql .= "{$atributo}";

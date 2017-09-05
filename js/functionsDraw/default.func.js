@@ -19,7 +19,7 @@ function setColorDefault(type){
         image: new ol.style.Circle({
             radius: 8,
             stroke: new ol.style.Stroke({
-                color: 'black',
+                color: '#666',
                 width: 3
             }),
             fill: new ol.style.Fill({
@@ -89,7 +89,7 @@ function generationWkt(e, type){
 //style provisórios -> quando um places é editado
 function generateStylePlaces(type){
     $color = "#33cc33"; //default => green
-    if(type == 'wait') $color = "#ccffff";
+    if(type == 'wait') $color = "#ccc";
     else if(type == 'duplic') $color = "orange";
     return new ol.style.Style({
         image: new ol.style.Circle({
@@ -138,8 +138,12 @@ function preencheFeature(id, type){
                             f.set(colunmsName, inputAtual, true);
                         });
                         
-                        var descFeature = $("#"+type+" textarea").val();
                         f.setStyle(generateStylePlaces());
+
+                        var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
+                        f.set('disc_date', discDate, true);
+
+                        var descFeature = $("#"+type+" textarea").val();
                         f.set('description', descFeature, true);
                     }
                 });
@@ -167,12 +171,18 @@ function editFeatDuplic(id, type){
 function getAttribs(feature, type){
     $("#"+type+" input").each(function(){
         var colunmsName = $(this).attr('name');
-        if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'geom' && colunmsName != 'description'){
+        if(colunmsName != 'callback' && colunmsName != 'callback_action' && colunmsName != 'geom' && colunmsName != 'description' && colunmsName != 'disc_date'){
             $('#'+type+' input[name="'+colunmsName+'"').val(feature.get(colunmsName));
         }
     });
 
     $("#"+type+" textarea").val(feature.get('description'));
+
+    if(feature.get('disc_date') == 't'){
+        $("#"+type+" input[name='disc_date']").prop("checked", true);
+    }else{
+        $("#"+type+" input[name='disc_date']").prop("checked", false);
+    }
 
     var jsonAutor = $('#jsonAutor').text();
     jsonAutor = JSON.parse(jsonAutor);
@@ -199,6 +209,9 @@ function atualizaFeature(idFeature, type){
                             var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
                             f.set(colunmsName, inputAtual, true);
                         });
+
+                        var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
+                        f.set('disc_date', discDate, true);
 
                         var descFeature = $("#"+type+" textarea").val();
                         f.set('description', descFeature, true);

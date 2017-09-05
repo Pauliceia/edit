@@ -54,6 +54,10 @@
             <div class="clear"></div>
         </div>
         <div class="form-group">
+            <label for="source">&#10143; Discrete date ?</label><br>
+            <input type="checkbox" name="disc_date" style="height: 20px; width: 20px; margin:10px 5px 0 10px;" value="true"> <b style="font-size: 1.3em;">YES</b>
+        </div> 
+        <div class="form-group">
             <label for="source">&#10143; Description:</label>
             <textarea name="description" class="form-control"></textarea>
         </div>
