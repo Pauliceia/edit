@@ -19,7 +19,9 @@ var drawPoints;
 
 function actPoint(){
 
-    drawPoints = new ol.interaction.Draw({
+    var styleTypeActual, featActual;
+
+    var drawPoints = new ol.interaction.Draw({
         source: places,
         type: 'Point',
         style: new ol.style.Style({
@@ -33,29 +35,28 @@ function actPoint(){
         })
     });
 
+    var styleSelects = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            stroke: new ol.style.Stroke({
+                color: 'black',
+                width: 3
+            }),
+            fill: new ol.style.Fill({
+                color: '#0066ff'
+            })
+        })
+    })
+
     //AO CLICAR NO BOTÃO [ ]
     $('#panPoint').click(function(){
         clearInteraction('points');
+        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
     
-        var defaultStyle = new ol.style.Style({
-            stroke: new ol.style.Stroke({
-                width: 6, 
-                color: [0, 102, 255, 0.8]
-            })
-        });
-
-        if (bases instanceof ol.layer.Group){
-            bases.getLayers().forEach(function(sublayer){
-                if (sublayer.get('name') == "street") {
-                    sublayer.getSource().getFeatures().forEach(function(feat){
-                        feat.setStyle(defaultStyle)
-                    });
-                }
-            });
-        }
-
+        setColorDefault('street');
+        
         return false;
     });
 
@@ -63,6 +64,7 @@ function actPoint(){
     $('#drawPoint').click(function(){
         if($('#insertData input[name="id_street"]').val()!=""){
             clearInteraction('points');
+            if(featActual!=null) featActual.setStyle(styleTypeActual);
             clearInteraction('line');
 
             $(this).addClass('activeOptions');
@@ -105,6 +107,7 @@ function actPoint(){
     //AO CLICAR NO BOTÃO EDIÇÃO
     $('#editPoint').click(function(){
         clearInteraction('points');
+        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(editPoint);
@@ -112,6 +115,13 @@ function actPoint(){
         editPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
+                if(featActual!=null) featActual.setStyle(styleTypeActual);
+                
+                featActual = featSelect;
+                styleTypeActual = featSelect.getStyle();
+
+                featSelect.setStyle(styleSelects);
+
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
                 $('.selectCamadas').fadeOut();
@@ -129,6 +139,7 @@ function actPoint(){
     //AO CLICAR NO BOTÃO PARA DUPLICAR FEATURE
     $('#duplicPoint').click(function(){
         clearInteraction('points');
+        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(duplicPoint);
@@ -136,6 +147,13 @@ function actPoint(){
         duplicPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
+                if(featActual!=null) featActual.setStyle(styleTypeActual);
+                
+                featActual = featSelect;
+                styleTypeActual = featSelect.getStyle();
+
+                featSelect.setStyle(styleSelects);
+
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
                 $('.selectCamadas').fadeOut();
@@ -155,6 +173,7 @@ function actPoint(){
     //AO CLICAR NO BOTÃO DE EXCLUSÃO
     $('#erasePoint').click(function(){
         clearInteraction('points');
+        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(erasePoint);
@@ -171,11 +190,21 @@ function actPoint(){
         erasePoint.getFeatures().on('add', function(e) {
             if(e.element.getGeometry().getType() == 'Point'){
                 if(e.target.getArray().length !== 0){
+                    if(featActual!=null) featActual.setStyle(styleTypeActual);
+
+                    var featSelect = e.element;
+
+                    featActual = featSelect;
+                    styleTypeActual = featSelect.getStyle();
+
+                    featSelect.setStyle(styleSelects);
 
                     confirme = confirm("Do you want to delete this Place?");
                     if(confirme){
                         statusDraw=0;
                         excluiFeature(e.element);
+                        featActual = featSelect;
+                        styleTypeActual = featSelect.getStyle();
                     }
                     
                 }                  

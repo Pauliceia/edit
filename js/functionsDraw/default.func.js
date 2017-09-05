@@ -8,6 +8,61 @@ function clearInteraction(type){
         map.removeInteraction(erasePoint);
         map.removeInteraction(editPoint);
         map.removeInteraction(duplicPoint);
+
+        setColorDefault('places')
+    }
+}
+
+//seta a cor default do layers desejado -> places ou street
+function setColorDefault(type){
+    var styletoModify = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            stroke: new ol.style.Stroke({
+                color: 'black',
+                width: 3
+            }),
+            fill: new ol.style.Fill({
+                color: '#0066ff'
+            })
+        })
+    })
+
+    var defaultStylePlace = new ol.style.Style({
+        image: new ol.style.Circle({
+            radius: 8,
+            stroke: new ol.style.Stroke({
+                color: 'white',
+                width: 3
+            }),
+            fill: new ol.style.Fill({
+                color: 'red'
+            })
+        })
+    });
+
+    var defaultStyleStreet = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            width: 6, 
+            color: [0, 102, 255, 0.8]
+        })
+    });
+
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == type) {
+                sublayer.getSource().getFeatures().forEach(function(feat){
+                    if(type=="places") {
+                        var styleActual = feat.getStyle();
+                        
+                        if(JSON.stringify(styleActual) === JSON.stringify(styletoModify)){
+                            feat.setStyle(defaultStylePlace);
+                        }
+                    
+                    }else if(type=="street") feat.setStyle(defaultStyleStreet);
+                });
+            }
+        });
     }
 }
 
