@@ -1,6 +1,6 @@
 // ===========================
 //configurações de mostragem do mapa
-function rendMap(){
+function rendMap(bases, osm){
 
 	if($.cookie("saveViewCenter") && $.cookie("saveViewCenter") != ''){
 		var long = parseFloat($.cookie("saveViewCenter"));
@@ -30,7 +30,7 @@ function rendMap(){
 			new ol.control.ZoomSlider()
 		]),
 		renderer: 'canvas',
-		layers: [openstreetmap, bases],
+		layers: [osm, bases],
 		view: view
 	});
 }

@@ -93,6 +93,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 $jSON['PlacesDuplicated'] = $duplic;
             }
 
+            $jSON['AuthorId'] = $_SESSION['userLogin']['id'];
             $jSON['ResultJson'] = $output;
         
         break;

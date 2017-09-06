@@ -8,15 +8,15 @@ endif;
 <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOzBrY44aUb2j3VIi4faeCIrhgy9-MSIU"></script>
 <script src="js/ol4/ol-debug.js" defer></script>
 
-<script src="js/layersMaps/nativo.js" defer></script>
-<script src="js/layersMaps/online.js" defer></script>
+<script src="js/map/index.js" defer></script>
+<script src="js/map/rendMap.js" defer></script>
 
-<script src="js/map.js" defer></script>
-<script src="js/eventsDraw/default.js" defer></script>
-<script src="js/eventsDraw/points.js" defer></script>
-<script src="js/eventsDraw/line.js" defer></script>
+<script src="js/map/colorVisiblePlaces.js" defer></script>
+<script src="js/map/actActions.js" defer></script>
+<script src="js/map/actPoints.js" defer></script>
+<script src="js/map/actLine.js" defer></script>
 
-<script src="js/functionsDraw/default.func.js" defer></script>
+<script src="js/map/default.func.js" defer></script>
 
 <section class="mapedit" id="mapafixo"> 
 
