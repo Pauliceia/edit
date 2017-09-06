@@ -30,6 +30,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
     switch ($Case):
         case 'getRes':
             $name = $PostData['tbName'];
+            $idAuthor = $_SESSION['userLogin']['id'];
             $sqljson = "SELECT id";
 
             //LEITURA DAS COLUNAS PERTENCENTES A TABELA ATUAL
@@ -47,7 +48,11 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
             }
 
             //CONCLUSÃO DA CONSTRUÇÃO DO SQL DOS DADOS GEOGRAFICOS, COM BASE NO TIPO DE DADO A SER CADASTRADO
-            $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name}";
+            $sqljson .= ", st_asgeojson(st_transform(geom,4326)) AS geojson FROM {$name} ";
+            if($name == 'tb_places'){
+                if(isset($PostData['my']) && $PostData['my'] == 'true')  $sqljson .= "WHERE id_user = {$idAuthor}";
+                else $sqljson .= "WHERE id_user != {$idAuthor}";
+            }
 
             $result = pg_query($Conn->getConn(), $sqljson);
 
@@ -93,7 +98,6 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                 $jSON['PlacesDuplicated'] = $duplic;
             }
 
-            $jSON['AuthorId'] = $_SESSION['userLogin']['id'];
             $jSON['ResultJson'] = $output;
         
         break;

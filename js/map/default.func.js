@@ -9,7 +9,7 @@ function clearInteraction(type){
         map.removeInteraction(editPoint);
         map.removeInteraction(duplicPoint);
 
-        setColorDefault('places')
+        //setColorDefault('places')
     }
 }
 
@@ -41,13 +41,6 @@ function setColorDefault(type){
         })
     });
 
-    var defaultStyleStreet = new ol.style.Style({
-        stroke: new ol.style.Stroke({
-            width: 6, 
-            color: [0, 102, 255, 0.8]
-        })
-    });
-
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == type) {
@@ -59,7 +52,7 @@ function setColorDefault(type){
                             feat.setStyle(defaultStylePlace);
                         }
                     
-                    }else if(type=="street") feat.setStyle(defaultStyleStreet);
+                    }else if(type=="street") feat.setStyle(styleStreet);
                 });
             }
         });
@@ -86,25 +79,6 @@ function generationWkt(e, type){
 
 }
 
-//style provisórios -> quando um places é editado
-function generateStylePlaces(type){
-    $color = "#33cc33"; //default => green
-    if(type == 'wait') $color = "#ccc";
-    else if(type == 'duplic') $color = "orange";
-    return new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 8,
-            stroke: new ol.style.Stroke({
-                color: 'white',
-                width: 3
-            }),
-            fill: new ol.style.Fill({
-                color: $color
-            })
-        })
-    });
-}
-
 //ADICIONA A FEATURE NO LAYER DO MAPA
 function addFeature(feature){
     feature.setProperties({
@@ -114,7 +88,7 @@ function addFeature(feature){
 
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'places') {
+            if (sublayer.get('name') == 'myplaces') {
                 sublayer.getSource().addFeatures(feature);
             }
         });
@@ -125,7 +99,7 @@ function addFeature(feature){
 function preencheFeature(id, type){
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'places') {
+            if (sublayer.get('name') == 'myplaces') {
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == 'waitingCheck'){
                         f.set('id', id, true);
@@ -198,24 +172,34 @@ function getAttribs(feature, type){
 
 //ATUALIZA OS ATRIBUTOS DA FEATURE DE ACORDO COM O QUE FOI DIGITADO PELO USUÁRIO
 function atualizaFeature(idFeature, type){
+
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'places') {
+            if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces') {
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == idFeature){
-
                         $("#"+type+" input.inF").each(function(){
                             var colunmsName = $(this).attr('name');
                             var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
                             f.set(colunmsName, inputAtual, true);
                         });
-
+                        
                         var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
                         f.set('disc_date', discDate, true);
-
+                        
                         var descFeature = $("#"+type+" textarea").val();
                         f.set('description', descFeature, true);
                         f.setStyle(generateStylePlaces());
+                        
+                        if(sublayer.get('name') == 'places'){
+                            bases.getLayers().forEach(function(sublayerp){
+                                if (sublayerp.get('name') == 'myplaces') {
+                                    sublayerp.getSource().addFeature(f);
+                                }
+                            }); 
+                            sublayer.getSource().removeFeature(f);
+                        }
+                     
                     }
                 });
             }

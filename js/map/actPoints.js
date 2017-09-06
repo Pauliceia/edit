@@ -19,10 +19,8 @@ var drawPoints;
 
 function actPoint(){
 
-    var styleTypeActual, featActual;
-
-    var drawPoints = new ol.interaction.Draw({
-        source: places,
+    drawPoints = new ol.interaction.Draw({
+        source: myplaces,
         type: 'Point',
         style: new ol.style.Style({
             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
@@ -35,23 +33,9 @@ function actPoint(){
         })
     });
 
-    var styleSelects = new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 8,
-            stroke: new ol.style.Stroke({
-                color: '#666',
-                width: 3
-            }),
-            fill: new ol.style.Fill({
-                color: '#0066ff'
-            })
-        })
-    })
-
     //AO CLICAR NO BOTÃO [ ]
     $('#panPoint').click(function(){
         clearInteraction('points');
-        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
     
@@ -64,7 +48,6 @@ function actPoint(){
     $('#drawPoint').click(function(){
         if($('#insertData input[name="id_street"]').val()!=""){
             clearInteraction('points');
-            if(featActual!=null) featActual.setStyle(styleTypeActual);
             clearInteraction('line');
 
             $(this).addClass('activeOptions');
@@ -90,6 +73,7 @@ function actPoint(){
 
                 if(statusDraw==0){
                     map.addInteraction(drawPoints);
+
                     drawPoints.on('drawend', function(e) {
                         addFeature(e.feature);
                         generationWkt(e.feature, "insert");
@@ -107,7 +91,6 @@ function actPoint(){
     //AO CLICAR NO BOTÃO EDIÇÃO
     $('#editPoint').click(function(){
         clearInteraction('points');
-        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(editPoint);
@@ -115,12 +98,6 @@ function actPoint(){
         editPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
-                if(featActual!=null) featActual.setStyle(styleTypeActual);
-                
-                featActual = featSelect;
-                styleTypeActual = featSelect.getStyle();
-
-                featSelect.setStyle(styleSelects);
 
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
@@ -139,7 +116,6 @@ function actPoint(){
     //AO CLICAR NO BOTÃO PARA DUPLICAR FEATURE
     $('#duplicPoint').click(function(){
         clearInteraction('points');
-        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(duplicPoint);
@@ -147,12 +123,6 @@ function actPoint(){
         duplicPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
-                if(featActual!=null) featActual.setStyle(styleTypeActual);
-                
-                featActual = featSelect;
-                styleTypeActual = featSelect.getStyle();
-
-                featSelect.setStyle(styleSelects);
 
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
@@ -173,7 +143,6 @@ function actPoint(){
     //AO CLICAR NO BOTÃO DE EXCLUSÃO
     $('#erasePoint').click(function(){
         clearInteraction('points');
-        if(featActual!=null) featActual.setStyle(styleTypeActual);
         clearInteraction('line');
         $(this).addClass('activeOptions');
         map.addInteraction(erasePoint);
@@ -190,14 +159,6 @@ function actPoint(){
         erasePoint.getFeatures().on('add', function(e) {
             if(e.element.getGeometry().getType() == 'Point'){
                 if(e.target.getArray().length !== 0){
-                    if(featActual!=null) featActual.setStyle(styleTypeActual);
-
-                    var featSelect = e.element;
-
-                    featActual = featSelect;
-                    styleTypeActual = featSelect.getStyle();
-
-                    featSelect.setStyle(styleSelects);
 
                     confirme = confirm("Do you want to delete this Place?");
                     if(confirme){

@@ -3,8 +3,13 @@
         <h1 class="page-header"> <span class=" glyphicon glyphicon-check"></span> Select Layers</h1>    
     </header>
     <div class="content">
-        <li><input type="checkbox" name="layers" value="places" checked>
-            <b> Places</b> 
+        <li><input type="checkbox" name="layers" value="myplaces" checked>
+            <b> My Places</b> 
+            <span style='font-size: 0.9em; color: #666;' class='period myplaces'>( 1868 - 1940 )</span>
+            <span style='float: right; cursor:pointer; color: #0066ff;' class='glyphicon glyphicon-cog selectCam' name='myplaces'></span>
+        </li>
+        <li><input type="checkbox" name="layers" value="places">
+            Others Places
             <span style='font-size: 0.9em; color: #666;' class='period places'>( 1868 - 1940 )</span>
             <span style='float: right; cursor:pointer; color: #0066ff;' class='glyphicon glyphicon-cog selectCam' name='places'></span>
         </li>
