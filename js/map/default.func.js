@@ -126,18 +126,63 @@ function preencheFeature(id, type){
     }
 }
 
-//ALTERA O ESTILO DA FEATURE DUPLICADA
-function editFeatDuplic(id, type){
+//DUPLICA OS PONTOS DE ACORDO COM OS NOVOS DADOS (MY PLACES)
+function editFeatDuplic(id, newId, idAuthor, type){
     if (bases instanceof ol.layer.Group){
+        var newFeat;
+
         bases.getLayers().forEach(function(sublayer){
-            if (sublayer.get('name') == 'places') {
+            if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces') {
                 sublayer.getSource().forEachFeature(function(f) {
                     if(f.get('id') == id){
-                        f.setStyle(generateStylePlaces('duplic'));
+                        newFeat = f.clone();
+                        newFeat.setId(newId);
+                        newFeat.set('id', newId, true);
+
+                        //f.setStyle(generateStylePlaces());
                     }
                 });
+            }            
+        });
+        
+        $("#"+type+" input.inF").each(function(){
+            var colunmsName = $(this).attr('name');
+            if(colunmsName != "author"){
+                var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
+                newFeat.set(colunmsName, inputAtual, true);
             }
         });
+        
+        //setando data atual
+        var d = new Date(),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        date = [year, month, day].join('-');
+
+        newFeat.set('date', date, true);
+
+        //setando autor atual
+        newFeat.set('id_user', idAuthor, true);
+
+        var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
+        newFeat.set('disc_date', discDate, true);
+        
+        var descFeature = $("#"+type+" textarea").val();
+        newFeat.set('description', descFeature, true);
+
+        console.log(newFeat);
+
+        bases.getLayers().forEach(function(sublayer){
+            if (sublayer.get('name') == 'myplaces') {
+                newFeat.setStyle(generateStylePlaces());
+                sublayer.getSource().addFeature(newFeat);
+            }            
+        });
+
     }
 }
 

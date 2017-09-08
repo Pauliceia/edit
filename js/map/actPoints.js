@@ -164,8 +164,6 @@ function actPoint(){
                     if(confirme){
                         statusDraw=0;
                         excluiFeature(e.element);
-                        featActual = featSelect;
-                        styleTypeActual = featSelect.getStyle();
                     }
                     
                 }                  

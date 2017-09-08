@@ -242,6 +242,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                             $jSON['draw'] = 'duplic';
                             $jSON['drawIdAnt'] = $antId;
                             $jSON['drawId'] = $newID;
+                            $jSON['idAuthor'] = $_SESSION['userLogin']['id'];
                             $jSON['none'] = true;
                         }else{
                             $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields.', E_USER_ERROR);
