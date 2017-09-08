@@ -174,8 +174,6 @@ function editFeatDuplic(id, newId, idAuthor, type){
         var descFeature = $("#"+type+" textarea").val();
         newFeat.set('description', descFeature, true);
 
-        console.log(newFeat);
-
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'myplaces') {
                 newFeat.setStyle(generateStylePlaces());
@@ -272,7 +270,7 @@ function excluiFeature(feature){
     if(DelId=='waitingCheck'){
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){
-                if (sublayer.get('name') == 'places'){
+                if (sublayer.get('name') == 'myplaces'){
                     sublayer.getSource().removeFeature(feature);
                 }
             });
@@ -285,8 +283,10 @@ function excluiFeature(feature){
             if (data.trigger) {
                 if (bases instanceof ol.layer.Group){
                     bases.getLayers().forEach(function(sublayer){
-                        if (sublayer.get('name') == 'places'){
-                            sublayer.getSource().removeFeature(feature);
+                        if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces'){
+                            if(sublayer.getSource().getFeatureById(DelId) != null){
+                                sublayer.getSource().removeFeature(feature);
+                            }
                         }
                     });
                 }
