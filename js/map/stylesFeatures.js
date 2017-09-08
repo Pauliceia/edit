@@ -5,6 +5,13 @@ var styleStreet = new ol.style.Style({
     })
 });
 
+var styleStreetSlc = new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        width: 6, 
+        color: [0, 0, 153, 0.9]
+    })
+});
+
 var styleMyPlaces = new ol.style.Style({
     image: new ol.style.Circle({
         radius: 8,

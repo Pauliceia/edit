@@ -33,6 +33,8 @@ function actPoint(){
         })
     });
 
+    var featAnterior, styleAnterior;
+
     //AO CLICAR NO BOTÃO [ ]
     $('#panPoint').click(function(){
         clearInteraction('points');
@@ -40,6 +42,8 @@ function actPoint(){
         $(this).addClass('activeOptions');
     
         setColorDefault('street');
+        setColorDefault('places');
+        setColorDefault('myplaces');
         
         return false;
     });
@@ -98,6 +102,14 @@ function actPoint(){
         editPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
+                
+                if( featAnterior!=null ){ 
+                    featAnterior.setStyle(styleAnterior);
+                }
+                featAnterior = featSelect;
+                styleAnterior = featSelect.getStyle();
+
+                featSelect.setStyle(styleSelects);
 
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();
@@ -123,6 +135,14 @@ function actPoint(){
         duplicPoint.getFeatures().on('add', function(e) {
             var featSelect = e.element;
             if(featSelect.get("id")!='waitingCheck' && featSelect.get("id")!=null && featSelect.get("tabName") == 'tb_places'){
+
+                if( featAnterior!=null){   
+                    featAnterior.setStyle(styleAnterior);
+                }
+                featAnterior = featSelect;
+                styleAnterior = featSelect.getStyle();
+
+                featSelect.setStyle(styleSelects);
 
                 $('#layersModel').removeClass('active');
                 $('#layers').fadeOut();

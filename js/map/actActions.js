@@ -183,14 +183,7 @@ function actActions(){
             var last_year = form.find('input[name="last_year"]').val();
 
             var callback = form.find('input[name="callback"]').val();
-            var callback_action = form.find('input[name="callback_action"]').val();
-            
-            var selectStyle = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    width: 6, 
-                    color: [0, 0, 153, 0.9]
-                })
-            });            
+            var callback_action = form.find('input[name="callback_action"]').val();         
 
             form.ajaxSubmit({
                 type: 'POST',
@@ -211,7 +204,7 @@ function actActions(){
                             if(layer.get('name') == "street"){
 
                                 var ruaSelect = layer.getSource().getFeatureById(idRua);
-                                ruaSelect.setStyle(selectStyle);
+                                ruaSelect.setStyle(styleStreetSlc);
 
                                 ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
                             }

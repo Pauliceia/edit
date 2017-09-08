@@ -8,51 +8,33 @@ function clearInteraction(type){
         map.removeInteraction(erasePoint);
         map.removeInteraction(editPoint);
         map.removeInteraction(duplicPoint);
-
-        //setColorDefault('places')
     }
 }
 
 //seta a cor default do layers desejado -> places ou street
 function setColorDefault(type){
-    var styletoModify = new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 8,
-            stroke: new ol.style.Stroke({
-                color: '#666',
-                width: 3
-            }),
-            fill: new ol.style.Fill({
-                color: '#0066ff'
-            })
-        })
-    })
-
-    var defaultStylePlace = new ol.style.Style({
-        image: new ol.style.Circle({
-            radius: 8,
-            stroke: new ol.style.Stroke({
-                color: 'white',
-                width: 3
-            }),
-            fill: new ol.style.Fill({
-                color: 'red'
-            })
-        })
-    });
 
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == type) {
                 sublayer.getSource().getFeatures().forEach(function(feat){
-                    if(type=="places") {
-                        var styleActual = feat.getStyle();
-                        
-                        if(JSON.stringify(styleActual) === JSON.stringify(styletoModify)){
-                            feat.setStyle(defaultStylePlace);
+                    var styleActual = feat.getStyle();
+
+                    if(type=="places") {                        
+                        if(JSON.stringify(styleActual) === JSON.stringify(styleSelects)){
+                            feat.setStyle(stylePlaces);
                         }
+                        colorDuplicPlaces();                        
                     
-                    }else if(type=="street") feat.setStyle(styleStreet);
+                    }else if(type=="street") {
+                        feat.setStyle(styleStreet);
+                    
+                    }else if(type=="myplaces") {
+                        if(JSON.stringify(styleActual) === JSON.stringify(styleSelects)){
+                            feat.setStyle(styleMyPlaces);
+                        }
+                        colorDuplicPlaces();
+                    }
                 });
             }
         });
@@ -138,8 +120,6 @@ function editFeatDuplic(id, newId, idAuthor, type){
                         newFeat = f.clone();
                         newFeat.setId(newId);
                         newFeat.set('id', newId, true);
-
-                        //f.setStyle(generateStylePlaces());
                     }
                 });
             }            
@@ -177,10 +157,10 @@ function editFeatDuplic(id, newId, idAuthor, type){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'myplaces') {
                 newFeat.setStyle(generateStylePlaces());
+                colorDuplicPlaces();
                 sublayer.getSource().addFeature(newFeat);
             }            
         });
-
     }
 }
 

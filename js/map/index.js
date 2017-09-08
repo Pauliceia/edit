@@ -3,23 +3,22 @@ function getJsonMap(table, myFeat, callback){
     
     $.post('ajax/MapJson.ajax.php', dados, function (data) {
         if (data.ResultJson) {
-            if(table == "tb_places") callback(data.ResultJson, data.PlacesDuplicated);
+            if(table == "tb_places") callback(data.ResultJson);
             else callback(data.ResultJson);
         }
     }, 'json');
 }
 
-var bases, placesDuplicated, places, myplaces, street, map;
+var bases, places, myplaces, street, map;
 getJsonMap('tb_street', false,  function(streets){
     street = new ol.source.Vector({
         features: (new ol.format.GeoJSON()).readFeatures(streets)
     });
-    getJsonMap('tb_places', false, function(place, duplicated){
-        placesDuplicated = duplicated;
+    getJsonMap('tb_places', false, function(place){
         places = new ol.source.Vector({
             features: (new ol.format.GeoJSON()).readFeatures(place)
         });
-        getJsonMap('tb_places', true, function(myplace, duplicated){
+        getJsonMap('tb_places', true, function(myplace){
             myplaces = new ol.source.Vector({
                 features: (new ol.format.GeoJSON()).readFeatures(myplace)
             });
@@ -65,7 +64,7 @@ getJsonMap('tb_street', false,  function(streets){
             });
 
             rendMap(bases, openstreetmap);
-            colorDuplicPlaces(placesDuplicated);
+            colorDuplicPlaces();
             actActions();
             actPoint();
             actLine();
