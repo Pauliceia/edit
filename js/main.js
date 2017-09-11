@@ -50,8 +50,16 @@ $(function() {
 
                     //DRAW SUCESSO (preenchendo feature com os dados)
                     if (data.draw){
-                        if(data.draw=='insert'){                           
-                            preencheFeature(data.drawId, "insertData");
+                        if(data.draw=='insert'){     
+                            if(data.exists){
+                                form.find('#enviar_form').prop('disabled', false);
+                                if(confirm('Place already exists! Do you really want to register?')){
+                                    form.find('input[name="termo"]').val('true');
+                                    alert('OK! Click in INSERT again');
+                                }
+                            }else{
+                                preencheFeature(data.drawId, "insertData");
+                            }                   
                         }else if(data.draw=='edit'){
                             atualizaFeature(data.drawId, "editData");
                         }else if(data.draw=='duplic'){

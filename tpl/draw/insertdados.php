@@ -3,10 +3,13 @@
         <h1 class="page-header"> <span class="glyphicon glyphicon-pencil"></span> Insert Data</h1>    
     </header>
     <div class="content">
+        <div id="dialog-confirm" style="display:none;"></div>
+
         <form action="" name="create_form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="callback" value="Draw">
         <input type="hidden" name="callback_action" value="draw_insert">
         <input type="hidden" name="geom" required id="clearForm">
+        <input type="hidden" name="termo" id="clearForm">
         <input type="hidden" name="id_user" class="inF" value="<?= $Admin['id'] ?>">
 
         <div class="form-group">
@@ -88,7 +91,7 @@
         </div>
 
         <button type="button" class="btn btn-default cl_form"><span class="glyphicon glyphicon-remove"></span> Close</button>
-        <button class="btn btn-success" id="enviar_form">Inserir</button>
+        <button class="btn btn-success" id="enviar_form">Insert</button>
         
         <div class="clear"></div>
         <img class="form_load" style="float: right; position:relative; display:none;" alt="Enviando Requisição!" title="Enviando Requisição!" src="images/load.gif"/>
