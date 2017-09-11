@@ -63,9 +63,7 @@ function generationWkt(e, type){
 
 //ADICIONA A FEATURE NO LAYER DO MAPA
 function addFeature(feature){
-    feature.setProperties({
-        'id': 'waitingCheck'
-    });
+    feature.setId('waitingCheck');
     feature.setStyle(generateStylePlaces('wait'));
 
     if (bases instanceof ol.layer.Group){
@@ -82,27 +80,26 @@ function preencheFeature(id, type){
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'myplaces') {
-                sublayer.getSource().forEachFeature(function(f) {
-                    if(f.get('id') == 'waitingCheck'){
-                        f.set('id', id, true);
-                        f.set('tabName', 'tb_places', true);
-                        f.setId(id);
+                f = sublayer.getSource().getFeatureById('waitingCheck');
 
-                        $("#"+type+" input.inF").each(function(){
-                            var colunmsName = $(this).attr('name');
-                            var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
-                            f.set(colunmsName, inputAtual, true);
-                        });
-                        
-                        f.setStyle(generateStylePlaces());
+                f.set('id', id, true);
+                f.set('tabName', 'tb_places', true);
+                f.setId(id);
 
-                        var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
-                        f.set('disc_date', discDate, true);
-
-                        var descFeature = $("#"+type+" textarea").val();
-                        f.set('description', descFeature, true);
-                    }
+                $("#"+type+" input.inF").each(function(){
+                    var colunmsName = $(this).attr('name');
+                    var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
+                    f.set(colunmsName, inputAtual, true);
                 });
+                
+                f.setStyle(generateStylePlaces());
+
+                var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
+                f.set('disc_date', discDate, true);
+
+                var descFeature = $("#"+type+" textarea").val();
+                f.set('description', descFeature, true);
+
             }
         });
     }
@@ -115,13 +112,12 @@ function editFeatDuplic(id, newId, idAuthor, type){
 
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces') {
-                sublayer.getSource().forEachFeature(function(f) {
-                    if(f.get('id') == id){
-                        newFeat = f.clone();
-                        newFeat.setId(newId);
-                        newFeat.set('id', newId, true);
-                    }
-                });
+                var f = sublayer.getSource().getFeatureById(id);
+                if(f != null){
+                    newFeat = f.clone();
+                    newFeat.setId(newId);
+                    newFeat.set('id', newId, true);
+                }
             }            
         });
         
@@ -199,32 +195,32 @@ function atualizaFeature(idFeature, type){
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces') {
-                sublayer.getSource().forEachFeature(function(f) {
-                    if(f.get('id') == idFeature){
-                        $("#"+type+" input.inF").each(function(){
-                            var colunmsName = $(this).attr('name');
-                            var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
-                            f.set(colunmsName, inputAtual, true);
-                        });
-                        
-                        var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
-                        f.set('disc_date', discDate, true);
-                        
-                        var descFeature = $("#"+type+" textarea").val();
-                        f.set('description', descFeature, true);
-                        f.setStyle(generateStylePlaces());
-                        
-                        if(sublayer.get('name') == 'places'){
-                            bases.getLayers().forEach(function(sublayerp){
-                                if (sublayerp.get('name') == 'myplaces') {
-                                    sublayerp.getSource().addFeature(f);
-                                }
-                            }); 
-                            sublayer.getSource().removeFeature(f);
-                        }
-                     
+                var f = sublayer.getSource().getFeatureById(idFeature);
+                if(f != null){
+
+                    $("#"+type+" input.inF").each(function(){
+                        var colunmsName = $(this).attr('name');
+                        var inputAtual = $('#'+type+' input[name="'+colunmsName+'"').val();
+                        f.set(colunmsName, inputAtual, true);
+                    });
+
+                    var discDate = $("#"+type+" input[name='disc_date']").is(":checked") == true ? 't' : 'f';
+                    f.set('disc_date', discDate, true);
+                    
+                    var descFeature = $("#"+type+" textarea").val();
+                    f.set('description', descFeature, true);
+                    f.setStyle(generateStylePlaces());
+
+                    if(sublayer.get('name') == 'places'){
+                        bases.getLayers().forEach(function(sublayerp){
+                            if (sublayerp.get('name') == 'myplaces') {
+                                sublayerp.getSource().addFeature(f);
+                            }
+                        }); 
+                        sublayer.getSource().removeFeature(f);
                     }
-                });
+
+                }
             }
         });
     }
@@ -235,18 +231,20 @@ function atualizaStreet(type){
     var streetID = $('#'+type+' input[name="id_street"').val();
     bases.getLayers().forEach(function(sublayer){
         if (sublayer.get('name') == 'street') {
-            sublayer.getSource().forEachFeature(function(f) {
-                if(f.get('id') == streetID){
-                    $('#'+type+' input[name="street"').val(f.get('name'))
-                }
-            });
+            var f = sublayer.getSource().getFeatureById(streetID);
+            if(f != null){
+                $('#'+type+' input[name="street"').val(f.get('name'))
+            }
         }
     });
 }
 
 //EXCLUI A FEATURE SELECIONADA DO 'LAYER ATUAL' NO MAPA
 function excluiFeature(feature){
-    var DelId = feature.get('id');
+    var DelId = feature.getId();
+
+    console.log(feature);
+
     if(DelId=='waitingCheck'){
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){

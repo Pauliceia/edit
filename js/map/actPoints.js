@@ -66,12 +66,10 @@ function actPoint(){
 
             if (bases instanceof ol.layer.Group){
                 bases.getLayers().forEach(function(sublayer){
-                    if (sublayer.get('name') == 'places') {
-                        sublayer.getSource().forEachFeature(function(f) {
-                            if(f.get('id') == 'waitingCheck'){
-                                statusDraw=1;
-                            }
-                        });
+                    if (sublayer.get('name') == 'myplaces') {
+                        if(sublayer.getSource().getFeatureById('waitingCheck') != null){
+                            statusDraw=1;
+                        }
                     }
                 });
 
