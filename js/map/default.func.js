@@ -264,6 +264,7 @@ function excluiFeature(feature){
                         if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces'){
                             if(sublayer.getSource().getFeatureById(DelId) != null){
                                 sublayer.getSource().removeFeature(feature);
+                                colorDuplicPlaces();
                             }
                         }
                     });

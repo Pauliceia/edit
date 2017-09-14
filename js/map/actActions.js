@@ -88,7 +88,6 @@ function actActions(){
             bases.getLayers().forEach(function(sublayer){
                 if (sublayer.get('name') == featName) {
                     var duplicStyle = sublayer.get('name') == "myplaces" ? styleMyDuplic : styleDuplic;
-
                     getPlacesDuplicated(function(dups){
                         sublayer.getSource().getFeatures().forEach( function(feat){
                             var visibleStyle = sublayer.getStyle();
@@ -106,9 +105,7 @@ function actActions(){
                                     && (feat.get('last_year') >= anoFirst && feat.get('last_year') <= anoLast) ) feat.setStyle(visibleStyle);
                                 else feat.setStyle(emptyStyle);
                             }
-
-
-
+                            
                             //verifica se a feature pertence aos places duplicados
                             if(JSON.stringify(feat.getStyle()) === JSON.stringify(visibleStyle)){
                                 dups.forEach(function(res){

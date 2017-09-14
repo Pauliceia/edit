@@ -14,23 +14,9 @@ function colorDuplicPlaces(){
         
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){
-                if (sublayer.get('name') == "places") {
-                    
-                    sublayer.getSource().getFeatures().forEach(function(feat){
-                        duplics.forEach(function(res){
-                            var pontos = res.substr(res.indexOf('(')+1);
-                            pontos = pontos.substr(0,pontos.indexOf(')'));
-                            var listPoints = pontos.split(' ');
-
-                            if(feat.getGeometry().getCoordinates()[0]==listPoints[0] && feat.getGeometry().getCoordinates()[1]==listPoints[1]){
-                                if(JSON.stringify(generateStylePlaces()) !== JSON.stringify(feat.getStyle())){
-                                    feat.setStyle(styleDuplic);
-                                }
-                            }
-                        });
-                    });
-
-                }else if(sublayer.get('name') == "myplaces"){
+     
+                if (sublayer.get('name') == "places" || sublayer.get('name') == "myplaces") {
+                    var styleActual = sublayer.get('name') == "myplaces" ? styleMyDuplic : styleDuplic;
 
                     sublayer.getSource().getFeatures().forEach(function(feat){
                         duplics.forEach(function(res){
@@ -40,12 +26,11 @@ function colorDuplicPlaces(){
 
                             if(feat.getGeometry().getCoordinates()[0]==listPoints[0] && feat.getGeometry().getCoordinates()[1]==listPoints[1]){
                                 if(JSON.stringify(generateStylePlaces()) !== JSON.stringify(feat.getStyle())){
-                                    feat.setStyle(styleMyDuplic);
+                                    feat.setStyle(styleActual);
                                 }
                             }
                         });
                     });
-
                 }
             });
         }
