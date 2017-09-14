@@ -89,9 +89,9 @@ function actActions(){
                 if (sublayer.get('name') == featName) {
                     var duplicStyle = sublayer.get('name') == "myplaces" ? styleMyDuplic : styleDuplic;
 
+                    getPlacesDuplicated(function(dups){
                         sublayer.getSource().getFeatures().forEach( function(feat){
                             var visibleStyle = sublayer.getStyle();
-                        
 
                             if(feat.get('first_year')=="" && feat.get('last_year')==""){
                                 feat.setStyle(visibleStyle);
@@ -103,10 +103,29 @@ function actActions(){
                                 else feat.setStyle(emptyStyle);
                             }else{
                                 if ((feat.get('first_year') >= anoFirst && feat.get('first_year') <= anoLast) 
-                                        || (feat.get('last_year') >= anoFirst && feat.get('last_year') <= anoLast) ) feat.setStyle(visibleStyle);
+                                    && (feat.get('last_year') >= anoFirst && feat.get('last_year') <= anoLast) ) feat.setStyle(visibleStyle);
                                 else feat.setStyle(emptyStyle);
-                            }             
-                        });
+                            }
+
+
+
+                            //verifica se a feature pertence aos places duplicados
+                            if(JSON.stringify(feat.getStyle()) === JSON.stringify(visibleStyle)){
+                                dups.forEach(function(res){
+                                    var pontos = res.substr(res.indexOf('(')+1);
+                                    pontos = pontos.substr(0,pontos.indexOf(')'));
+                                    var listPoints = pontos.split(' ');
+    
+                                    if(feat.getGeometry().getCoordinates()[0]==listPoints[0] && feat.getGeometry().getCoordinates()[1]==listPoints[1]){
+                                        if(JSON.stringify(generateStylePlaces()) !== JSON.stringify(feat.getStyle())){
+                                            feat.setStyle(styleDuplic);
+                                        }
+                                    }
+                                });
+                            }
+                        });                     
+
+                    });
                 }
             });
         }

@@ -46,7 +46,7 @@ var styleMyDuplic = new ol.style.Style({
             width: 3
         }),
         fill: new ol.style.Fill({
-            color: '#e69500'
+            color: '#ffa600'
         })
     })
 });
