@@ -243,8 +243,6 @@ function atualizaStreet(type){
 function excluiFeature(feature){
     var DelId = feature.getId();
 
-    console.log(feature);
-
     if(DelId=='waitingCheck'){
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){
@@ -264,7 +262,7 @@ function excluiFeature(feature){
                         if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces'){
                             if(sublayer.getSource().getFeatureById(DelId) != null){
                                 sublayer.getSource().removeFeature(feature);
-                                colorDuplicPlaces();
+                                colorPosDel(feature);
                             }
                         }
                     });
@@ -272,6 +270,28 @@ function excluiFeature(feature){
             }
 
         }, 'json');
+    }
+}
+
+//APÓS EXCLUSÃO -> ao excluir um ponto, ele verifica se a algum duplicado e volta a sua cor original.
+function colorPosDel(featDel){
+    if (bases instanceof ol.layer.Group){
+        bases.getLayers().forEach(function(sublayer){
+
+            if (sublayer.get('name') == 'places' || sublayer.get('name') == 'myplaces'){
+                var styleActual = sublayer.get('name') == "myplaces" ? styleMyPlaces : stylePlaces;
+                sublayer.getSource().getFeatures().forEach(function(feat){
+                    var formatWKT = new ol.format.WKT();
+                    var featDelwkt = formatWKT.writeFeature(featDel);
+                    var featwkt = formatWKT.writeFeature(feat);
+
+                    if(featDelwkt == featwkt){
+                        feat.setStyle(styleActual);
+                    }
+                });
+            }
+
+        });
     }
 }
 

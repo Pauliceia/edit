@@ -87,7 +87,7 @@ function actActions(){
         if (bases instanceof ol.layer.Group){
             bases.getLayers().forEach(function(sublayer){
                 if (sublayer.get('name') == featName) {
-                    var duplicStyle = sublayer.get('name') == "myplaces" ? styleMyDuplic : styleDuplic;
+
                     getPlacesDuplicated(function(dups){
                         sublayer.getSource().getFeatures().forEach( function(feat){
                             var visibleStyle = sublayer.getStyle();
@@ -107,7 +107,8 @@ function actActions(){
                             }
                             
                             //verifica se a feature pertence aos places duplicados
-                            if(JSON.stringify(feat.getStyle()) === JSON.stringify(visibleStyle)){
+                            if( (JSON.stringify(feat.getStyle()) === JSON.stringify(visibleStyle)) && (sublayer.get('name') == "myplaces" || sublayer.get('name') == "myplaces") ){
+                                var styleActual = sublayer.get('name') == "myplaces" ? styleMyDuplic : styleDuplic;
                                 dups.forEach(function(res){
                                     var pontos = res.substr(res.indexOf('(')+1);
                                     pontos = pontos.substr(0,pontos.indexOf(')'));
@@ -115,7 +116,7 @@ function actActions(){
     
                                     if(feat.getGeometry().getCoordinates()[0]==listPoints[0] && feat.getGeometry().getCoordinates()[1]==listPoints[1]){
                                         if(JSON.stringify(generateStylePlaces()) !== JSON.stringify(feat.getStyle())){
-                                            feat.setStyle(styleDuplic);
+                                            feat.setStyle(styleActual);
                                         }
                                     }
                                 });
