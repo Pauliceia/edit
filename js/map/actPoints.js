@@ -60,6 +60,8 @@ function actPoint(){
             $('.selectCamadas').fadeOut();
             $('#searchEnd').fadeOut();
             $('#searchModel').removeClass('active');
+            $('#infoModel').removeClass('active');
+            $('#infos').fadeOut();
             $('#editData').fadeOut();
             $('#duplicData').fadeOut();
             $('#insertData').fadeIn();
@@ -114,6 +116,8 @@ function actPoint(){
                 $('.selectCamadas').fadeOut();
                 $('#searchEnd').fadeOut();
                 $('#searchModel').removeClass('active');
+                $('#infoModel').removeClass('active');
+                $('#infos').fadeOut();
                 $('#insertData').fadeOut();
                 $('#duplicData').fadeOut();
                 $('#editData').fadeIn();
@@ -147,6 +151,8 @@ function actPoint(){
                 $('.selectCamadas').fadeOut();
                 $('#searchEnd').fadeOut();
                 $('#searchModel').removeClass('active');
+                $('#infoModel').removeClass('active');
+                $('#infos').fadeOut();
                 $('#insertData').fadeOut();
                 $('#editData').fadeOut();
                 $('#duplicData').fadeIn();
@@ -170,6 +176,8 @@ function actPoint(){
         $('#searchEnd').fadeOut();
         $('.selectCamadas').fadeOut();
         $('#searchModel').removeClass('active');
+        $('#infoModel').removeClass('active');
+        $('#infos').fadeOut();
         $('#insertData').fadeOut();
         $('#editData').fadeOut();
         $('#duplicData').fadeOut();

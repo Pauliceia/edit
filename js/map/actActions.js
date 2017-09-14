@@ -10,6 +10,8 @@ function actActions(){
         $('.form_draw').fadeOut();
         $('#searchEnd').fadeOut();
         $('#searchModel').removeClass('active');
+        $('#infoModel').removeClass('active');
+        $('#infos').fadeOut();
         $('#layers').fadeIn();
     });
     $('#cl_layers').click(function () {
@@ -32,6 +34,8 @@ function actActions(){
         }
         $('.form_draw').fadeOut();
         $('#layersModel').removeClass('active');
+        $('#infoModel').removeClass('active');
+        $('#infos').fadeOut();
         $('#layers').fadeOut();
         $('.selectCamadas').fadeOut();
 
@@ -43,6 +47,27 @@ function actActions(){
         $('#searchEnd').fadeOut();
     });
 
+    //OPEN / CLOSE TOOBAR INFOS
+    $('#infoModel').click(function () {
+        clearInteraction('points');
+        if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+        }
+        $('.form_draw').fadeOut();
+        $('#layersModel').removeClass('active');
+        $('#searchEnd').fadeOut();
+        $('#searchModel').removeClass('active');
+        $('#layers').fadeOut();
+        $('.selectCamadas').fadeOut();
+        $('#searchEnd').fadeOut();
+
+        $('#infos').fadeIn();
+        //load_dados();
+    });
+    $('#cl_info').click(function () {
+        $('#infoModel').removeClass('active');
+        $('#infos').fadeOut();
+    });
 
     //btn RECARREGAMENTO de PÁGINA
     $('#recEditModel').click(function () {

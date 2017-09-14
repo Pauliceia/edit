@@ -39,6 +39,11 @@ endif;
             <a class='btn_draw drawPoint glyphicon glyphicon-record' id='pointsModel'></a>
         </div>
 
+        <!--- btn INFOS -->
+        <div class="base_btn infoB">
+            <a class='btn_draw glyphicon glyphicon-info-sign' id='infoModel'></a>
+        </div>
+
         <!--- btn RECARREGAMENTO de PÁGINA -->
         <div class="base_btn recarregB">
             <a class='btn_draw glyphicon glyphicon-refresh' id='recEditModel'></a>
@@ -72,6 +77,9 @@ endif;
     <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
     <?php require 'tpl/draw/search.php'; ?>
 
+    <!--- TOOBAR DE INFORMÇÕES -->
+    <?php require 'tpl/draw/infos.php'; ?>
+    
     <!--- TOOBAR DE SELEÇÃO DE CAMADAS (FEATURE por data) -->
     <?php require 'tpl/draw/selectCamadas.php'; ?>
 

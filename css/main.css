@@ -138,18 +138,23 @@ footer p{
     text-decoration: none;
 }
 
-.mapedit .base_btn.searchB{
-    width: 2.54em;
-    bottom: 370px;
-    left: 5px;
-}
 .mapedit .base_btn.layerB{
     top: 7.5px;
     right:50px;
 }
+.mapedit .base_btn.infoB{
+    width: 2.54em;
+    bottom:320px;
+    left:5px;
+}
+.mapedit .base_btn.searchB{
+    width: 2.54em;
+    bottom: 260px;
+    left: 5px;
+}
 .mapedit .base_btn.typeGeomB{
     width: 2.54em;
-    bottom:220px;
+    bottom:160px;
     left: 5px;
 }
 .mapedit .base_btn.recarregB{
@@ -258,6 +263,13 @@ footer p{
 .searchEnd .searchResposta button{
     padding: 0 3px;
     float: right;
+}
+
+/* ---- Infos Features ---- */
+.infos{
+    width: 35%;
+    top: 3.5%;
+    left: 3%;
 }
 
 /* ============================= EXCLUSÃO ============================= */
