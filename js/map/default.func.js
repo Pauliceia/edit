@@ -295,3 +295,23 @@ function colorPosDel(featDel){
     }
 }
 
+//GET INFO FEATURE -> função i
+    function viewInfo(feat){
+        
+    }
+
+    //gerar a resposta com as informações da feature
+    function generateResp(feat){
+        var resp = "";
+        if(feat.get('tabName')=='street'){
+            resp +=  "<table><tr><td colspan='3'><b>"+feat.get('name') != '' ? feat.get('name') : feat.get('obs')+"</b></td></tr>";
+            resp += "<tr><td>"+feat.get('first_year')+"</td>";
+            resp += "<td>"+feat.get('last_year')+"</td></tr>";
+            resp += "<tr><td colspan='3'>"+feat.get('perimeter')+"</td></tr></table>";
+            
+        }else{
+
+        }
+
+        return resp;
+    }

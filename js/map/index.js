@@ -68,6 +68,7 @@ getJsonMap('tb_street', false,  function(streets){
             actActions();
             actPoint();
             actLine();
+            actInfos();
         });
     });
 });
