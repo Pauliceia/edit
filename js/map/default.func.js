@@ -330,13 +330,24 @@ function colorPosDel(featDel){
     function generateResp(feat){
         var resp = "";
         if(feat.get('tabName')=='tb_street'){
+            var sizeStreet = 0;
+            if(feat.get('perimeter')==0){
+            //MultiLineString
+                for(var i=0; i<feat.getGeometry().getLineStrings().length; i++){
+                    sizeStreet += LengthLineString(feat.getGeometry().getCoordinates()[i]);
+                }
+            }else{
+                sizeStreet = feat.get('perimeter');
+            }
+            sizeStreet = sizeStreet>=1000 ? parseFloat((sizeStreet/1000).toFixed(2))+"km" : (parseFloat(sizeStreet).toFixed(2))+"m";
+
             var title = feat.get('name') != '' ? feat.get('name') : feat.get('obs');
             resp += "<tr style='background: #999;'> <td colspan='2'><b>"+title+"</b></td>";
             resp += "<td><center><button class='btn' id='selectFeat' idFeat="+feat.getId()+" tab="+feat.get('tabName')+"> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
 
             resp += "<tr> <td>First_year: "+feat.get('first_year')+"</td>";
             resp += "<td>Last_year: "+feat.get('last_year')+"</td> </tr>";
-            resp += "<tr><td colspan='3'> Perimiter: "+feat.get('perimeter')+"</td></tr>"
+            resp += "<tr><td colspan='3'> Perimiter: "+sizeStreet+"</td></tr>"
             
         }else if(feat.get('tabName')=='tb_places'){
             var title = feat.get('name') != '' ? feat.get('name') : 'unnamed';
@@ -354,6 +365,21 @@ function colorPosDel(featDel){
 
         return resp;
     }
+
+    //calculo do tamanho de uma linha - street
+    function LengthLineString(coordinates) {
+        var length = 0;
+        var wgs84Sphere = new ol.Sphere(6378137);
+        
+        for (var i = 0, ii = coordinates.length - 1; i < ii; ++i) {
+            var c1 = ol.proj.transform(coordinates[i], map.getView().getProjection(), 'EPSG:4326');
+            var c2 = ol.proj.transform(coordinates[i + 1], map.getView().getProjection(), 'EPSG:4326');
+            length += wgs84Sphere.haversineDistance(c1, c2);
+        }
+        
+        return (Math.round(length * 100) / 100);
+    }
+        
 
     //muda a cor e da um zoom na feature selecionada
     function extendsToSelect(idFeat, table){
