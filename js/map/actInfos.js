@@ -7,10 +7,8 @@ function actInfos(){
         map.addInteraction(getFeat);
 
         getFeat.getFeatures().on('add', function(e) {
-            var featSelect = e.element;
-            if(featSelect.get('tabName') == "tb_places") featSelect.setStyle(styleSelects);
-            else if(featSelect.get('tabName') == "tb_street") featSelect.setStyle(styleStreetSlc);
-            
+            var featSelect = e.element;   
+                     
             viewInfo(featSelect, 'unique');
         });
     });

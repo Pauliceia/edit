@@ -297,7 +297,11 @@ function colorPosDel(featDel){
 
 //GET INFO FEATURE -> função i
     function viewInfo(feat, type){
-        $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>").fadeIn();        
+        $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>").fadeIn();     
+        
+        $('#selectFeat').click(function(){
+            extendsToSelect($(this).attr('idFeat'), $(this).attr('tab'));
+        });   
     }
 
     //seleciona as features que possuem a geometria = selecionada
@@ -328,14 +332,17 @@ function colorPosDel(featDel){
         var resp = "";
         if(feat.get('tabName')=='tb_street'){
             var title = feat.get('name') != '' ? feat.get('name') : feat.get('obs');
-            resp +=  "<tr style='background: #999;'> <td colspan='3'><b>"+title+"</b></td> </tr>";
+            resp += "<tr style='background: #999;'> <td colspan='2'><b>"+title+"</b></td>";
+            resp += "<td><center><button class='btn' id='selectFeat' idFeat="+feat.getId()+" tab="+feat.get('tabName')+"> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
+
             resp += "<tr> <td>First_year: "+feat.get('first_year')+"</td>";
             resp += "<td>Last_year: "+feat.get('last_year')+"</td> </tr>";
             resp += "<tr><td colspan='3'> Perimiter: "+feat.get('perimeter')+"</td></tr>"
             
         }else if(feat.get('tabName')=='tb_places'){
             var title = feat.get('name') != '' ? feat.get('name') : 'unnamed';
-            resp += "<tr style='background: #999;'> <td colspan='3'><b>"+title+"</b></td> </tr>";
+            resp += "<tr style='background: #999;'> <td colspan='2'><b>"+title+"</b></td>";
+            resp += "<td><center><button class='btn' id='selectFeat' idFeat="+feat.getId()+" tab="+feat.get('tabName')+"> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
 
             if(feat.get('description') != '') resp += "<tr> <td colspan='3'>"+feat.get('description')+"</td> </tr>";
 
@@ -347,4 +354,37 @@ function colorPosDel(featDel){
         }
 
         return resp;
+    }
+
+    //muda a cor e da um zoom na feature selecionada
+    function extendsToSelect(idFeat, table){
+        if(table == "tb_street"){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.getVisible() && sublayer.get('name') == "street" ){
+                    var feat = sublayer.getSource().getFeatureById(idFeat);
+                    var extent = ol.extent.createEmpty();
+                    if(feat!=null) {
+                        feat.setStyle(styleStreetSlc);
+                       
+                        ol.extent.extend(extent, feat.getGeometry().getExtent());
+                        map.getView().fit(extent, map.getSize());
+                    }
+                }
+            });
+        
+        }else if(table == "tb_places"){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.getVisible() && (sublayer.get('name') == "places" || sublayer.get('name') == "myplaces") ){
+                    var feat = sublayer.getSource().getFeatureById(idFeat);
+                    var extent = ol.extent.createEmpty();
+                    if(feat!=null) {
+                        feat.setStyle(styleSelects);
+                        
+                        ol.extent.extend(extent, feat.getGeometry().getExtent());
+                        map.getView().fit(extent, map.getSize());
+                    }
+                }
+            });
+
+        }
     }
