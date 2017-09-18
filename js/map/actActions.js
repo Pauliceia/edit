@@ -124,8 +124,9 @@ function actActions(){
                                 if (feat.get('first_year') >= anoFirst && feat.get('first_year') <= anoLast) feat.setStyle(visibleStyle);
                                 else feat.setStyle(emptyStyle);
                             }else{
-                                if ((feat.get('first_year') >= anoFirst && feat.get('first_year') <= anoLast) 
-                                    && (feat.get('last_year') >= anoFirst && feat.get('last_year') <= anoLast) ) feat.setStyle(visibleStyle);
+                                if ( (feat.get('first_year') >= anoFirst && feat.get('first_year') <= anoLast) || 
+                                        (feat.get('last_year') >= anoFirst && feat.get('last_year') <= anoLast) ||
+                                        (feat.get('first_year') <= anoFirst && feat.get('last_year') >= anoLast) ) feat.setStyle(visibleStyle);
                                 else feat.setStyle(emptyStyle);
                             }
                             
