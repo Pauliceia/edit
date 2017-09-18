@@ -25,7 +25,8 @@ function colorDuplicPlaces(){
                             var listPoints = pontos.split(' ');
 
                             if(feat.getGeometry().getCoordinates()[0]==listPoints[0] && feat.getGeometry().getCoordinates()[1]==listPoints[1]){
-                                if(JSON.stringify(generateStylePlaces()) !== JSON.stringify(feat.getStyle())){
+                                if( (JSON.stringify(generateStylePlaces()) !== JSON.stringify(feat.getStyle())) &&
+                                    (JSON.stringify(emptyStyle) !== JSON.stringify(feat.getStyle())) ){
                                     feat.setStyle(styleActual);
                                 }
                             }

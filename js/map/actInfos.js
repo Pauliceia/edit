@@ -10,7 +10,12 @@ function actInfos(){
             var featSelect = e.element;   
                      
             viewInfo(featSelect, 'unique');
+
+            $('#selectFeat').click(function(){
+                extendsToSelect($(this).attr('idFeat'), $(this).attr('tab'));
+            });
         });
+        
     });
 
     $('#clearInfo').click(function(){

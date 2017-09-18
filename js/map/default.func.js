@@ -27,7 +27,9 @@ function setColorDefault(type){
                         colorDuplicPlaces();                        
                     
                     }else if(type=="street") {
-                        feat.setStyle(styleStreet);
+                        if(JSON.stringify(styleActual) === JSON.stringify(styleStreetSlc)){
+                            feat.setStyle(styleStreet);
+                        }
                     
                     }else if(type=="myplaces") {
                         if(JSON.stringify(styleActual) === JSON.stringify(styleSelects)){
@@ -299,9 +301,6 @@ function colorPosDel(featDel){
     function viewInfo(feat, type){
         $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>").fadeIn();     
         
-        $('#selectFeat').click(function(){
-            extendsToSelect($(this).attr('idFeat'), $(this).attr('tab'));
-        });   
     }
 
     //seleciona as features que possuem a geometria = selecionada
@@ -385,6 +384,7 @@ function colorPosDel(featDel){
                     }
                 }
             });
-
         }
     }
+
+      
