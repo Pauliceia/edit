@@ -296,20 +296,53 @@ function colorPosDel(featDel){
 }
 
 //GET INFO FEATURE -> função i
-    function viewInfo(feat){
+    function viewInfo(feat, type){
+        $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>").fadeIn();        
+    }
+
+    //seleciona as features que possuem a geometria = selecionada
+    function getFeatSelects(feat){
+        var respInfo = "";
         
+        if (bases instanceof ol.layer.Group){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.getVisible() && sublayer.get('name') != "sara" ){
+                    sublayer.getSource().getFeatures().forEach(function(featSelect){
+                        var formatWKT = new ol.format.WKT();
+                        var featSelwkt = formatWKT.writeFeature(featSelect);
+                        var featwkt = formatWKT.writeFeature(feat);
+    
+                        if( (featSelwkt == featwkt) && (JSON.stringify(featSelect.getStyle()) !== JSON.stringify(emptyStyle)) ){
+                            respInfo += generateResp(featSelect);
+                        }
+                    });
+                }
+            });
+        }
+        
+        return respInfo;
     }
 
     //gerar a resposta com as informações da feature
     function generateResp(feat){
         var resp = "";
-        if(feat.get('tabName')=='street'){
-            resp +=  "<table><tr><td colspan='3'><b>"+feat.get('name') != '' ? feat.get('name') : feat.get('obs')+"</b></td></tr>";
-            resp += "<tr><td>"+feat.get('first_year')+"</td>";
-            resp += "<td>"+feat.get('last_year')+"</td></tr>";
-            resp += "<tr><td colspan='3'>"+feat.get('perimeter')+"</td></tr></table>";
+        if(feat.get('tabName')=='tb_street'){
+            var title = feat.get('name') != '' ? feat.get('name') : feat.get('obs');
+            resp +=  "<tr style='background: #999;'> <td colspan='3'><b>"+title+"</b></td> </tr>";
+            resp += "<tr> <td>First_year: "+feat.get('first_year')+"</td>";
+            resp += "<td>Last_year: "+feat.get('last_year')+"</td> </tr>";
+            resp += "<tr><td colspan='3'> Perimiter: "+feat.get('perimeter')+"</td></tr>"
             
-        }else{
+        }else if(feat.get('tabName')=='tb_places'){
+            var title = feat.get('name') != '' ? feat.get('name') : 'unnamed';
+            resp += "<tr style='background: #999;'> <td colspan='3'><b>"+title+"</b></td> </tr>";
+
+            if(feat.get('description') != '') resp += "<tr> <td colspan='3'>"+feat.get('description')+"</td> </tr>";
+
+            resp += "<tr> <td>First day: "+feat.get('first_day')+"</td> <td>First month: "+feat.get('first_month')+"</td> <td>First year: "+feat.get('first_year')+"</td> </tr>";
+            resp += "<tr> <td>Last day: "+feat.get('last_day')+"</td> <td>Last month: "+feat.get('last_month')+"</td> <td>Last year: "+feat.get('last_year')+"</td> </tr>";
+            resp += "<tr> <td>Number: "+feat.get('number')+"</td> <td colspan='2'>Original_number: "+feat.get('original_number')+"</td> </tr>";
+            resp += "<tr> <td colspan='3'>Source: "+feat.get('source')+"</td> </tr>";
 
         }
 

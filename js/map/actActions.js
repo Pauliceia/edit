@@ -100,8 +100,6 @@ function actActions(){
         $('.selectCamadas').fadeOut();
     });
     $('#applyCamadas').click(function () {
-	    var emptyStyle = new ol.style.Style({ display: 'none' });
-
         var featName = $('.selectCamadas input[name="featureName"]').val();
         var anoFirst = $('.selectCamadas input[name="first_year"]').val();
         var anoLast = $('.selectCamadas input[name="last_year"]').val();

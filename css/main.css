@@ -270,7 +270,28 @@ footer p{
     width: 35%;
     top: 3.5%;
     left: 3%;
+    max-height: 80%;
 }
+
+.infos .respInfo{
+    width: 100%; 
+    background: #fff;
+    margin: 15px 0;
+    padding: 15px;
+    display:none;
+}
+.infos .respInfo table{
+    width: 100%;
+}
+.infos .respInfo table tr, td{
+    border: 1px solid #666;
+    padding: 6px !important;
+}
+.infos .respInfo table a {
+    text-align: center;
+    font-size: 1.1em;
+}
+
 
 /* ============================= EXCLUSÃO ============================= */
 .del_colaborador .btn{ background: #e60000; color: #fff; padding: 3px 10px;}

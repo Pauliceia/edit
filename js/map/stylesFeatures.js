@@ -1,3 +1,5 @@
+var emptyStyle = new ol.style.Style({ display: 'none' });
+
 var styleStreet = new ol.style.Style({
     stroke: new ol.style.Stroke({
         width: 6, 
