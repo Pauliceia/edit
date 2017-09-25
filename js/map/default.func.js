@@ -299,8 +299,17 @@ function colorPosDel(featDel){
 
 //GET INFO FEATURE -> função i
     function viewInfo(feat, type){
-        $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>").fadeIn();     
-        
+        if(type=='unique'){
+            $("#infos .respInfo").fadeIn();
+            $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>");
+            
+        }else{
+            var resp = "<table>";
+            feat.getArray().forEach(function(feature) {
+                resp += generateResp(feature);
+            });
+            $("#infos .respInfo").html(resp+"</table>").fadeIn();
+        }
     }
 
     //seleciona as features que possuem a geometria = selecionada
@@ -347,7 +356,7 @@ function colorPosDel(featDel){
 
             resp += "<tr> <td>First_year: "+feat.get('first_year')+"</td>";
             resp += "<td>Last_year: "+feat.get('last_year')+"</td> </tr>";
-            resp += "<tr><td colspan='3'> Perimiter: "+sizeStreet+"</td></tr>"
+            resp += "<tr><td colspan='3'> Perimiter: "+sizeStreet+"</td></tr>";
             
         }else if(feat.get('tabName')=='tb_places'){
             var title = feat.get('name') != '' ? feat.get('name') : 'unnamed';
@@ -360,9 +369,10 @@ function colorPosDel(featDel){
             resp += "<tr> <td>Last day: "+feat.get('last_day')+"</td> <td>Last month: "+feat.get('last_month')+"</td> <td>Last year: "+feat.get('last_year')+"</td> </tr>";
             resp += "<tr> <td>Number: "+feat.get('number')+"</td> <td colspan='2'>Original_number: "+feat.get('original_number')+"</td> </tr>";
             resp += "<tr> <td colspan='3'>Source: "+feat.get('source')+"</td> </tr>";
-
+            
         }
 
+        
         return resp;
     }
 
@@ -379,7 +389,6 @@ function colorPosDel(featDel){
         
         return (Math.round(length * 100) / 100);
     }
-        
 
     //muda a cor e da um zoom na feature selecionada
     function extendsToSelect(idFeat, table){
