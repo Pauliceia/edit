@@ -59,7 +59,7 @@ getJsonMap('tb_street', false,  function(streets){
 
             var openstreetmap = new ol.layer.Tile({
                 source: new ol.source.OSM(),
-                visible: true,
+                visible: false,
                 name: 'openstreetmap'
             });
 
