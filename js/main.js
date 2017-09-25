@@ -53,6 +53,7 @@ $(function() {
                         if(data.draw=='insert'){     
                             if(data.exists){
                                 form.find('#enviar_form').prop('disabled', false);
+                                viewInfo(data.feats, 'exists');
                                 if(confirm('Place already exists! Do you really want to register?')){
                                     form.find('input[name="termo"]').val('true');
                                     alert('OK! Click in INSERT again');

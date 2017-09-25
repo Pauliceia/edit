@@ -45,11 +45,12 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                                 $PostData['name'] = strtolower($PostData['name']);
                             }
 
-                            $sqlName = "SELECT name, source FROM tb_places WHERE name='{$PostData['name']}' AND source='{$PostData['source']}'";
+                            $sqlName = "SELECT id, name, source FROM tb_places WHERE name='{$PostData['name']}' AND source='{$PostData['source']}'";
                             $result = pg_query($conn->getConn(), $sqlName);
                             if(pg_num_rows($result) > 0 && empty($PostData['termo'])){
                                 $jSON['draw'] = 'insert';
                                 $jSON['exists'] = true;
+                                $jSON['feats'] = pg_fetch_all($result);
 
                             }else{
 

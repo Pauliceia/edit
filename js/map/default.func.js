@@ -303,6 +303,22 @@ function colorPosDel(featDel){
             $("#infos .respInfo").fadeIn();
             $("#infos .respInfo").html("<table>"+getFeatSelects(feat)+"</table>");
             
+        }else if(type=='exists'){
+            var resp = "<table>";
+            feat.forEach(function(feats){
+                var id = feats['id'];
+                bases.getLayers().forEach(function(sublayer){
+                    if (sublayer.get('name') == "places" || sublayer.get('name') == "myplaces"){
+                        var feature = sublayer.getSource().getFeatureById(id);
+                        if(feature!=null){
+                            resp += generateResp(feature);
+                        }
+                    }
+                });
+            });
+            $("#infos").fadeIn();
+            $("#infos .respInfo").html(resp+"</table>").fadeIn();
+
         }else{
             var resp = "<table>";
             feat.getArray().forEach(function(feature) {
