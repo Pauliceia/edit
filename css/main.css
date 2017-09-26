@@ -142,6 +142,11 @@ footer p{
     top: 7.5px;
     right:50px;
 }
+.mapedit .base_btn.reverseStrB{
+    width: 2.54em;
+    bottom:370px;
+    left:5px;
+}
 .mapedit .base_btn.infoB{
     width: 2.54em;
     bottom:320px;
@@ -290,6 +295,13 @@ footer p{
 .infos .respInfo table a {
     text-align: center;
     font-size: 1.1em;
+}
+
+/* ---- Search Street ---- */
+.reverseStr{
+    width: 25%;
+    top: 10%;
+    left: 3%;
 }
 
 

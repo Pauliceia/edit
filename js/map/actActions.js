@@ -12,6 +12,8 @@ function actActions(){
         $('#searchModel').removeClass('active');
         $('#infoModel').removeClass('active');
         $('#infos').fadeOut();
+        arrowLine('remove');
+
         $('#layers').fadeIn();
     });
     $('#cl_layers').click(function () {
@@ -38,6 +40,7 @@ function actActions(){
         $('#infos').fadeOut();
         $('#layers').fadeOut();
         $('.selectCamadas').fadeOut();
+        arrowLine('remove');
 
         $('#searchEnd').fadeIn();
         //load_dados();
@@ -45,6 +48,19 @@ function actActions(){
     $('#cl_search').click(function () {
         $('#searchModel').removeClass('active');
         $('#searchEnd').fadeOut();
+    });
+
+    //OPEN / CLOSE TOOBAR REVERSE
+    $('#reverseModel').click(function () {
+        clearInteraction('points');
+        clearInteraction('line');
+        if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+        }
+        arrowLine('');
+    });
+    $('#cl_reverse').click(function () {
+        arrowLine('remove');
     });
 
     //OPEN / CLOSE TOOBAR INFOS
@@ -60,6 +76,7 @@ function actActions(){
         $('#layers').fadeOut();
         $('.selectCamadas').fadeOut();
         $('#searchEnd').fadeOut();
+        arrowLine('remove');
 
         $('#infos').fadeIn();
         //load_dados();
@@ -85,6 +102,27 @@ function actActions(){
 
         location.reload();
     });
+
+    // função que adiciona e remove os arrows das ruas
+    function arrowLine(actionType){
+        if(actionType=='remove'){
+            $('#reverseModel').removeClass('active');
+            $('#reverseStr').fadeOut();
+            $('#strReverse').attr('disabled', true);
+        }else{
+            $('.form_draw').fadeOut();
+            $('#layersModel').removeClass('active');
+            $('#layers').fadeOut();
+            $('.selectCamadas').fadeOut();
+            $('#searchEnd').fadeOut();
+            $('#searchModel').removeClass('active');
+            $('#infoModel').removeClass('active');
+            $('#infos').fadeOut();
+
+            $('#reverseStr').fadeIn();
+        }
+        return;
+    }
 
     //btn SELECT DE FEATURES EM DETERMINADO TEMPO (DATE)
     $('.selectCam').click(function () {

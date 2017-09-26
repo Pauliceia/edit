@@ -40,6 +40,11 @@ endif;
             <a class='btn_draw drawPoint glyphicon glyphicon-record' id='pointsModel'></a>
         </div>
 
+        <!--- btn REVERSE STREET -->
+        <div class="base_btn reverseStrB">
+            <a class='btn_draw glyphicon glyphicon-sort' id='reverseModel'></a>
+        </div>
+
         <!--- btn INFOS -->
         <div class="base_btn infoB">
             <a class='btn_draw glyphicon glyphicon-info-sign' id='infoModel'></a>
@@ -77,6 +82,9 @@ endif;
 
     <!--- TOOBAR DE PESQUISA (GEOCODIFICAÇÃO) -->
     <?php require 'tpl/draw/search.php'; ?>
+
+    <!--- TOOBAR DE REVERSE STREET -->
+    <?php require 'tpl/draw/reverse.php'; ?>
 
     <!--- TOOBAR DE INFORMÇÕES -->
     <?php require 'tpl/draw/infos.php'; ?>
