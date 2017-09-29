@@ -6,16 +6,15 @@ function actInfos(){
     var auxSelect = new ol.interaction.Select();
 
     $('#getFeatInfo').click(function(){
+        var getFeat = new ol.interaction.Select();
+        var getBoxFeat = new ol.interaction.DragBox();
+        var auxSelect = new ol.interaction.Select();
         map.addInteraction(getFeat);
 
         getFeat.on('select', function(e) {
-            var featSelect = e.selected[0];   
+            var featSelect = e.selected[0];
                      
             viewInfo(featSelect, 'unique');  
-
-            $('#selectFeat').click(function(){
-                extendsToSelect($(this).attr('idFeat'), $(this).attr('tab'));
-            });
         });
 
     });
@@ -40,11 +39,8 @@ function actInfos(){
                 }
             });
             
-            viewInfo(selectedFeatures, 'multi');
-
-            $('#selectFeat').click(function(){
-                extendsToSelect($(this).attr('idFeat'), $(this).attr('tab'));
-            });
+            viewInfo(selectedFeatures, 'multi');     
+            map.removeInteraction(getBoxFeat);
 
         });
 

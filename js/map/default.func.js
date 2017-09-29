@@ -328,6 +328,7 @@ function colorPosDel(featDel){
             });
             $("#infos .respInfo").html(resp+"</table>").fadeIn();
         }
+
     }
 
     //seleciona as features que possuem a geometria = selecionada
@@ -353,9 +354,14 @@ function colorPosDel(featDel){
         return respInfo;
     }
 
+    function viewFeatSelect(idFeat,tabFeat){
+        extendsToSelect(idFeat, tabFeat==1 ? 'tb_street' : 'tb_places');
+    };  
+
     //gerar a resposta com as informações da feature
     function generateResp(feat){
         var resp = "";
+         
         if(feat.get('tabName')=='tb_street'){
             var sizeStreet = 0;
             if(feat.get('perimeter')==0){
@@ -370,7 +376,7 @@ function colorPosDel(featDel){
 
             var title = feat.get('name') != '' ? feat.get('name') : feat.get('obs');
             resp += "<tr style='background: #999;'> <td colspan='2'><b>"+title+"</b></td>";
-            resp += "<td><center><button class='btn' id='selectFeat' idFeat="+feat.getId()+" tab="+feat.get('tabName')+"> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
+            resp += "<td><center><button class='btn' onclick='viewFeatSelect("+feat.getId()+","+1+")'> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
 
             resp += "<tr> <td>First_year: "+feat.get('first_year')+"</td>";
             resp += "<td>Last_year: "+feat.get('last_year')+"</td> </tr>";
@@ -379,7 +385,7 @@ function colorPosDel(featDel){
         }else if(feat.get('tabName')=='tb_places'){
             var title = feat.get('name') != '' ? feat.get('name') : 'unnamed';
             resp += "<tr style='background: #999;'> <td colspan='2'><b>"+title+"</b></td>";
-            resp += "<td><center><button class='btn' id='selectFeat' idFeat="+feat.getId()+" tab="+feat.get('tabName')+"> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
+            resp += "<td><center><button class='btn' onclick='viewFeatSelect("+feat.getId()+","+2+")'> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
 
             if(feat.get('description') != '') resp += "<tr> <td colspan='3'>"+feat.get('description')+"</td> </tr>";
 

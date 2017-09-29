@@ -79,6 +79,32 @@ var styleSelects = new ol.style.Style({
     })
 });
 
+var styleFunction = function(feature) {
+    var geometry = feature.getGeometry();
+    var styles = [
+        styleStreetSlc
+    ];
+
+    var lineStringsArray = geometry.getLineStrings();
+    for(var i=0;i<lineStringsArray.length;i++){
+        lineStringsArray[i].forEachSegment(function(start, end) {
+            var dx = end[0] - start[0];
+            var dy = end[1] - start[1];
+            var rotation = Math.atan2(dy, dx);
+            styles.push(new ol.style.Style({
+                geometry: new ol.geom.Point(end),
+                image: new ol.style.Icon({
+                    src: 'images/arrow.png',
+                    rotateWithView: false,
+                    rotation: -rotation
+                })
+            }));
+        });
+    }
+
+    return styles;
+};
+
 function generateStylePlaces(type){
     $color = "#33cc33"; //default => green
    

@@ -12,7 +12,7 @@
         <div class="clear"></div>
         
         <div class="respInfo"></div>
-
+        <br>
         <button type="button" class="btn btn-default" id="cl_info" style="float:right;"><span class="glyphicon glyphicon-remove"></span> Close</button>
     </div>
 </article>

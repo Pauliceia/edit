@@ -9,7 +9,7 @@
     .mapedit .boxToobar h1{font-size: 2em;} 
 
     .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{width: 40%;}
-    .mapedit .searchEnd{left: 5%;}
+    .mapedit .searchEnd, .mapedit .infos, .mapedit .reverseStr{left: 5%;}
 }
 
 @media (max-width: 780px){
@@ -19,7 +19,7 @@
     .mapedit a.btnbackMap{ bottom: 95%; right: 60%; }
 
     .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{ width: 55%; }
-    .mapedit .searchEnd{left: 7%;}
+    .mapedit .searchEnd, .mapedit .infos, .mapedit .reverseStr{left: 7%;}
 }
 
 @media (max-width: 620px){
@@ -33,7 +33,7 @@
     .mapedit .btn_edit{ bottom: 15px; left:3%; }
 
     .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{ width: 80%; }
-    .mapedit .searchEnd{left: 10%;}
+    .mapedit .searchEnd, .mapedit .infos, .mapedit .reverseStr{left: 10%;}
 }
 
 @media (max-width: 450px){
