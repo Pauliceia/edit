@@ -8,7 +8,7 @@
 
     .mapedit .boxToobar h1{font-size: 2em;} 
 
-    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{width: 40%;}
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{width: 40%;}
     .mapedit .searchEnd{left: 5%;}
 }
 
@@ -16,9 +16,9 @@
     header .logo{ width: 30%; }
 
     .mapedit img{ width: 20%; }
-    .mapedit a.btnbackMap{ bottom: 95%; right: 50%; }
+    .mapedit a.btnbackMap{ bottom: 95%; right: 60%; }
 
-    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{ width: 55%; }
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{ width: 55%; }
     .mapedit .searchEnd{left: 7%;}
 }
 
@@ -32,7 +32,7 @@
 
     .mapedit .btn_edit{ bottom: 15px; left:3%; }
 
-    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{ width: 80%; }
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{ width: 80%; }
     .mapedit .searchEnd{left: 10%;}
 }
 
@@ -42,7 +42,7 @@
     .mapedit .btn_edit{ bottom: 15px; left:1%; }
     .mapedit .btn_edit p{ padding: 5px 10px; font: 0.75em;}
 
-    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw{ width: 85%; }
+    .mapedit .layersMap, .mapedit .searchEnd, .mapedit .form_draw, .mapedit .infos, .mapedit .reverseStr{ width: 85%; }
 }
 
 @media (max-height: 650px){
@@ -50,8 +50,6 @@
     .mapedit .base_btn.layerB{ top: 5px; }
     .mapedit .base_btn.typeGeomB{ bottom:140px; }
     .mapedit .base_btn.recarregB{ bottom:65px; }
-
-    .mapedit a.btnbackMap{ bottom: 90%; }
 
     .ol-zoomslider {display: none !important;}
 }
