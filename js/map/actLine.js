@@ -3,6 +3,7 @@ var selectLine = new ol.interaction.Select({
     style: styleFunction
 });
 
+var featSelect;
 //AO CLICAR NO BOTÃO PARA DUPLICAR FEATURE
 function actLine(){
     $('#selectStLine').click(function(){
@@ -18,7 +19,6 @@ function actLine(){
         return false;
     });
 
-    var featSelect;
     $('#sltStrReverse').click(function(){
         clearInteraction('point');
         clearInteraction('line');
@@ -86,6 +86,12 @@ function actLine(){
 
                 $('#'+type+' input[name="id_street"]').val(idStreet);
                 $('#'+type+' input[name="street"]').val(nameStreet);
+            }
+        });
+
+        selectLine.getFeatures().on('remove', function(){
+            if(featSelect!=null){
+                featSelect.setStyle(styleStreetSlc);
             }
         });
     }

@@ -4,6 +4,9 @@ function clearInteraction(type){
     if(type == 'line'){
         map.removeInteraction(selectLine);
     }else{
+        if(featSelect!=null){
+            featSelect.setStyle(styleStreetSlc);
+        }
         map.removeInteraction(drawPoints);
         map.removeInteraction(erasePoint);
         map.removeInteraction(editPoint);
@@ -13,7 +16,7 @@ function clearInteraction(type){
 
 //seta a cor default do layers desejado -> places ou street
 function setColorDefault(type){
-
+    featSelect = null;
     if (bases instanceof ol.layer.Group){
         bases.getLayers().forEach(function(sublayer){
             if (sublayer.get('name') == type) {
