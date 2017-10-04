@@ -39,59 +39,60 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         if(!isset($PostData['geom']) || empty($PostData['geom'])){
                             $jSON['trigger'] = AjaxErro('Error: add point into map</b>', E_USER_ERROR);
                         }else{
-
-                            if(isset($PostData['name']) || !empty($PostData['name'])){
-                                $PostData['name'] = preg_replace('/[^\w\ \.\,]/', '', htmlentities(trim($PostData['name'])));
-                                $PostData['name'] = strtolower($PostData['name']);
-                            }
-
-                            $sqlName = "SELECT id, name, source FROM tb_places WHERE name='{$PostData['name']}' AND source='{$PostData['source']}'";
-                            $result = pg_query($conn->getConn(), $sqlName);
-                            if(pg_num_rows($result) > 0 && empty($PostData['termo'])){
-                                $jSON['draw'] = 'insert';
-                                $jSON['exists'] = true;
-                                $jSON['feats'] = pg_fetch_all($result);
-
+                            if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9- ])+$/i', $PostData['name'])){
+                                $jSON['trigger'] = AjaxErro('Error: the name is in an invalid format, type only letters and numbers</b>', E_USER_ERROR);
+                                
                             }else{
+                                $PostData['name'] = strtolower($PostData['name']);
 
-                                unset($PostData['termo']);
-                                $date = date("Y/m/d");
-                                $PostData['id_user'] = $_SESSION['userLogin']['id'];
-                
-                                $sql = "INSERT INTO tb_places ";
-                                $sqlKeys = "(geom, date";
-                                $sqlValues = "VALUES (st_GeomFromText('{$PostData['geom']}', 4326), '{$date}'";
-                                foreach($PostData as $key => $value){
-                                    if($key!="geom"){
-                                        $sqlKeys .= ", {$key}";
-                                        if($value==''){
-                                            $sqlValues .= ", null";
-                                        }else{
-                                            if($key == "name" || $key == "original_number" || $key == "source" || $key == "description"){
-                                                $sqlValues .= ", '{$value}'";
-                                            }else{
-                                                $sqlValues .= ", {$value}";
-                                            }
-                                        }
-                                        
-                                    }
-                                }
+                                $sqlName = "SELECT id, name, source FROM tb_places WHERE name='{$PostData['name']}' AND source='{$PostData['source']}'";
+                                $result = pg_query($conn->getConn(), $sqlName);
+                                if(pg_num_rows($result) > 0 && empty($PostData['termo'])){
+                                    $jSON['draw'] = 'insert';
+                                    $jSON['exists'] = true;
+                                    $jSON['feats'] = pg_fetch_all($result);
     
-                                $sql .= $sqlKeys.")"." ".$sqlValues.")";
-                                $result = pg_query($conn->getConn(), $sql);
-                                if(!$result) {
-                                    $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields</b>', E_USER_ERROR);
                                 }else{
-                                    $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
-                                    $result = pg_query($conn->getConn(), $sql);
-                                    $registro = pg_fetch_all($result)[0];
-                                    $newID = $registro['id'];
+    
+                                    unset($PostData['termo']);
+                                    $date = date("Y/m/d");
+                                    $PostData['id_user'] = $_SESSION['userLogin']['id'];
+                    
+                                    $sql = "INSERT INTO tb_places ";
+                                    $sqlKeys = "(geom, date";
+                                    $sqlValues = "VALUES (st_GeomFromText('{$PostData['geom']}', 4326), '{$date}'";
+                                    foreach($PostData as $key => $value){
+                                        if($key!="geom"){
+                                            $sqlKeys .= ", {$key}";
+                                            if($value==''){
+                                                $sqlValues .= ", null";
+                                            }else{
+                                                if($key == "name" || $key == "original_number" || $key == "source" || $key == "description"){
+                                                    $sqlValues .= ", '{$value}'";
+                                                }else{
+                                                    $sqlValues .= ", {$value}";
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
         
-                                    if($result){
-                                        $jSON['trigger'] = AjaxErro('Data inserted successfully');
-                                        $jSON['draw'] = 'insert';
-                                        $jSON['drawId'] = $newID;
-                                        $jSON['clearInput'] = true;
+                                    $sql .= $sqlKeys.")"." ".$sqlValues.")";
+                                    $result = pg_query($conn->getConn(), $sql);
+                                    if(!$result) {
+                                        $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields</b>', E_USER_ERROR);
+                                    }else{
+                                        $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
+                                        $result = pg_query($conn->getConn(), $sql);
+                                        $registro = pg_fetch_all($result)[0];
+                                        $newID = $registro['id'];
+            
+                                        if($result){
+                                            $jSON['trigger'] = AjaxErro('Data inserted successfully');
+                                            $jSON['draw'] = 'insert';
+                                            $jSON['drawId'] = $newID;
+                                            $jSON['clearInput'] = true;
+                                        }
                                     }
                                 }
                             }                                                  
@@ -124,45 +125,46 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $jSON['trigger'] = AjaxErro('Error: Select a street or avenue</b>', E_USER_ERROR);
                     }else{
 
-                        if(isset($PostData['name']) || !empty($PostData['name'])){
-                            $PostData['name'] = preg_replace('/[^\w\ \.\,]/', '', htmlentities(trim($PostData['name'])));
-                            $PostData['name'] = strtolower($PostData['name']);
-                        }
+                        if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9- ])+$/i', $PostData['name'])){
+                            $jSON['trigger'] = AjaxErro('Error: the name is in an invalid format, type only letters and numbers</b>', E_USER_ERROR);
+                            
+                        }else{
 
-                        $date = date("Y/m/d");
-                        $PostData['id_user'] = $_SESSION['userLogin']['id'];
-                        $sql = "UPDATE tb_places SET date='{$date}', id_user={$PostData['id_user']}";
+                            $date = date("Y/m/d");
+                            $PostData['id_user'] = $_SESSION['userLogin']['id'];
+                            $sql = "UPDATE tb_places SET date='{$date}', id_user={$PostData['id_user']}";
 
-                        $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='tb_places'";
-                        $result = pg_query($conn->getConn(), $sqlcolumn);
-                        if(pg_num_rows($result) > 0){
-                            $atributos = pg_fetch_all($result);
-                            foreach ($atributos as $columns){
-                                extract($columns);
-                                if($column_name != 'id' && $column_name != 'geom' && $column_name != 'id_user' && $column_name != 'date'){
-                                    $sql .= ", {$column_name}=";
-                                    $atributo = isset($PostData[$column_name]) ? $PostData[$column_name] : 'false';
-                                    if($atributo==''){
-                                        $sql .= "null";
-                                    }else{
-                                        if($column_name == "disc_name" || $column_name == "name" || $column_name == "original_number" || $column_name == "source" || $column_name == "description"){
-                                            $sql .= "'{$atributo}'";
+                            $sqlcolumn = "SELECT column_name FROM information_schema.columns WHERE table_name ='tb_places'";
+                            $result = pg_query($conn->getConn(), $sqlcolumn);
+                            if(pg_num_rows($result) > 0){
+                                $atributos = pg_fetch_all($result);
+                                foreach ($atributos as $columns){
+                                    extract($columns);
+                                    if($column_name != 'id' && $column_name != 'geom' && $column_name != 'id_user' && $column_name != 'date'){
+                                        $sql .= ", {$column_name}=";
+                                        $atributo = isset($PostData[$column_name]) ? $PostData[$column_name] : 'false';
+                                        if($atributo==''){
+                                            $sql .= "null";
                                         }else{
-                                            $sql .= "{$atributo}";
-                                        }
-                                    } 
+                                            if($column_name == "disc_name" || $column_name == "name" || $column_name == "original_number" || $column_name == "source" || $column_name == "description"){
+                                                $sql .= "'{$atributo}'";
+                                            }else{
+                                                $sql .= "{$atributo}";
+                                            }
+                                        } 
+                                    }
                                 }
                             }
-                        }
 
-                        $sql .= " WHERE id={$PostData['id']}";
-                        $result = pg_query($conn->getConn(), $sql);
-                        if($result){
-                            $jSON['trigger'] = AjaxErro('Data updated successfully');
-                            $jSON['draw'] = 'edit';
-                            $jSON['drawId'] = $PostData['id'];
-                        }else{
-                            $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields', E_USER_ERROR);
+                            $sql .= " WHERE id={$PostData['id']}";
+                            $result = pg_query($conn->getConn(), $sql);
+                            if($result){
+                                $jSON['trigger'] = AjaxErro('Data updated successfully');
+                                $jSON['draw'] = 'edit';
+                                $jSON['drawId'] = $PostData['id'];
+                            }else{
+                                $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields', E_USER_ERROR);
+                            }
                         }
                     }
 
@@ -216,47 +218,48 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     
                     }else{
 
-                        if(isset($PostData['name']) || !empty($PostData['name'])){
-                            $PostData['name'] = preg_replace('/[^\w\ \.\,]/', '', htmlentities(trim($PostData['name'])));
-                            $PostData['name'] = strtolower($PostData['name']);
-                        }
+                        if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9- ])+$/i', $PostData['name'])){
+                            $jSON['trigger'] = AjaxErro('Error: the name is in an invalid format, type only letters and numbers</b>', E_USER_ERROR);
+                            
+                        }else{
 
-                        $sql = "INSERT INTO tb_places ";
-                        $sqlKeys = "(geom, date";
-                        $sqlValues = "VALUES (st_GeomFromText('{$geom}', 4326), '{$date}'";
+                            $sql = "INSERT INTO tb_places ";
+                            $sqlKeys = "(geom, date";
+                            $sqlValues = "VALUES (st_GeomFromText('{$geom}', 4326), '{$date}'";
 
-                        foreach($PostData as $key => $value){
-                            if($key!="geom"){
-                                $sqlKeys .= ", {$key}";
+                            foreach($PostData as $key => $value){
+                                if($key!="geom"){
+                                    $sqlKeys .= ", {$key}";
 
-                                if($value==''){
-                                    $sqlValues .= ", null";
-                                }else{
-                                    if($key == "name" || $key == "original_number" || $key == "source" || $key == "description"){
-                                        $sqlValues .= ", '{$value}'";
+                                    if($value==''){
+                                        $sqlValues .= ", null";
                                     }else{
-                                        $sqlValues .= ", {$value}";
+                                        if($key == "name" || $key == "original_number" || $key == "source" || $key == "description"){
+                                            $sqlValues .= ", '{$value}'";
+                                        }else{
+                                            $sqlValues .= ", {$value}";
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        $sql .= $sqlKeys.")"." ".$sqlValues.")";
-                        $result = pg_query($conn->getConn(), $sql);
-                        $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
-                        $result = pg_query($conn->getConn(), $sql);
-                        $registro = pg_fetch_all($result)[0];
-                        $newID = $registro['id'];
+                            $sql .= $sqlKeys.")"." ".$sqlValues.")";
+                            $result = pg_query($conn->getConn(), $sql);
+                            $sql = "SELECT * FROM tb_places ORDER BY id DESC limit 1";
+                            $result = pg_query($conn->getConn(), $sql);
+                            $registro = pg_fetch_all($result)[0];
+                            $newID = $registro['id'];
 
-                        if($result){
-                            $jSON['trigger'] = AjaxErro('data replicated successfully');
-                            $jSON['draw'] = 'duplic';
-                            $jSON['drawIdAnt'] = $antId;
-                            $jSON['drawId'] = $newID;
-                            $jSON['idAuthor'] = $_SESSION['userLogin']['id'];
-                            $jSON['none'] = true;
-                        }else{
-                            $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields.', E_USER_ERROR);
+                            if($result){
+                                $jSON['trigger'] = AjaxErro('data replicated successfully');
+                                $jSON['draw'] = 'duplic';
+                                $jSON['drawIdAnt'] = $antId;
+                                $jSON['drawId'] = $newID;
+                                $jSON['idAuthor'] = $_SESSION['userLogin']['id'];
+                                $jSON['none'] = true;
+                            }else{
+                                $jSON['trigger'] = AjaxErro('Error: verify your data, (*) <b>Required fields.', E_USER_ERROR);
+                            }
                         }
                     }
                 }
