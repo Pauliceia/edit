@@ -39,7 +39,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         if(!isset($PostData['geom']) || empty($PostData['geom'])){
                             $jSON['trigger'] = AjaxErro('Error: add point into map</b>', E_USER_ERROR);
                         }else{
-                            if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9- ])+$/i', $PostData['name'])){
+                            if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9-. ])+$/i', $PostData['name'])){
                                 $jSON['trigger'] = AjaxErro('Error: the name is in an invalid format, type only letters and numbers</b>', E_USER_ERROR);
                                 
                             }else{
@@ -125,7 +125,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                         $jSON['trigger'] = AjaxErro('Error: Select a street or avenue</b>', E_USER_ERROR);
                     }else{
 
-                        if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9- ])+$/i', $PostData['name'])){
+                        if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9-. ])+$/i', $PostData['name'])){
                             $jSON['trigger'] = AjaxErro('Error: the name is in an invalid format, type only letters and numbers</b>', E_USER_ERROR);
                             
                         }else{
@@ -218,7 +218,7 @@ if ($PostData && $PostData['callback_action'] && $PostData['callback'] = $CallBa
                     
                     }else{
 
-                        if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9- ])+$/i', $PostData['name'])){
+                        if(isset($PostData['name']) && !empty($PostData['name']) && !preg_match('/^([a-z0-9-. ])+$/i', $PostData['name'])){
                             $jSON['trigger'] = AjaxErro('Error: the name is in an invalid format, type only letters and numbers</b>', E_USER_ERROR);
                             
                         }else{
