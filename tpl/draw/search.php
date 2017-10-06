@@ -19,8 +19,14 @@
                 <div class="clear"></div>
             </div>
             <hr>
+            <center> 
+                <input type="radio" name="camada" class="camada" value="street" checked/> STREET
+                <input type="radio" name="camada" class="camada" value="myplaces" style="margin-left: 15px"/> MY PLACES
+                <input type="radio" name="camada" class="camada" value="places" style="margin-left: 15px"/> OTHER PLACES
+            </center>
+            <hr>
             <div class="form-group">
-                <input type="text" name="searchInput" value="" class="form-control" tabindex="1" placeholder="street ... " />
+                <input type="text" name="searchInput" value="" class="form-control" tabindex="1" placeholder="street or place... " />
             </div>
             <div class="clear"></div>
         </form>

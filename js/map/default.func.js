@@ -421,28 +421,49 @@ function colorPosDel(featDel){
     function extendsToSelect(idFeat, table){
         if(table == "tb_street"){
             bases.getLayers().forEach(function(sublayer){
-                if (sublayer.getVisible() && sublayer.get('name') == "street" ){
-                    var feat = sublayer.getSource().getFeatureById(idFeat);
-                    var extent = ol.extent.createEmpty();
-                    if(feat!=null) {
-                        feat.setStyle(styleStreetSlc);
-                       
-                        ol.extent.extend(extent, feat.getGeometry().getExtent());
-                        map.getView().fit(extent, map.getSize());
-                    }
+                if (sublayer.get('name') == "street" ){
+                    if(sublayer.getVisible()){
+                        var feat = sublayer.getSource().getFeatureById(idFeat);
+                        var extent = ol.extent.createEmpty();
+                        if(feat!=null) {
+                            feat.setStyle(styleStreetSlc);
+                           
+                            ol.extent.extend(extent, feat.getGeometry().getExtent());
+                            map.getView().fit(extent, map.getSize());
+                        }
+                    }else{
+                        alert('activate the street layer');
+                    }   
                 }
             });
         
         }else if(table == "tb_places"){
             bases.getLayers().forEach(function(sublayer){
-                if (sublayer.getVisible() && (sublayer.get('name') == "places" || sublayer.get('name') == "myplaces") ){
+                if (sublayer.get('name') == "places"){
                     var feat = sublayer.getSource().getFeatureById(idFeat);
                     var extent = ol.extent.createEmpty();
                     if(feat!=null) {
-                        feat.setStyle(styleSelects);
+                        if(sublayer.getVisible()){
+                            feat.setStyle(styleSelects);
                         
-                        ol.extent.extend(extent, feat.getGeometry().getExtent());
-                        map.getView().fit(extent, map.getSize());
+                            ol.extent.extend(extent, feat.getGeometry().getExtent());
+                            map.getView().fit(extent, map.getSize());
+                        }else{
+                            alert('activate the others places layer');
+                        }
+                    }
+                }else if(sublayer.get('name') == "myplaces"){
+                    var feat = sublayer.getSource().getFeatureById(idFeat);
+                    var extent = ol.extent.createEmpty();
+                    if(feat!=null) {
+                        if(sublayer.getVisible()){
+                            feat.setStyle(styleSelects);
+                        
+                            ol.extent.extend(extent, feat.getGeometry().getExtent());
+                            map.getView().fit(extent, map.getSize());
+                        }else{
+                            alert('activate the my places layer');
+                        }
                     }
                 }
             });

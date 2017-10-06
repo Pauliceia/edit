@@ -65,7 +65,7 @@ getJsonMap('tb_street', false,  function(streets){
 
             rendMap(bases, openstreetmap);
             colorDuplicPlaces();
-            actActions();
+            actDefault();
             actPoint();
             actLine();
             actInfos();

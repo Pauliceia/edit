@@ -14,7 +14,7 @@ endif;
 <script src="js/map/index.js" defer></script>
 <script src="js/map/rendMap.js" defer></script>
 
-<script src="js/map/actActions.js" defer></script>
+<script src="js/map/actDefault.js" defer></script>
 <script src="js/map/actPoints.js" defer></script>
 <script src="js/map/actLine.js" defer></script>
 <script src="js/map/actInfos.js" defer></script>

@@ -1,5 +1,5 @@
 //liberando as ações por evento
-function actActions(){
+function actDefault(){
 
     //OPEN / CLOSE TOOBAR LAYERS
     $('#layersModel').click(function () {
@@ -244,46 +244,53 @@ function actActions(){
             }
         });
 
+        $(".searchEnd .camada").click(function(){
+            load_dados();
+        });
+
         //função que carrega os dados do formulário para o ajax
         function load_dados(){
             var form = $('#searchForm_end');
 
+            var first_year = form.find('input[name="first_year"]').val().length > 0 
+                                && parseInt(form.find('input[name="first_year"]').val()) >= 1868
+                                && parseInt(form.find('input[name="first_year"]').val()) <= 1940
+                                ? form.find('input[name="first_year"]').val() : 1868;
+            var last_year = form.find('input[name="last_year"]').val().length > 0 
+                                && parseInt(form.find('input[name="last_year"]').val()) >= 1868
+                                && parseInt(form.find('input[name="last_year"]').val()) <= 1940 
+                                ? form.find('input[name="last_year"]').val() : 1940;
+
             var consulta = form.find('input[name="searchInput"]').val();
-            var first_year = form.find('input[name="first_year"]').val();
-            var last_year = form.find('input[name="last_year"]').val();
+            var camada = form.find('input[name="camada"]:checked').val(); 
+                 
+            var  resp="";
+            bases.getLayers().forEach(function(layer) {
+                if(layer.get('name') == camada){
+                    
+                    var results=0;
+                    var feats = layer.getSource().getFeatures();
+                    for(var i=0; i<feats.length; i++){
+                        var nameFeat = feats[i].get("name").toLowerCase().trim();
 
-            var callback = form.find('input[name="callback"]').val();
-            var callback_action = form.find('input[name="callback_action"]').val();         
-
-            form.ajaxSubmit({
-                type: 'POST',
-                data: {callback_action: callback_action},
-                dataType: 'json',
-                url: 'ajax/' + callback + '.ajax.php',
-                success: function(msg){
-                    var res = msg.sucess;
-                    $("#searchResposta").html(res).fadeIn();
-
-                    //ao clicar no botão de visualizar a rua
-                    $(".searchResposta p button").click(function(){
-                        var idRua = $(this).attr('id');
-                            
-                        //centraliza o mapa na rua selecionada
-                        var extent = ol.extent.createEmpty();
-                        bases.getLayers().forEach(function(layer) {
-                            if(layer.get('name') == "street"){
-
-                                var ruaSelect = layer.getSource().getFeatureById(idRua);
-                                ruaSelect.setStyle(styleStreetSlc);
-
-                                ol.extent.extend(extent, ruaSelect.getGeometry().getExtent());
-                            }
-                        });
-                        map.getView().fit(extent, map.getSize());
+                        if( ((nameFeat).search(consulta.toLowerCase()) >= 0) && (
+                             ((feats[i].get('first_year') >= first_year && feats[i].get('first_year') <= last_year) || feats[i].get('first_year')=="") || 
+                             ((feats[i].get('last_year') >= first_year && feats[i].get('last_year') <= last_year) || feats[i].get('last_year')=="") 
+                            ) ){
+                                nameFeat = nameFeat != "" ? nameFeat : "unnamed";
+                                if(feats[i].get('tabName')=="tb_street"){
+                                    resp += "<p>"+nameFeat+"<button onclick='viewFeatSelect("+feats[i].getId()+","+1+")' geom='geomeria'>&#10146;</button></p>";
+                                }else if(feats[i].get('tabName')=="tb_places"){
+                                    resp += "<p>"+nameFeat+"<button onclick='viewFeatSelect("+feats[i].getId()+","+2+")' geom='geomeria'>&#10146;</button></p>";
+                                }
+                                if(++results==5) return;
+                        }
                         
-                    });
+                    }
                 }
             });
-        }
+
+            $("#searchResposta").html(resp).fadeIn();
+        }              
 
 }
