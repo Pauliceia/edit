@@ -30,9 +30,7 @@ function setColorDefault(type){
                         colorDuplicPlaces();                        
                     
                     }else if(type=="street") {
-                        if(JSON.stringify(styleActual) === JSON.stringify(styleStreetSlc)){
-                            feat.setStyle(styleStreet);
-                        }
+                        feat.setStyle(styleStreet);
                     
                     }else if(type=="myplaces") {
                         if(JSON.stringify(styleActual) === JSON.stringify(styleSelects)){
@@ -62,6 +60,7 @@ function generationWkt(e, type){
 
     }else if(type == "edit"){
         $("#editData input[name='geom']").val(featureWkt);
+    
     }else if(type == "reverse"){
         $('#reverseStr input[name="geom"]').val(featureWkt);
     }
@@ -399,7 +398,6 @@ function colorPosDel(featDel){
             
         }
 
-        
         return resp;
     }
 

@@ -6,6 +6,8 @@ function actInfos(){
     var auxSelect = new ol.interaction.Select();
 
     $('#getFeatInfo').click(function(){
+        featSelect = null;
+        
         var getFeat = new ol.interaction.Select();
         var getBoxFeat = new ol.interaction.DragBox();
         var auxSelect = new ol.interaction.Select();
@@ -51,6 +53,9 @@ function actInfos(){
     });
 
     $('#clearInfo').click(function(){
+        clearInteraction('point');
+        clearInteraction('line');
+
         map.removeInteraction(getFeat);
         map.removeInteraction(getBoxFeat);
         map.removeInteraction(auxSelect);

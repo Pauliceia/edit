@@ -9,12 +9,14 @@ function actLine(){
     $('#selectStLine').click(function(){
         clearInteraction('point');
         $(this).addClass('activeOptions');
+        
         getStreetLine('insertData');
         return false;
     });
     
     $('#alterStLine').click(function(){
         clearInteraction('point');
+        
         getStreetLine('editData');
         return false;
     });
@@ -22,40 +24,14 @@ function actLine(){
     $('#sltStrReverse').click(function(){
         clearInteraction('point');
         clearInteraction('line');
-        selectLine = new ol.interaction.Select({
-            style: styleFunction
-        });
-        map.addInteraction(selectLine);
 
-        selectLine.getFeatures().on('add', function(e) {
-            if(e.element.get("tabName") == 'tb_street'){
-                featSelect = e.element;
-
-                $('#strReverse').attr('disabled', false);
-                $('#reverseStr input[name="name_street"]').val(featSelect.get('name'));
-                $('#reverseStr input[name="first_year"]').val(featSelect.get('first_year'));
-                $('#reverseStr input[name="last_year"]').val(featSelect.get('last_year'));
-
-                var sizeStreet = 0;
-                if(featSelect.get('perimeter')==0){
-                    //MultiLineString
-                    for(var i=0; i<featSelect.getGeometry().getLineStrings().length; i++){
-                        sizeStreet += LengthLineString(featSelect.getGeometry().getCoordinates()[i]);
-                    }
-                }else{
-                    sizeStreet = featSelect.get('perimeter');
-                }
-                sizeStreet = sizeStreet>=1000 ? parseFloat((sizeStreet/1000).toFixed(2))+"km" : (parseFloat(sizeStreet).toFixed(2))+"m";
-                $('#reverseStr input[name="length_street"]').val(sizeStreet);
-                $('#reverseStr input[name="id"]').val(featSelect.get('id'));
-            }
-        });
-        
+        getStreetLine('reverseStr');        
         return false;
     });
 
     $('#strReverse').click(function(){
         clearInteraction('point');
+
         var newLine = [];
         var lineStringsArray = featSelect.getGeometry().getLineStrings();
 
@@ -66,6 +42,8 @@ function actLine(){
 
         generationWkt(featSelect, "reverse");
         $('#btnStrReverseSave').prop("disabled", false);
+
+        featSelect.setStyle(styleFunction(featSelect));
         
         return false;
     });
@@ -75,23 +53,49 @@ function actLine(){
 
         selectLine.getFeatures().on('add', function(e) {
             if(featSelect!=null){
-                featSelect.setStyle(styleStreetSlc);
+                featSelect.setStyle(styleFunction(featSelect));
             }
 
             if(e.element.get("tabName") == 'tb_street'){
                 featSelect = e.element;
 
-                var idStreet = featSelect.get("id");
-                var nameStreet = featSelect.get("name");
+                //FORM DE REVERSAO DE LINE
+                if(type=='reverseStr'){
+                    $('#strReverse').attr('disabled', false);
+                    $('#'+type+' input[name="name_street"]').val(featSelect.get('name'));
+                    $('#'+type+' input[name="first_year"]').val(featSelect.get('first_year'));
+                    $('#'+type+' input[name="last_year"]').val(featSelect.get('last_year'));
 
-                $('#'+type+' input[name="id_street"]').val(idStreet);
-                $('#'+type+' input[name="street"]').val(nameStreet);
+                    var sizeStreet = 0;
+                    if(featSelect.get('perimeter')==0){
+                        //MultiLineString
+                        for(var i=0; i<featSelect.getGeometry().getLineStrings().length; i++){
+                            sizeStreet += LengthLineString(featSelect.getGeometry().getCoordinates()[i]);
+                        }
+                    }else{
+                        sizeStreet = featSelect.get('perimeter');
+                    }
+                    sizeStreet = sizeStreet>=1000 ? parseFloat((sizeStreet/1000).toFixed(2))+"km" : (parseFloat(sizeStreet).toFixed(2))+"m";
+
+                    $('#'+type+' input[name="length_street"]').val(sizeStreet);
+                    $('#'+type+' input[name="id"]').val(featSelect.get('id'));
+
+
+                //FORM DE CADASTRO E EDIÇÃO
+                }else{
+                    var idStreet = featSelect.get("id");
+                    var nameStreet = featSelect.get("name");
+    
+                    $('#'+type+' input[name="id_street"]').val(idStreet);
+                    $('#'+type+' input[name="street"]').val(nameStreet);
+
+                }
             }
         });
 
         selectLine.getFeatures().on('remove', function(){
             if(featSelect!=null){
-                featSelect.setStyle(styleStreetSlc);
+                featSelect.setStyle(styleFunction(featSelect));
             }
         });
     }
