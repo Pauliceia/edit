@@ -7,7 +7,7 @@
         <center>
             <button type="button" class="btn btn-info" id="getFeatInfo"><span class="glyphicon glyphicon-pushpin"></span> <b>FEATURE</b></button>
             <button type="button" class="btn btn-info" id="getBoxInfo"><span class="glyphicon glyphicon-modal-window"></span> <b>BOX</b></button>
-            <button type="button" class="btn btn-danger" id="clearInfo"><b>CLEAR</b></button>
+            <button type="button" class="btn btn-danger" id="clearInfo"><b>CLEAN</b></button>
         </center>
         <div class="clear"></div>
         
