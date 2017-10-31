@@ -27,7 +27,7 @@ getJsonMap('tb_street', false,  function(streets){
                 layers: [
                     new ol.layer.Tile({
                         source: new ol.source.TileWMS({
-                            url: 'http://www.terrama2.dpi.inpe.br/geoserver/ows',
+                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
                             params: {'LAYERS': 'pauliceia:saraBrasil', 'TILED': true},
                             serverType: 'geoserver'
                         }),
