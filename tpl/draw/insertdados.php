@@ -50,7 +50,7 @@
                 <input type="number" name="first_month" class="form-control inF" min="1" max="12" placeholder="month" id="clearForm">
             </div>
             <div class="col-lg-4">
-                <input type="number" name="first_year" class="form-control inF" min="1868" max="1940" placeholder="year" id="clearForm">
+                <input type="number" name="first_year" class="form-control inF" min="1868" placeholder="year" id="clearForm">
             </div>
             <div class="clear"></div>
         </div>
@@ -64,7 +64,7 @@
                 <input type="number" name="last_month" class="form-control inF" min="1" max="12" placeholder="month" id="clearForm">
             </div>
             <div class="col-lg-4">
-                <input type="number" name="last_year" class="form-control inF" min="1868" max="1940" placeholder="year" id="clearForm">
+                <input type="number" name="last_year" class="form-control inF" min="1868" placeholder="year" id="clearForm">
             </div>
             <div class="clear"></div>
         </div>  
