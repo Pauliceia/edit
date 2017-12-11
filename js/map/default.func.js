@@ -360,6 +360,32 @@ function colorPosDel(featDel){
         extendsToSelect(idFeat, tabFeat==1 ? 'tb_street' : 'tb_places');
     };  
 
+    function editPlace(featSelectId){
+        var feat = null;
+        if (bases instanceof ol.layer.Group){
+            bases.getLayers().forEach(function(sublayer){
+                if (sublayer.get('name') == "myplaces" || sublayer.get('name') == "places"){
+                    if(sublayer.getSource().getFeatureById(featSelectId) != null){
+                        feat = sublayer.getSource().getFeatureById(featSelectId);
+
+                        $('#layersModel').removeClass('active');
+                        $('#layers').fadeOut();
+                        $('.selectCamadas').fadeOut();
+                        $('#searchEnd').fadeOut();
+                        $('#searchModel').removeClass('active');
+                        $('#infoModel').removeClass('active');
+                        $('#infos').fadeOut();
+                        $('#insertData').fadeOut();
+                        $('#duplicData').fadeOut();
+                        $('#editData').fadeIn();
+
+                        getAttribs(feat, "editData");
+                    }
+                }
+            });
+        }
+    }
+
     //gerar a resposta com as informações da feature
     function generateResp(feat){
         var resp = "";
@@ -387,7 +413,8 @@ function colorPosDel(featDel){
         }else if(feat.get('tabName')=='tb_places'){
             var title = feat.get('name') != '' ? feat.get('name') : 'unnamed';
             resp += "<tr style='background: #999;'> <td colspan='2'><b>"+title+"</b></td>";
-            resp += "<td><center><button class='btn' onclick='viewFeatSelect("+feat.getId()+","+2+")'> <span class='glyphicon glyphicon-zoom-in'></span> </button></center></td> </tr>";
+            resp += "<td> <button class='btn' onclick='viewFeatSelect("+feat.getId()+","+2+")'> <span class='glyphicon glyphicon-zoom-in'></span> </button></center>";
+            resp += " <button class='btn' onclick='editPlace("+feat.getId()+")'> <span class='glyphicon glyphicon-pencil'></span> </button> </td></tr>";
 
             if(feat.get('description') != '') resp += "<tr> <td colspan='3'>"+feat.get('description')+"</td> </tr>";
 
