@@ -422,7 +422,7 @@ function colorPosDel(featDel){
             resp += "<tr> <td>Last day: "+feat.get('last_day')+"</td> <td>Last month: "+feat.get('last_month')+"</td> <td>Last year: "+feat.get('last_year')+"</td> </tr>";
             resp += "<tr> <td>Number: "+feat.get('id_user')+"</td> <td colspan='2'>Original number: "+feat.get('original_number')+"</td> </tr>";
             
-            var discDate = feat.get('disc_date')==true ? "YES" : "NO";
+            var discDate = feat.get('disc_date') == 't' ? "YES" : "NO";
 
             var jsonAutor = $('#jsonAutor').text();
             jsonAutor = JSON.parse(jsonAutor);
