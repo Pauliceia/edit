@@ -60,11 +60,7 @@ function actInfos(){
         map.removeInteraction(getBoxFeat);
         map.removeInteraction(auxSelect);
 
-        $("#infos .respInfo").html("<p></p>").fadeOut(); 
-
-        setColorDefault('street');
-        setColorDefault('places');
-        setColorDefault('myplaces');
+        $("#infos .respInfo").html("<p></p>").fadeOut();
         
         return false;
     });
