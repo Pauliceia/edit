@@ -420,7 +420,7 @@ function colorPosDel(featDel){
 
             resp += "<tr> <td>First day: "+feat.get('first_day')+"</td> <td>First month: "+feat.get('first_month')+"</td> <td>First year: "+feat.get('first_year')+"</td> </tr>";
             resp += "<tr> <td>Last day: "+feat.get('last_day')+"</td> <td>Last month: "+feat.get('last_month')+"</td> <td>Last year: "+feat.get('last_year')+"</td> </tr>";
-            resp += "<tr> <td>Number: "+feat.get('id_user')+"</td> <td colspan='2'>Original number: "+feat.get('original_number')+"</td> </tr>";
+            resp += "<tr> <td>Number: "+feat.get('number')+"</td> <td colspan='2'>Original number: "+feat.get('original_number')+"</td> </tr>";
             
             var discDate = feat.get('disc_date') == 't' ? "YES" : "NO";
 
