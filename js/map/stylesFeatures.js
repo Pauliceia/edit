@@ -60,6 +60,19 @@ var styleMyDuplic = new ol.style.Style({
     })
 });
 
+var stylePointZero = new ol.style.Style({
+    image: new ol.style.Circle({
+        radius: 8,
+        stroke: new ol.style.Stroke({
+            color: 'white',
+            width: 2
+        }),
+        fill: new ol.style.Fill({
+            color: [0, 0, 153, 0.9]
+        })
+    })
+});
+
 var styleDuplic = new ol.style.Style({
     image: new ol.style.Circle({
         radius: 8,
