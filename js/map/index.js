@@ -14,8 +14,8 @@ getJsonMap('tb_street', false,  function(streets){
     street = new ol.source.Vector({
         features: (new ol.format.GeoJSON()).readFeatures(streets)
     });
-    getJsonMap('tb_street', true, function(street_ref){
-        myplaces = new ol.source.Vector({
+    getJsonMap('tb_street_ref', true, function(street_ref){
+        street_ref = new ol.source.Vector({
             features: (new ol.format.GeoJSON()).readFeatures(street_ref)
         });
         getJsonMap('tb_places', false, function(place){
@@ -45,7 +45,7 @@ getJsonMap('tb_street', false,  function(streets){
                             style: styleStreet
                         }),
                         new ol.layer.Vector({
-                            source: street,
+                            source: street_ref,
                             visible: true,
                             name: 'street_ref',
                             style: styleStreetRef
