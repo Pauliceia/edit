@@ -68,7 +68,7 @@ var stylePointZero = new ol.style.Style({
             width: 2
         }),
         fill: new ol.style.Fill({
-            color: [0, 0, 153, 0.9]
+            color: [0, 153, 51, 0.8]
         })
     })
 });
