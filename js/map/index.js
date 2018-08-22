@@ -40,11 +40,11 @@ getJsonMap('tb_street', false,  function(streets){
                         name: 'street',
                         style: styleStreet
                     }),
-                    new ol.layer.Tile({
+                    new ol.layer.Vector({
                         source: new ol.source.Vector({
                             url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pauliceia:tb_street_ref&outputFormat=application%2Fjson',
                             format: new ol.format.GeoJSON(),
-                            crossOrigin: 'anonymous',
+                            crossOrigin: 'anonymous'
                         }),
                         visible: true,
                         name: 'street_ref',
