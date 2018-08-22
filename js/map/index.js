@@ -9,14 +9,14 @@ function getJsonMap(table, myFeat, callback){
     }, 'json');
 }
 
-var bases, places, myplaces, street, map;
+var bases, places, myplaces, street, street_ref, map;
 getJsonMap('tb_street', false,  function(streets){
     street = new ol.source.Vector({
         features: (new ol.format.GeoJSON()).readFeatures(streets)
     });
-    getJsonMap('tb_street_ref', true, function(street_ref){
+    getJsonMap('tb_street_ref', true, function(streets_ref){
         street_ref = new ol.source.Vector({
-            features: (new ol.format.GeoJSON()).readFeatures(street_ref)
+            features: (new ol.format.GeoJSON()).readFeatures(streets_ref)
         });
         getJsonMap('tb_places', false, function(place){
             places = new ol.source.Vector({
