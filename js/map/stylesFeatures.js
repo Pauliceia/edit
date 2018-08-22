@@ -7,6 +7,13 @@ var styleStreet = new ol.style.Style({
     })
 });
 
+var styleStreetRef = new ol.style.Style({
+    stroke: new ol.style.Stroke({
+        width: 6, 
+        color: [0, 153, 51, 0.8]
+    })
+});
+
 var styleStreetSlc = new ol.style.Style({
     stroke: new ol.style.Stroke({
         width: 6, 

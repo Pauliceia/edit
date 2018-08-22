@@ -34,6 +34,15 @@ getJsonMap('tb_street', false,  function(streets){
                         visible: true,
                         name: 'sara'
                     }),
+                    new ol.layer.Tile({
+                        source: new ol.source.TileWMS({
+                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
+                            params: {'LAYERS': 'pauliceia:tb_street_ref', 'TILED': true},
+                            serverType: 'geoserver'
+                        }),
+                        visible: true,
+                        name: 'street_ref'
+                    }),
                     new ol.layer.Vector({
                         source: street,
                         visible: true,
