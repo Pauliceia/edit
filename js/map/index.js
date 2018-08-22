@@ -22,7 +22,7 @@ getJsonMap('tb_street', false,  function(streets){
             myplaces = new ol.source.Vector({
                 features: (new ol.format.GeoJSON()).readFeatures(myplace)
             });
-
+        
             bases = new ol.layer.Group({
                 layers: [
                     new ol.layer.Tile({
@@ -48,6 +48,16 @@ getJsonMap('tb_street', false,  function(streets){
                         visible: true,
                         name: 'street',
                         style: styleStreet
+                    }),
+                    new ol.layer.Vector({
+                        source: new ol.source.TileWMS({
+                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
+                            params: {'LAYERS': 'pauliceia:tb_street_ref', 'TILED': true},
+                            serverType: 'geoserver'
+                        }),
+                        visible: true,
+                        name: 'street_ref',
+                        style: styleStreetRef
                     }),
                     new ol.layer.Vector({   
                         source: places,
