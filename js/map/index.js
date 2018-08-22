@@ -9,77 +9,76 @@ function getJsonMap(table, myFeat, callback){
     }, 'json');
 }
 
-var bases, places, myplaces, street, street_ref, map;
+var bases, places, myplaces, street, map;
 getJsonMap('tb_street', false,  function(streets){
     street = new ol.source.Vector({
         features: (new ol.format.GeoJSON()).readFeatures(streets)
     });
-    getJsonMap('tb_street_ref', false, function(streets_ref){
-        street_ref = new ol.source.Vector({
-            features: (new ol.format.GeoJSON()).readFeatures(streets_ref)
+    getJsonMap('tb_places', false, function(place){
+        places = new ol.source.Vector({
+            features: (new ol.format.GeoJSON()).readFeatures(place)
         });
-        getJsonMap('tb_places', false, function(place){
-            places = new ol.source.Vector({
-                features: (new ol.format.GeoJSON()).readFeatures(place)
+        getJsonMap('tb_places', true, function(myplace){
+            myplaces = new ol.source.Vector({
+                features: (new ol.format.GeoJSON()).readFeatures(myplace)
             });
-            getJsonMap('tb_places', true, function(myplace){
-                myplaces = new ol.source.Vector({
-                    features: (new ol.format.GeoJSON()).readFeatures(myplace)
-                });
-            
-                bases = new ol.layer.Group({
-                    layers: [
-                        new ol.layer.Tile({
-                            source: new ol.source.TileWMS({
-                                url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
-                                params: {'LAYERS': 'pauliceia:saraBrasil30', 'TILED': true},
-                                serverType: 'geoserver'
-                            }),
-                            visible: true,
-                            name: 'sara'
+        
+            bases = new ol.layer.Group({
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.TileWMS({
+                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
+                            params: {'LAYERS': 'pauliceia:saraBrasil30', 'TILED': true},
+                            serverType: 'geoserver'
                         }),
-                        new ol.layer.Vector({
-                            source: street,
-                            visible: true,
-                            name: 'street',
-                            style: styleStreet
+                        visible: true,
+                        name: 'sara'
+                    }),
+                    new ol.layer.Vector({
+                        source: street,
+                        visible: true,
+                        name: 'street',
+                        style: styleStreet
+                    }),
+                    new ol.layer.Vector({
+                        source: new ol.source.TileWMS({
+                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
+                            params: {'LAYERS': 'pauliceia:tb_street_ref', 'TILED': true},
+                            serverType: 'geoserver'
                         }),
-                        new ol.layer.Vector({
-                            source: street_ref,
-                            visible: true,
-                            name: 'street_ref',
-                            style: styleStreetRef
-                        }),
-                        new ol.layer.Vector({   
-                            source: places,
-                            visible: false,
-                            name: 'places',
-                            style: stylePlaces
-                        }),
-                        new ol.layer.Vector({   
-                            source: myplaces,
-                            visible: true,
-                            name: 'myplaces',
-                            style: styleMyPlaces
-                        }),
-                    ],
-                    visible: true,
-                    name: 'bases'
-                });
-
-                var openstreetmap = new ol.layer.Tile({
-                    source: new ol.source.OSM(),
-                    visible: false,
-                    name: 'openstreetmap'
-                });
-
-                rendMap(bases, openstreetmap);
-                colorDuplicPlaces();
-                actDefault();
-                actPoint();
-                actLine();
-                actInfos();
+                        visible: true,
+                        name: 'street_ref',
+                        style: styleStreetRef
+                    }),
+                    new ol.layer.Vector({   
+                        source: places,
+                        visible: false,
+                        name: 'places',
+                        style: stylePlaces
+                    }),
+                    new ol.layer.Vector({   
+                        source: myplaces,
+                        visible: true,
+                        name: 'myplaces',
+                        style: styleMyPlaces
+                    }),
+                ],
+                visible: true,
+                name: 'bases'
             });
+
+            var openstreetmap = new ol.layer.Tile({
+                source: new ol.source.OSM(),
+                visible: false,
+                name: 'openstreetmap'
+            });
+
+            rendMap(bases, openstreetmap);
+            colorDuplicPlaces();
+            actDefault();
+            actPoint();
+            actLine();
+            actInfos();
         });
     });
 });

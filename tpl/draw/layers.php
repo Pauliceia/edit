@@ -13,11 +13,7 @@
             <span style='font-size: 0.9em; color: #666;' class='period places'>( 1868 - 1940 )</span>
             <span style='float: right; cursor:pointer; color: #0066ff;' class='glyphicon glyphicon-cog selectCam' name='places'></span>
         </li>
-        <li><input type="checkbox" name="layers" value="street_ref" checked>
-            Street Saboya
-            <span style='font-size: 0.9em; color: #666;' class='period places'>( 1930 )</span>
-            <span style='float: right; cursor:pointer; color: #0066ff;' class='glyphicon glyphicon-cog selectCam' name='street_ref'></span>
-        </li>
+        <li><input type="checkbox" name="layers" value="street_ref" checked> Street Saboya </li>
         <li><input type="checkbox" name="layers" value="street" checked> 
             Street 
             <span style='font-size: 0.9em; color: #666;' class='period street'>( 1868 - 1940 )</span>
