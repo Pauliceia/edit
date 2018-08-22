@@ -34,26 +34,17 @@ getJsonMap('tb_street', false,  function(streets){
                         visible: true,
                         name: 'sara'
                     }),
-                    new ol.layer.Tile({
-                        source: new ol.source.TileWMS({
-                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
-                            params: {'LAYERS': 'pauliceia:tb_street_ref', 'TILED': true},
-                            serverType: 'geoserver'
-                        }),
-                        visible: true,
-                        name: 'street_ref'
-                    }),
                     new ol.layer.Vector({
                         source: street,
                         visible: true,
                         name: 'street',
                         style: styleStreet
                     }),
-                    new ol.layer.Vector({
-                        source: new ol.source.TileWMS({
-                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows',
-                            params: {'LAYERS': 'pauliceia:tb_street_ref', 'TILED': true},
-                            serverType: 'geoserver'
+                    new ol.layer.Tile({
+                        source: new ol.source.Vector({
+                            url: 'http://www.pauliceia.dpi.inpe.br/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pauliceia:tb_street_ref&outputFormat=application%2Fjson',
+                            format: new ol.format.GeoJSON(),
+                            crossOrigin: 'anonymous',
                         }),
                         visible: true,
                         name: 'street_ref',
