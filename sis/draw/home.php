@@ -9,6 +9,7 @@ endif;
 <script src="js/ol4/ol-debug.js" defer></script>
 
 <script src="js/map/colorDuplicPlaces.js" defer></script>
+<script src="js/map/colorPointZero.js" defer></script>
 <script src="js/map/stylesFeatures.js" defer></script>
 
 <script src="js/map/index.js" defer></script>
